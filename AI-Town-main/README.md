@@ -116,6 +116,7 @@ NEW/
 │   └── logger.py               每日 log 檔
 ├── main.py                     程式進入點（伺服器 / 離線模擬）
 ├── simulate.py                 完整測試 + HTML 報告生成
+├── requirements.txt            Python 環境設定
 └── simulate_report.html        最近一次測試的視覺化報告
 ```
 
