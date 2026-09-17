@@ -117,7 +117,9 @@ NEW/
 ├── main.py                     程式進入點（伺服器 / 離線模擬）
 ├── simulate.py                 完整測試 + HTML 報告生成
 ├── requirements.txt            Python 環境設定
-└── simulate_report.html        最近一次測試的視覺化報告
+├── WEBSOCKET.py                使用 UE 虛擬環境模擬時要先執行這個檔案作為伺服器，如果使用這個檔案和 YOLO_UDP.py 則不會用到 main.py
+├── YOLO_UDP.py                 將 UE 裡的 NPC 第一視角畫面串流在 PyQt 視窗，然後在偵測到已知人物出現時通知伺服器
+，└── simulate_report.html        最近一次測試的視覺化報告
 ```
 
 ---
