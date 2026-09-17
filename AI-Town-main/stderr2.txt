@@ -1,0 +1,240 @@
+[14:43:53] [INFO] [simulate] === AI-Town 離線模擬\u555f動 ===
+[14:43:53] [INFO] [simulate] 參數：days=1, no_model=True
+[14:43:53] [INFO] [simulate] 使用 FakeLoader（無模型模式）
+[14:43:53] [INFO] [manager] 時鐘同\u6b65至第 1 天
+[14:43:53] [INFO] [manager] AgentManager 初始化，角色：['A', 'B', 'C', 'D', 'E']
+[14:43:53] [INFO] [manager] ===== Tick 06:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：起床 A家
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 06:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 07:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：前往 \u5496\u5561店
+[14:43:53] [INFO] [manager] [B] 執行：起床 B家
+[14:43:53] [INFO] [manager] [C] 執行：起床 C家
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 07:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 08:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：整理店面 \u5496\u5561店
+[14:43:53] [INFO] [manager] [B] 執行：前往 超市
+[14:43:53] [INFO] [manager] [C] 執行：前往 \u8fa6公室
+[14:43:53] [INFO] [manager] [D] 執行：起床 D家
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 08:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 09:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：賣\u5496\u5561 \u5496\u5561店
+[14:43:53] [INFO] [manager] [B] 執行：補貨 超市
+[14:43:53] [INFO] [manager] [C] 執行：工作 \u8fa6公室
+[14:43:53] [INFO] [manager] [D] 執行：前往 \u5496\u5561店
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 09:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 10:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：前往 \u8fa6公室
+[14:43:53] [INFO] [manager] [E] 執行：起床 E家
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 10:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 11:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：收銀 超市
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：工作 \u8fa6公室
+[14:43:53] [INFO] [manager] [E] 執行：前往 餐廳
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 11:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 12:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：吃飯 \u5496\u5561店後場
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：吃飯 公司附近
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：服務客人 餐廳
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 12:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 13:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：賣\u5496\u5561 \u5496\u5561店
+[14:43:53] [INFO] [manager] [B] 執行：吃飯 超市附近
+[14:43:53] [INFO] [manager] [C] 執行：工作 \u8fa6公室
+[14:43:53] [INFO] [manager] [D] 執行：吃飯 公司附近
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 13:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 14:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：收銀 超市
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：工作 \u8fa6公室
+[14:43:53] [INFO] [manager] [E] 執行：吃飯 餐廳
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 14:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 15:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 餐廳
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 15:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 16:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 16:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 17:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：補貨 超市
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 17:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 18:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：打\u70ca \u5496\u5561店
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：回家 C家
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：服務客人 餐廳
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 18:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 19:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：回家 A家
+[14:43:53] [INFO] [manager] [B] 執行：回家 B家
+[14:43:53] [INFO] [manager] [C] 執行：整理家裡 C家
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 19:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 20:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：回家 D家
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 20:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 21:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 21:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 22:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：休息 
+[14:43:53] [INFO] [manager] [B] 執行：休息 
+[14:43:53] [INFO] [manager] [C] 執行：休息 
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：回家 E家
+[14:43:53] [ERROR] [manager] [A] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [B] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [C] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 22:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 23:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [A] 執行：睡覺 A家
+[14:43:53] [INFO] [manager] [A] Day 1 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 5 筆
+[14:43:53] [INFO] [manager] [A] 存\u6a94完成，進入第 2 天
+[14:43:53] [INFO] [manager] [B] 執行：睡覺 B家
+[14:43:53] [INFO] [manager] [B] Day 1 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 4 筆
+[14:43:53] [INFO] [manager] [B] 存\u6a94完成，進入第 2 天
+[14:43:53] [INFO] [manager] [C] 執行：睡覺 C家
+[14:43:53] [INFO] [manager] [C] Day 1 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 4 筆
+[14:43:53] [INFO] [manager] [C] 存\u6a94完成，進入第 2 天
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 23:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 00:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [D] 執行：休息 
+[14:43:53] [INFO] [manager] [E] 執行：休息 
+[14:43:53] [ERROR] [manager] [D] decide 失敗：name '_sys' is not defined
+[14:43:53] [ERROR] [manager] [E] decide 失敗：name '_sys' is not defined
+[14:43:53] [INFO] [manager] ===== Tick 00:00 結束 =====
+[14:43:53] [INFO] [manager] ===== Tick 01:00 第 1 天 開始 =====
+[14:43:53] [INFO] [manager] [D] 執行：睡覺 D家
+[14:43:53] [INFO] [manager] [D] Day 1 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 4 筆
+[14:43:53] [INFO] [manager] [D] 存\u6a94完成，進入第 2 天
+[14:43:53] [INFO] [manager] [E] 執行：睡覺 E家
+[14:43:53] [INFO] [manager] [E] Day 1 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 4 筆
+[14:43:53] [INFO] [manager] [E] 存\u6a94完成，進入第 2 天
+[14:43:53] [INFO] [manager] ===== Tick 01:00 結束 =====
+[14:43:53] [INFO] [manager] 推進至第 2 天
+[14:43:53] [INFO] [simulate] 模擬完成，耗時 0.1 秒

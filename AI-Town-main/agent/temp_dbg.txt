@@ -1,0 +1,2091 @@
+PATH Amy mode=deliberate slot=None cur='起床'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='前往'
+PATH Ben mode=deliberate slot=None cur='起床'
+PATH Claire mode=deliberate slot=None cur='起床'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='整理店面'
+PATH Ben mode=deliberate slot=None cur='前往'
+PATH Claire mode=deliberate slot=None cur='前往'
+PATH David mode=deliberate slot=None cur='起床'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+PATH Ben mode=deliberate slot=None cur='補貨'
+PATH Claire mode=deliberate slot=None cur='工作'
+PATH David mode=deliberate slot=None cur='前往'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='前往'
+PATH Emma mode=deliberate slot=None cur='起床'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='收銀'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='工作'
+PATH Emma mode=deliberate slot=None cur='前往'
+PATH Amy mode=deliberate slot=None cur='吃飯'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='吃飯'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='服務客人'
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+PATH Ben mode=deliberate slot=None cur='吃飯'
+PATH Claire mode=deliberate slot=None cur='工作'
+PATH David mode=deliberate slot=None cur='吃飯'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='收銀'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='工作'
+PATH Emma mode=deliberate slot=None cur='吃飯'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='補貨'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='打烊'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='回家'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='服務客人'
+PATH Amy mode=deliberate slot=None cur='回家'
+PATH Ben mode=deliberate slot=None cur='回家'
+PATH Claire mode=deliberate slot=None cur='整理家裡'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='回家'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH Amy mode=deliberate slot=None cur='休息'
+PATH Ben mode=deliberate slot=None cur='休息'
+PATH Claire mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='回家'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+PATH David mode=deliberate slot=None cur='休息'
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=360 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='起床'
+SLOT Ben time_min=360 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=360 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=360 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=360 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=420 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='前往'
+SLOT Ben time_min=420 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='起床'
+SLOT Claire time_min=420 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='起床'
+SLOT David time_min=420 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=420 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=480 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='整理店面'
+SLOT Ben time_min=480 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='前往'
+SLOT Claire time_min=480 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='前往'
+SLOT David time_min=480 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='起床'
+SLOT Emma time_min=480 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=540 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=540 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=540 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=540 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=540 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=600 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=600 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=600 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=600 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=600 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='起床'
+SLOT Amy time_min=660 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=660 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=660 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=660 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=660 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='前往'
+SLOT Amy time_min=720 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='吃飯'
+SLOT Ben time_min=720 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=720 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='吃飯'
+SLOT David time_min=720 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=720 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=780 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=780 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='吃飯'
+SLOT Claire time_min=780 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=780 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='吃飯'
+SLOT Emma time_min=780 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=840 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=840 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=840 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=840 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=840 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='吃飯'
+SLOT Amy time_min=900 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=900 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=900 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=900 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=900 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=960 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=960 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=960 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=960 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=960 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1020 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1020 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=1020 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1020 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1020 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1080 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='打烊'
+SLOT Ben time_min=1080 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1080 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='回家'
+SLOT David time_min=1080 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1080 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=1140 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='回家'
+SLOT Ben time_min=1140 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='回家'
+SLOT Claire time_min=1140 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='整理家裡'
+SLOT David time_min=1140 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1140 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1200 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1200 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1200 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1200 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='回家'
+SLOT Emma time_min=1200 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1260 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1260 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1260 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1260 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1260 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1320 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1320 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1320 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1320 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1320 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='回家'
+SLOT David time_min=1380 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1380 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT David time_min=0 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=0 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=360 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='起床'
+SLOT Ben time_min=360 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=360 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=360 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=360 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=420 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='前往'
+SLOT Ben time_min=420 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='起床'
+SLOT Claire time_min=420 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='起床'
+SLOT David time_min=420 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=420 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=480 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='整理店面'
+SLOT Ben time_min=480 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='前往'
+SLOT Claire time_min=480 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='前往'
+SLOT David time_min=480 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='起床'
+SLOT Emma time_min=480 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=540 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=540 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=540 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=540 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=540 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=600 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=600 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=600 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=600 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=600 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='起床'
+SLOT Amy time_min=660 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=660 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=660 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=660 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=660 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='前往'
+SLOT Amy time_min=720 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='吃飯'
+SLOT Ben time_min=720 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=720 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='吃飯'
+SLOT David time_min=720 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=720 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=780 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=780 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='吃飯'
+SLOT Claire time_min=780 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=780 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='吃飯'
+SLOT Emma time_min=780 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=840 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=840 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=840 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=840 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=840 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='吃飯'
+SLOT Amy time_min=900 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=900 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=900 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=900 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=900 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=960 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=960 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=960 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=960 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=960 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1020 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1020 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=1020 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1020 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1020 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1080 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='打烊'
+SLOT Ben time_min=1080 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1080 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='回家'
+SLOT David time_min=1080 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1080 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=1140 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='回家'
+SLOT Ben time_min=1140 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='回家'
+SLOT Claire time_min=1140 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='整理家裡'
+SLOT David time_min=1140 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1140 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1200 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1200 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1200 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1200 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='回家'
+SLOT Emma time_min=1200 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1260 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1260 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1260 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1260 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1260 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1320 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1320 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1320 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1320 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1320 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='回家'
+SLOT David time_min=1380 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1380 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT David time_min=0 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=0 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=360 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='起床'
+SLOT Ben time_min=360 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=360 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=360 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=360 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=420 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='前往'
+SLOT Ben time_min=420 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='起床'
+SLOT Claire time_min=420 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='起床'
+SLOT David time_min=420 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=420 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=480 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='整理店面'
+SLOT Ben time_min=480 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='前往'
+SLOT Claire time_min=480 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='前往'
+SLOT David time_min=480 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='起床'
+SLOT Emma time_min=480 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=540 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=540 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=540 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=540 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=540 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=600 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=600 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=600 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=600 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=600 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='起床'
+SLOT Amy time_min=660 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=660 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=660 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=660 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=660 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='前往'
+SLOT Amy time_min=720 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='吃飯'
+SLOT Ben time_min=720 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=720 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='吃飯'
+SLOT David time_min=720 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=720 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=780 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=780 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='吃飯'
+SLOT Claire time_min=780 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=780 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='吃飯'
+SLOT Emma time_min=780 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=840 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=840 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=840 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=840 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=840 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='吃飯'
+SLOT Amy time_min=900 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=900 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=900 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=900 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=900 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=960 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=960 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=960 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=960 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=960 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1020 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1020 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=1020 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1020 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1020 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1080 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='打烊'
+SLOT Ben time_min=1080 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1080 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='回家'
+SLOT David time_min=1080 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1080 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=1140 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='回家'
+SLOT Ben time_min=1140 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='回家'
+SLOT Claire time_min=1140 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='整理家裡'
+SLOT David time_min=1140 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1140 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1200 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1200 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1200 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1200 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='回家'
+SLOT Emma time_min=1200 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1260 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1260 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1260 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1260 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1260 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1320 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1320 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1320 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1320 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1320 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='回家'
+SLOT David time_min=1380 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1380 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT David time_min=0 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=0 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=360 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='起床'
+SLOT Ben time_min=360 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=360 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=360 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=360 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=420 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='前往'
+SLOT Ben time_min=420 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='起床'
+SLOT Claire time_min=420 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='起床'
+SLOT David time_min=420 slot=None schedule_len=8 day=1
+PATH David mode=intuitive slot=None cur='休息'
+SLOT Emma time_min=420 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=480 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='整理店面'
+SLOT Ben time_min=480 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='前往'
+SLOT Claire time_min=480 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='前往'
+SLOT David time_min=480 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='起床'
+SLOT Emma time_min=480 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=540 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=540 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=540 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=540 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=540 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=600 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=600 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=600 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=600 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='前往'
+SLOT Emma time_min=600 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='起床'
+SLOT Amy time_min=660 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=660 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=660 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=660 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=660 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='前往'
+SLOT Amy time_min=720 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='吃飯'
+SLOT Ben time_min=720 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=720 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='吃飯'
+SLOT David time_min=720 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=720 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=780 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='賣咖啡'
+SLOT Ben time_min=780 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='吃飯'
+SLOT Claire time_min=780 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='工作'
+SLOT David time_min=780 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='吃飯'
+SLOT Emma time_min=780 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=840 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=840 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='收銀'
+SLOT Claire time_min=840 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=840 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='工作'
+SLOT Emma time_min=840 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='吃飯'
+SLOT Amy time_min=900 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=900 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=900 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=900 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=900 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=960 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=960 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=960 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=960 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=960 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1020 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1020 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='補貨'
+SLOT Claire time_min=1020 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1020 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1020 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1080 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='打烊'
+SLOT Ben time_min=1080 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1080 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='回家'
+SLOT David time_min=1080 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1080 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='服務客人'
+SLOT Amy time_min=1140 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='回家'
+SLOT Ben time_min=1140 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='回家'
+SLOT Claire time_min=1140 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='整理家裡'
+SLOT David time_min=1140 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1140 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1200 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1200 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1200 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1200 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='回家'
+SLOT Emma time_min=1200 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1260 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1260 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1260 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1260 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1260 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT Amy time_min=1320 slot=None schedule_len=9 day=1
+PATH Amy mode=deliberate slot=None cur='休息'
+SLOT Ben time_min=1320 slot=None schedule_len=9 day=1
+PATH Ben mode=deliberate slot=None cur='休息'
+SLOT Claire time_min=1320 slot=None schedule_len=8 day=1
+PATH Claire mode=deliberate slot=None cur='休息'
+SLOT David time_min=1320 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1320 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='回家'
+SLOT David time_min=1380 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=1380 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+SLOT David time_min=0 slot=None schedule_len=8 day=1
+PATH David mode=deliberate slot=None cur='休息'
+SLOT Emma time_min=0 slot=None schedule_len=8 day=1
+PATH Emma mode=deliberate slot=None cur='休息'
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=False
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=FakeLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True
+CALL_MODEL loader=ModelLoader loaded=True

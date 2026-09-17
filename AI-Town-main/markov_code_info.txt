@@ -1,0 +1,2830 @@
+Code Object: <module>
+  Arg count: 0
+  Kwonly arg count: 0
+  Local vars: ()
+  Constants: (0, None, ('VALID_ACTIONS', 'VALID_LOCATIONS', 'ACTION_SEPARATOR', 'ACTION_TO_CATEGORY'), ('ACTION_KEYWORD_BOOST', 'KEYWORD_BOOST_PER_HIT', 'EMOTION_TO_ACTION_BOOST'), ('MARKOV_WEIGHTS_NORMAL', 'MARKOV_WEIGHTS_EVENT', 'SLEEP_ACTION', 'WAKE_ACTION'), 0.005, '平靜', False, 'schedule_slot', 'stm_recent_verbs', 'perception', 'co_located', 'emotion', 'is_major_event', 'weights', 'action_values', 'return_breakdown', <code object compute_action_probabilities at 0x000002AA62BBED90, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 55>, 'compute_action_probabilities', 'slot', 'return', <code object schedule_score at 0x000002AA62BBEEF0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 154>, 'schedule_score', <code object inertia_score at 0x000002AA62BBF050, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 197>, 'inertia_score', <code object situation_score at 0x000002AA62BBF260, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 234>, 'situation_score', 'probs', 'exclude', <code object sample_action at 0x000002AA62BBF470, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 277>, 'sample_action', 2.5, 'boost_factor', <code object resolve_dialogue_target at 0x000002AA62BBF5D0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 301>, 'resolve_dialogue_target', 5, 'top_n', <code object format_probs_display at 0x000002AA62BBF7E0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 342>, 'format_probs_display', 1.0, 'scores', 'temperature', <code object _softmax_dict at 0x000002AA62BBFB50, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 353>, '_softmax_dict', (None, None, None, None, '平靜', False, None, None, False), (None,), (2.5,), (5,), (1.0,))
+  Names referenced: ('math', 'random', 'config.action_list', 'VALID_ACTIONS', 'VALID_LOCATIONS', 'ACTION_SEPARATOR', 'ACTION_TO_CATEGORY', 'config.triggers', 'ACTION_KEYWORD_BOOST', 'KEYWORD_BOOST_PER_HIT', 'EMOTION_TO_ACTION_BOOST', 'config.world_config', 'MARKOV_WEIGHTS_NORMAL', 'MARKOV_WEIGHTS_EVENT', 'SLEEP_ACTION', 'WAKE_ACTION', 'MIN_PROB_FLOOR', 'dict', 'list', 'str', 'bool', 'compute_action_probabilities', 'schedule_score', 'inertia_score', 'situation_score', 'sample_action', 'float', 'tuple', 'resolve_dialogue_target', 'int', 'format_probs_display', '_softmax_dict')
+  Free vars: ()
+  Cell vars: ()
+  Disassembly:
+ 27           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (None)
+              4 IMPORT_NAME              0 (math)
+              6 STORE_NAME               0 (math)
+
+ 28           8 LOAD_CONST               0 (0)
+             10 LOAD_CONST               1 (None)
+             12 IMPORT_NAME              1 (random)
+             14 STORE_NAME               1 (random)
+
+ 30          16 LOAD_CONST               0 (0)
+             18 LOAD_CONST               2 (('VALID_ACTIONS', 'VALID_LOCATIONS', 'ACTION_SEPARATOR', 'ACTION_TO_CATEGORY'))
+             20 IMPORT_NAME              2 (config.action_list)
+             22 IMPORT_FROM              3 (VALID_ACTIONS)
+             24 STORE_NAME               3 (VALID_ACTIONS)
+             26 IMPORT_FROM              4 (VALID_LOCATIONS)
+             28 STORE_NAME               4 (VALID_LOCATIONS)
+             30 IMPORT_FROM              5 (ACTION_SEPARATOR)
+             32 STORE_NAME               5 (ACTION_SEPARATOR)
+             34 IMPORT_FROM              6 (ACTION_TO_CATEGORY)
+             36 STORE_NAME               6 (ACTION_TO_CATEGORY)
+             38 POP_TOP
+
+ 34          40 LOAD_CONST               0 (0)
+             42 LOAD_CONST               3 (('ACTION_KEYWORD_BOOST', 'KEYWORD_BOOST_PER_HIT', 'EMOTION_TO_ACTION_BOOST'))
+             44 IMPORT_NAME              7 (config.triggers)
+             46 IMPORT_FROM              8 (ACTION_KEYWORD_BOOST)
+             48 STORE_NAME               8 (ACTION_KEYWORD_BOOST)
+             50 IMPORT_FROM              9 (KEYWORD_BOOST_PER_HIT)
+             52 STORE_NAME               9 (KEYWORD_BOOST_PER_HIT)
+             54 IMPORT_FROM             10 (EMOTION_TO_ACTION_BOOST)
+             56 STORE_NAME              10 (EMOTION_TO_ACTION_BOOST)
+             58 POP_TOP
+
+ 39          60 LOAD_CONST               0 (0)
+             62 LOAD_CONST               4 (('MARKOV_WEIGHTS_NORMAL', 'MARKOV_WEIGHTS_EVENT', 'SLEEP_ACTION', 'WAKE_ACTION'))
+             64 IMPORT_NAME             11 (config.world_config)
+             66 IMPORT_FROM             12 (MARKOV_WEIGHTS_NORMAL)
+             68 STORE_NAME              12 (MARKOV_WEIGHTS_NORMAL)
+             70 IMPORT_FROM             13 (MARKOV_WEIGHTS_EVENT)
+             72 STORE_NAME              13 (MARKOV_WEIGHTS_EVENT)
+             74 IMPORT_FROM             14 (SLEEP_ACTION)
+             76 STORE_NAME              14 (SLEEP_ACTION)
+             78 IMPORT_FROM             15 (WAKE_ACTION)
+             80 STORE_NAME              15 (WAKE_ACTION)
+             82 POP_TOP
+
+ 48          84 LOAD_CONST               5 (0.005)
+             86 STORE_NAME              16 (MIN_PROB_FLOOR)
+
+ 56          88 NOP
+
+ 57          90 NOP
+
+ 58          92 NOP
+
+ 59          94 NOP
+
+ 60          96 NOP
+
+ 61          98 NOP
+
+ 62         100 NOP
+
+ 63         102 NOP
+
+ 64         104 NOP
+
+ 55         106 LOAD_CONST              44 ((None, None, None, None, '平靜', False, None, None, False))
+            108 LOAD_CONST               8 ('schedule_slot')
+
+ 56         110 LOAD_NAME               17 (dict)
+
+ 55         112 LOAD_CONST               9 ('stm_recent_verbs')
+
+ 57         114 LOAD_NAME               18 (list)
+
+ 55         116 LOAD_CONST              10 ('perception')
+
+ 58         118 LOAD_NAME               17 (dict)
+
+ 55         120 LOAD_CONST              11 ('co_located')
+
+ 59         122 LOAD_NAME               18 (list)
+
+ 55         124 LOAD_CONST              12 ('emotion')
+
+ 60         126 LOAD_NAME               19 (str)
+
+ 55         128 LOAD_CONST              13 ('is_major_event')
+
+ 61         130 LOAD_NAME               20 (bool)
+
+ 55         132 LOAD_CONST              14 ('weights')
+
+ 62         134 LOAD_NAME               17 (dict)
+
+ 55         136 LOAD_CONST              15 ('action_values')
+
+ 63         138 LOAD_NAME               17 (dict)
+
+ 55         140 LOAD_CONST              16 ('return_breakdown')
+
+ 64         142 LOAD_NAME               20 (bool)
+
+ 55         144 BUILD_TUPLE             18
+            146 LOAD_CONST              17 (<code object compute_action_probabilities at 0x000002AA62BBED90, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 55>)
+            148 LOAD_CONST              18 ('compute_action_probabilities')
+            150 MAKE_FUNCTION            5 (defaults, annotations)
+            152 STORE_NAME              21 (compute_action_probabilities)
+
+154         154 LOAD_CONST              45 ((None,))
+            156 LOAD_CONST              19 ('slot')
+            158 LOAD_NAME               17 (dict)
+            160 LOAD_CONST              10 ('perception')
+            162 LOAD_NAME               17 (dict)
+            164 LOAD_CONST              20 ('return')
+            166 LOAD_NAME               17 (dict)
+            168 BUILD_TUPLE              6
+            170 LOAD_CONST              21 (<code object schedule_score at 0x000002AA62BBEEF0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 154>)
+            172 LOAD_CONST              22 ('schedule_score')
+            174 MAKE_FUNCTION            5 (defaults, annotations)
+            176 STORE_NAME              22 (schedule_score)
+
+197         178 LOAD_CONST               9 ('stm_recent_verbs')
+            180 LOAD_NAME               18 (list)
+            182 LOAD_CONST              20 ('return')
+            184 LOAD_NAME               17 (dict)
+            186 BUILD_TUPLE              4
+            188 LOAD_CONST              23 (<code object inertia_score at 0x000002AA62BBF050, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 197>)
+            190 LOAD_CONST              24 ('inertia_score')
+            192 MAKE_FUNCTION            4 (annotations)
+            194 STORE_NAME              23 (inertia_score)
+
+234         196 LOAD_CONST              10 ('perception')
+            198 LOAD_NAME               17 (dict)
+            200 LOAD_CONST              11 ('co_located')
+
+235         202 LOAD_NAME               18 (list)
+
+234         204 LOAD_CONST              12 ('emotion')
+
+236         206 LOAD_NAME               19 (str)
+
+234         208 LOAD_CONST              20 ('return')
+
+236         210 LOAD_NAME               17 (dict)
+
+234         212 BUILD_TUPLE              8
+            214 LOAD_CONST              25 (<code object situation_score at 0x000002AA62BBF260, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 234>)
+            216 LOAD_CONST              26 ('situation_score')
+            218 MAKE_FUNCTION            4 (annotations)
+            220 STORE_NAME              24 (situation_score)
+
+277         222 LOAD_CONST              45 ((None,))
+            224 LOAD_CONST              27 ('probs')
+            226 LOAD_NAME               17 (dict)
+            228 LOAD_CONST              28 ('exclude')
+            230 LOAD_NAME               18 (list)
+            232 LOAD_CONST              20 ('return')
+            234 LOAD_NAME               19 (str)
+            236 BUILD_TUPLE              6
+            238 LOAD_CONST              29 (<code object sample_action at 0x000002AA62BBF470, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 277>)
+            240 LOAD_CONST              30 ('sample_action')
+            242 MAKE_FUNCTION            5 (defaults, annotations)
+            244 STORE_NAME              25 (sample_action)
+
+303         246 NOP
+
+301         248 LOAD_CONST              46 ((2.5,))
+            250 LOAD_CONST              27 ('probs')
+            252 LOAD_NAME               17 (dict)
+            254 LOAD_CONST              11 ('co_located')
+
+302         256 LOAD_NAME               18 (list)
+
+301         258 LOAD_CONST              32 ('boost_factor')
+
+303         260 LOAD_NAME               26 (float)
+
+301         262 LOAD_CONST              20 ('return')
+
+303         264 LOAD_NAME               27 (tuple)
+
+301         266 BUILD_TUPLE              8
+            268 LOAD_CONST              33 (<code object resolve_dialogue_target at 0x000002AA62BBF5D0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 301>)
+            270 LOAD_CONST              34 ('resolve_dialogue_target')
+            272 MAKE_FUNCTION            5 (defaults, annotations)
+            274 STORE_NAME              28 (resolve_dialogue_target)
+
+342         276 LOAD_CONST              47 ((5,))
+            278 LOAD_CONST              27 ('probs')
+            280 LOAD_NAME               17 (dict)
+            282 LOAD_CONST              36 ('top_n')
+            284 LOAD_NAME               29 (int)
+            286 LOAD_CONST              20 ('return')
+            288 LOAD_NAME               19 (str)
+            290 BUILD_TUPLE              6
+            292 LOAD_CONST              37 (<code object format_probs_display at 0x000002AA62BBF7E0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 342>)
+            294 LOAD_CONST              38 ('format_probs_display')
+            296 MAKE_FUNCTION            5 (defaults, annotations)
+            298 STORE_NAME              30 (format_probs_display)
+
+353         300 LOAD_CONST              48 ((1.0,))
+            302 LOAD_CONST              40 ('scores')
+            304 LOAD_NAME               17 (dict)
+            306 LOAD_CONST              41 ('temperature')
+            308 LOAD_NAME               26 (float)
+            310 LOAD_CONST              20 ('return')
+            312 LOAD_NAME               17 (dict)
+            314 BUILD_TUPLE              6
+            316 LOAD_CONST              42 (<code object _softmax_dict at 0x000002AA62BBFB50, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 353>)
+            318 LOAD_CONST              43 ('_softmax_dict')
+            320 MAKE_FUNCTION            5 (defaults, annotations)
+            322 STORE_NAME              31 (_softmax_dict)
+            324 LOAD_CONST               1 (None)
+            326 RETURN_VALUE
+
+Disassembly of <code object compute_action_probabilities at 0x000002AA62BBED90, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 55>:
+ 91           0 LOAD_FAST                6 (weights)
+              2 JUMP_IF_TRUE_OR_POP      7 (to 14)
+              4 LOAD_FAST                5 (is_major_event)
+              6 POP_JUMP_IF_FALSE        6 (to 12)
+              8 LOAD_GLOBAL              0 (MARKOV_WEIGHTS_EVENT)
+             10 JUMP_FORWARD             1 (to 14)
+
+ 92     >>   12 LOAD_GLOBAL              1 (MARKOV_WEIGHTS_NORMAL)
+
+ 91     >>   14 STORE_FAST               9 (w)
+
+ 93          16 LOAD_FAST                9 (w)
+             18 LOAD_METHOD              2 (get)
+             20 LOAD_CONST               1 ('alpha')
+             22 LOAD_CONST               2 (0.4)
+             24 CALL_METHOD              2
+             26 STORE_FAST              10 (alpha)
+
+ 94          28 LOAD_FAST                9 (w)
+             30 LOAD_METHOD              2 (get)
+             32 LOAD_CONST               3 ('beta')
+             34 LOAD_CONST               4 (0.3)
+             36 CALL_METHOD              2
+             38 STORE_FAST              11 (beta)
+
+ 95          40 LOAD_FAST                9 (w)
+             42 LOAD_METHOD              2 (get)
+             44 LOAD_CONST               5 ('gamma')
+             46 LOAD_CONST               4 (0.3)
+             48 CALL_METHOD              2
+             50 STORE_FAST              12 (gamma)
+
+ 98          52 LOAD_DEREF               0 (action_values)
+             54 POP_JUMP_IF_FALSE       34 (to 68)
+             56 LOAD_FAST                9 (w)
+             58 LOAD_METHOD              2 (get)
+             60 LOAD_CONST               6 ('delta')
+             62 LOAD_CONST               7 (0.15)
+             64 CALL_METHOD              2
+             66 JUMP_FORWARD             1 (to 70)
+        >>   68 LOAD_CONST               8 (0.0)
+        >>   70 STORE_FAST              13 (delta)
+
+101          72 LOAD_GLOBAL              3 (schedule_score)
+             74 LOAD_FAST                0 (schedule_slot)
+             76 LOAD_FAST                2 (perception)
+             78 CALL_FUNCTION            2
+             80 STORE_FAST              14 (sched_scores)
+
+102          82 LOAD_GLOBAL              4 (inertia_score)
+             84 LOAD_FAST                1 (stm_recent_verbs)
+             86 JUMP_IF_TRUE_OR_POP     45 (to 90)
+             88 BUILD_LIST               0
+        >>   90 CALL_FUNCTION            1
+             92 STORE_FAST              15 (iner_scores)
+
+103          94 LOAD_GLOBAL              5 (situation_score)
+             96 LOAD_FAST                2 (perception)
+             98 JUMP_IF_TRUE_OR_POP     51 (to 102)
+            100 BUILD_MAP                0
+        >>  102 LOAD_FAST                3 (co_located)
+            104 JUMP_IF_TRUE_OR_POP     54 (to 108)
+            106 BUILD_LIST               0
+        >>  108 LOAD_FAST                4 (emotion)
+            110 CALL_FUNCTION            3
+            112 STORE_FAST              16 (situ_scores)
+
+106         114 LOAD_GLOBAL              6 (_softmax_dict)
+            116 LOAD_FAST               14 (sched_scores)
+            118 CALL_FUNCTION            1
+            120 STORE_FAST              17 (sched_probs)
+
+107         122 LOAD_GLOBAL              6 (_softmax_dict)
+            124 LOAD_FAST               15 (iner_scores)
+            126 CALL_FUNCTION            1
+            128 STORE_FAST              18 (iner_probs)
+
+108         130 LOAD_GLOBAL              6 (_softmax_dict)
+            132 LOAD_FAST               16 (situ_scores)
+            134 CALL_FUNCTION            1
+            136 STORE_FAST              19 (situ_probs)
+
+112         138 LOAD_DEREF               0 (action_values)
+            140 POP_JUMP_IF_FALSE      106 (to 212)
+            142 LOAD_FAST               13 (delta)
+            144 LOAD_CONST               9 (0)
+            146 COMPARE_OP               4 (>)
+            148 POP_JUMP_IF_FALSE      106 (to 212)
+
+114         150 LOAD_CLOSURE             0 (action_values)
+            152 BUILD_TUPLE              1
+            154 LOAD_CONST              10 (<code object <dictcomp> at 0x000002AA62BBEAD0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 114>)
+            156 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            158 MAKE_FUNCTION            8 (closure)
+            160 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            162 GET_ITER
+            164 CALL_FUNCTION            1
+            166 STORE_FAST              20 (full_values)
+
+116         168 LOAD_GLOBAL              8 (min)
+            170 LOAD_FAST               20 (full_values)
+            172 LOAD_METHOD              9 (values)
+            174 CALL_METHOD              0
+            176 CALL_FUNCTION            1
+            178 STORE_DEREF              1 (min_v)
+
+117         180 LOAD_CLOSURE             1 (min_v)
+            182 BUILD_TUPLE              1
+            184 LOAD_CONST              12 (<code object <dictcomp> at 0x000002AA62BBEB80, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 117>)
+            186 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            188 MAKE_FUNCTION            8 (closure)
+            190 LOAD_FAST               20 (full_values)
+            192 LOAD_METHOD             10 (items)
+            194 CALL_METHOD              0
+            196 GET_ITER
+            198 CALL_FUNCTION            1
+            200 STORE_FAST              21 (shifted)
+
+118         202 LOAD_GLOBAL              6 (_softmax_dict)
+            204 LOAD_FAST               21 (shifted)
+            206 CALL_FUNCTION            1
+            208 STORE_FAST              22 (value_probs)
+            210 JUMP_FORWARD             9 (to 230)
+
+120     >>  212 LOAD_CONST              13 (<code object <dictcomp> at 0x000002AA62BBEC30, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 120>)
+            214 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            216 MAKE_FUNCTION            0
+            218 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            220 GET_ITER
+            222 CALL_FUNCTION            1
+            224 STORE_FAST              22 (value_probs)
+
+121         226 LOAD_CONST               8 (0.0)
+            228 STORE_FAST              13 (delta)
+
+124     >>  230 BUILD_MAP                0
+            232 STORE_FAST              23 (final_probs)
+
+125         234 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            236 GET_ITER
+        >>  238 FOR_ITER                41 (to 322)
+            240 STORE_FAST              24 (action)
+
+126         242 LOAD_FAST               10 (alpha)
+            244 LOAD_FAST               17 (sched_probs)
+            246 LOAD_METHOD              2 (get)
+            248 LOAD_FAST               24 (action)
+            250 LOAD_CONST               8 (0.0)
+            252 CALL_METHOD              2
+            254 BINARY_MULTIPLY
+
+127         256 LOAD_FAST               11 (beta)
+            258 LOAD_FAST               18 (iner_probs)
+            260 LOAD_METHOD              2 (get)
+            262 LOAD_FAST               24 (action)
+            264 LOAD_CONST               8 (0.0)
+            266 CALL_METHOD              2
+            268 BINARY_MULTIPLY
+
+126         270 BINARY_ADD
+
+128         272 LOAD_FAST               12 (gamma)
+            274 LOAD_FAST               19 (situ_probs)
+            276 LOAD_METHOD              2 (get)
+            278 LOAD_FAST               24 (action)
+            280 LOAD_CONST               8 (0.0)
+            282 CALL_METHOD              2
+            284 BINARY_MULTIPLY
+
+126         286 BINARY_ADD
+
+129         288 LOAD_FAST               13 (delta)
+            290 LOAD_FAST               22 (value_probs)
+            292 LOAD_METHOD              2 (get)
+            294 LOAD_FAST               24 (action)
+            296 LOAD_CONST               8 (0.0)
+            298 CALL_METHOD              2
+            300 BINARY_MULTIPLY
+
+126         302 BINARY_ADD
+            304 STORE_FAST              25 (p)
+
+130         306 LOAD_GLOBAL             11 (max)
+            308 LOAD_FAST               25 (p)
+            310 LOAD_GLOBAL             12 (MIN_PROB_FLOOR)
+            312 CALL_FUNCTION            2
+            314 LOAD_FAST               23 (final_probs)
+            316 LOAD_FAST               24 (action)
+            318 STORE_SUBSCR
+            320 JUMP_ABSOLUTE          119 (to 238)
+
+133     >>  322 LOAD_GLOBAL             13 (sum)
+            324 LOAD_FAST               23 (final_probs)
+            326 LOAD_METHOD              9 (values)
+            328 CALL_METHOD              0
+            330 CALL_FUNCTION            1
+            332 STORE_DEREF              2 (total)
+
+134         334 LOAD_CLOSURE             2 (total)
+            336 BUILD_TUPLE              1
+            338 LOAD_CONST              14 (<code object <dictcomp> at 0x000002AA62BBECE0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 134>)
+            340 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            342 MAKE_FUNCTION            8 (closure)
+            344 LOAD_FAST               23 (final_probs)
+            346 LOAD_METHOD             10 (items)
+            348 CALL_METHOD              0
+            350 GET_ITER
+            352 CALL_FUNCTION            1
+            354 STORE_FAST              23 (final_probs)
+
+136         356 LOAD_FAST                8 (return_breakdown)
+            358 POP_JUMP_IF_FALSE      195 (to 390)
+
+138         360 LOAD_FAST               23 (final_probs)
+
+140         362 LOAD_FAST               17 (sched_probs)
+
+141         364 LOAD_FAST               18 (iner_probs)
+
+142         366 LOAD_FAST               19 (situ_probs)
+
+143         368 LOAD_FAST               22 (value_probs)
+
+144         370 LOAD_FAST               10 (alpha)
+            372 LOAD_FAST               11 (beta)
+            374 LOAD_FAST               12 (gamma)
+            376 LOAD_FAST               13 (delta)
+            378 BUILD_TUPLE              4
+
+139         380 LOAD_CONST              15 (('schedule', 'inertia', 'situation', 'value', 'weights'))
+            382 BUILD_CONST_KEY_MAP      5
+
+137         384 LOAD_CONST              16 (('probs', 'breakdown'))
+            386 BUILD_CONST_KEY_MAP      2
+            388 RETURN_VALUE
+
+147     >>  390 LOAD_FAST               23 (final_probs)
+            392 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEAD0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 114>:
+114           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_DEREF               0 (action_values)
+             12 LOAD_METHOD              0 (get)
+             14 LOAD_FAST                1 (a)
+             16 LOAD_CONST               0 (0.0)
+             18 CALL_METHOD              2
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEB80, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 117>:
+117           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (v)
+             16 LOAD_DEREF               0 (min_v)
+             18 BINARY_SUBTRACT
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEC30, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 120>:
+120           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_GLOBAL              0 (len)
+             14 LOAD_GLOBAL              1 (VALID_ACTIONS)
+             16 CALL_FUNCTION            1
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBECE0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 134>:
+134           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_GLOBAL              0 (round)
+             16 LOAD_FAST                2 (p)
+             18 LOAD_DEREF               0 (total)
+             20 BINARY_TRUE_DIVIDE
+             22 LOAD_CONST               0 (4)
+             24 CALL_FUNCTION            2
+             26 MAP_ADD                  2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+Disassembly of <code object schedule_score at 0x000002AA62BBEEF0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 154>:
+163           0 LOAD_CONST               1 (<code object <dictcomp> at 0x000002AA62BBEE40, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 163>)
+              2 LOAD_CONST               2 ('schedule_score.<locals>.<dictcomp>')
+              4 MAKE_FUNCTION            0
+              6 LOAD_GLOBAL              0 (VALID_ACTIONS)
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 STORE_FAST               2 (scores)
+
+165          14 LOAD_FAST                0 (slot)
+             16 POP_JUMP_IF_TRUE        11 (to 22)
+
+166          18 LOAD_FAST                2 (scores)
+             20 RETURN_VALUE
+
+168     >>   22 LOAD_FAST                0 (slot)
+             24 LOAD_METHOD              1 (get)
+             26 LOAD_CONST               3 ('action')
+             28 LOAD_CONST               4 ('')
+             30 CALL_METHOD              2
+             32 STORE_FAST               3 (target_action)
+
+169          34 LOAD_FAST                0 (slot)
+             36 LOAD_METHOD              1 (get)
+             38 LOAD_CONST               5 ('location')
+             40 LOAD_CONST               4 ('')
+             42 CALL_METHOD              2
+             44 STORE_FAST               4 (target_loc)
+
+170          46 LOAD_GLOBAL              2 (ACTION_TO_CATEGORY)
+             48 LOAD_METHOD              1 (get)
+             50 LOAD_FAST                3 (target_action)
+             52 LOAD_CONST               6 (None)
+             54 CALL_METHOD              2
+             56 STORE_FAST               5 (target_cat)
+
+172          58 LOAD_GLOBAL              0 (VALID_ACTIONS)
+             60 GET_ITER
+        >>   62 FOR_ITER                24 (to 112)
+             64 STORE_FAST               6 (action)
+
+174          66 LOAD_FAST                6 (action)
+             68 LOAD_FAST                3 (target_action)
+             70 COMPARE_OP               2 (==)
+             72 POP_JUMP_IF_FALSE       42 (to 84)
+
+175          74 LOAD_CONST               7 (1.0)
+             76 LOAD_FAST                2 (scores)
+             78 LOAD_FAST                6 (action)
+             80 STORE_SUBSCR
+             82 JUMP_ABSOLUTE           31 (to 62)
+
+177     >>   84 LOAD_FAST                5 (target_cat)
+             86 POP_JUMP_IF_FALSE       55 (to 110)
+             88 LOAD_GLOBAL              2 (ACTION_TO_CATEGORY)
+             90 LOAD_METHOD              1 (get)
+             92 LOAD_FAST                6 (action)
+             94 CALL_METHOD              1
+             96 LOAD_FAST                5 (target_cat)
+             98 COMPARE_OP               2 (==)
+            100 POP_JUMP_IF_FALSE       55 (to 110)
+
+178         102 LOAD_CONST               8 (0.5)
+            104 LOAD_FAST                2 (scores)
+            106 LOAD_FAST                6 (action)
+            108 STORE_SUBSCR
+        >>  110 JUMP_ABSOLUTE           31 (to 62)
+
+181     >>  112 LOAD_FAST                1 (perception)
+            114 POP_JUMP_IF_FALSE       95 (to 190)
+            116 LOAD_FAST                4 (target_loc)
+            118 POP_JUMP_IF_FALSE       95 (to 190)
+
+182         120 LOAD_FAST                1 (perception)
+            122 LOAD_METHOD              1 (get)
+            124 LOAD_CONST               5 ('location')
+            126 LOAD_CONST               4 ('')
+            128 CALL_METHOD              2
+            130 STORE_FAST               7 (current_loc)
+
+184         132 LOAD_FAST                4 (target_loc)
+            134 POP_JUMP_IF_FALSE       83 (to 166)
+            136 LOAD_FAST                7 (current_loc)
+            138 LOAD_FAST                4 (target_loc)
+            140 COMPARE_OP               3 (!=)
+            142 POP_JUMP_IF_FALSE       83 (to 166)
+
+185         144 LOAD_GLOBAL              3 (max)
+            146 LOAD_FAST                2 (scores)
+            148 LOAD_CONST               9 ('前往')
+            150 BINARY_SUBSCR
+            152 LOAD_CONST              10 (0.6)
+            154 CALL_FUNCTION            2
+            156 LOAD_FAST                2 (scores)
+            158 LOAD_CONST               9 ('前往')
+            160 STORE_SUBSCR
+
+190         162 LOAD_FAST                2 (scores)
+            164 RETURN_VALUE
+
+187     >>  166 LOAD_FAST                7 (current_loc)
+            168 LOAD_FAST                4 (target_loc)
+            170 COMPARE_OP               2 (==)
+            172 POP_JUMP_IF_FALSE       95 (to 190)
+
+188         174 LOAD_FAST                2 (scores)
+            176 LOAD_CONST               9 ('前往')
+            178 BINARY_SUBSCR
+            180 LOAD_CONST              11 (0.3)
+            182 BINARY_MULTIPLY
+            184 LOAD_FAST                2 (scores)
+            186 LOAD_CONST               9 ('前往')
+            188 STORE_SUBSCR
+
+190     >>  190 LOAD_FAST                2 (scores)
+            192 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEE40, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 163>:
+163           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+Disassembly of <code object inertia_score at 0x000002AA62BBF050, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 197>:
+204           0 LOAD_GLOBAL              0 (len)
+              2 LOAD_FAST                0 (stm_recent_verbs)
+              4 CALL_FUNCTION            1
+              6 LOAD_CONST               1 (2)
+              8 COMPARE_OP               0 (<)
+             10 POP_JUMP_IF_FALSE       13 (to 26)
+
+206          12 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBEFA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 206>)
+             14 LOAD_CONST               3 ('inertia_score.<locals>.<dictcomp>')
+             16 MAKE_FUNCTION            0
+             18 LOAD_GLOBAL              1 (VALID_ACTIONS)
+             20 GET_ITER
+             22 CALL_FUNCTION            1
+             24 RETURN_VALUE
+
+208     >>   26 LOAD_FAST                0 (stm_recent_verbs)
+             28 LOAD_CONST               4 (-1)
+             30 BINARY_SUBSCR
+             32 STORE_FAST               1 (current_verb)
+
+209          34 BUILD_MAP                0
+             36 STORE_FAST               2 (transitions)
+
+210          38 LOAD_GLOBAL              2 (range)
+             40 LOAD_GLOBAL              0 (len)
+             42 LOAD_FAST                0 (stm_recent_verbs)
+             44 CALL_FUNCTION            1
+             46 LOAD_CONST               5 (1)
+             48 BINARY_SUBTRACT
+             50 CALL_FUNCTION            1
+             52 GET_ITER
+        >>   54 FOR_ITER                24 (to 104)
+             56 STORE_FAST               3 (i)
+
+211          58 LOAD_FAST                0 (stm_recent_verbs)
+             60 LOAD_FAST                3 (i)
+             62 BINARY_SUBSCR
+             64 LOAD_FAST                1 (current_verb)
+             66 COMPARE_OP               2 (==)
+             68 POP_JUMP_IF_FALSE       51 (to 102)
+
+212          70 LOAD_FAST                0 (stm_recent_verbs)
+             72 LOAD_FAST                3 (i)
+             74 LOAD_CONST               5 (1)
+             76 BINARY_ADD
+             78 BINARY_SUBSCR
+             80 STORE_FAST               4 (nxt)
+
+213          82 LOAD_FAST                2 (transitions)
+             84 LOAD_METHOD              3 (get)
+             86 LOAD_FAST                4 (nxt)
+             88 LOAD_CONST               6 (0)
+             90 CALL_METHOD              2
+             92 LOAD_CONST               5 (1)
+             94 BINARY_ADD
+             96 LOAD_FAST                2 (transitions)
+             98 LOAD_FAST                4 (nxt)
+            100 STORE_SUBSCR
+        >>  102 JUMP_ABSOLUTE           27 (to 54)
+
+215     >>  104 LOAD_FAST                2 (transitions)
+            106 POP_JUMP_IF_TRUE        69 (to 138)
+
+217         108 LOAD_FAST                0 (stm_recent_verbs)
+            110 GET_ITER
+        >>  112 FOR_ITER                12 (to 138)
+            114 STORE_FAST               5 (v)
+
+218         116 LOAD_FAST                2 (transitions)
+            118 LOAD_METHOD              3 (get)
+            120 LOAD_FAST                5 (v)
+            122 LOAD_CONST               6 (0)
+            124 CALL_METHOD              2
+            126 LOAD_CONST               5 (1)
+            128 BINARY_ADD
+            130 LOAD_FAST                2 (transitions)
+            132 LOAD_FAST                5 (v)
+            134 STORE_SUBSCR
+            136 JUMP_ABSOLUTE           56 (to 112)
+
+221     >>  138 BUILD_MAP                0
+            140 STORE_FAST               6 (scores)
+
+222         142 LOAD_GLOBAL              1 (VALID_ACTIONS)
+            144 GET_ITER
+        >>  146 FOR_ITER                17 (to 182)
+            148 STORE_FAST               7 (action)
+
+224         150 LOAD_FAST                2 (transitions)
+            152 LOAD_METHOD              3 (get)
+            154 LOAD_FAST                7 (action)
+            156 LOAD_CONST               6 (0)
+            158 CALL_METHOD              2
+            160 LOAD_CONST               5 (1)
+            162 BINARY_ADD
+            164 STORE_FAST               8 (count)
+
+225         166 LOAD_GLOBAL              4 (math)
+            168 LOAD_METHOD              5 (log)
+            170 LOAD_FAST                8 (count)
+            172 CALL_METHOD              1
+            174 LOAD_FAST                6 (scores)
+            176 LOAD_FAST                7 (action)
+            178 STORE_SUBSCR
+            180 JUMP_ABSOLUTE           73 (to 146)
+
+227     >>  182 LOAD_FAST                6 (scores)
+            184 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEFA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 206>:
+206           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+Disassembly of <code object situation_score at 0x000002AA62BBF260, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 234>:
+245           0 LOAD_CONST               1 (<code object <dictcomp> at 0x000002AA62BBF100, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 245>)
+              2 LOAD_CONST               2 ('situation_score.<locals>.<dictcomp>')
+              4 MAKE_FUNCTION            0
+              6 LOAD_GLOBAL              0 (VALID_ACTIONS)
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 STORE_FAST               3 (scores)
+
+248          14 LOAD_CONST               3 (' ')
+             16 LOAD_METHOD              1 (join)
+
+249          18 LOAD_FAST                0 (perception)
+             20 LOAD_METHOD              2 (get)
+             22 LOAD_CONST               4 ('scene_text')
+             24 LOAD_CONST               5 ('')
+             26 CALL_METHOD              2
+
+250          28 LOAD_FAST                0 (perception)
+             30 LOAD_METHOD              2 (get)
+             32 LOAD_CONST               6 ('yolo_desc')
+             34 LOAD_CONST               5 ('')
+             36 CALL_METHOD              2
+
+251          38 LOAD_FAST                0 (perception)
+             40 LOAD_METHOD              2 (get)
+             42 LOAD_CONST               7 ('location')
+             44 LOAD_CONST               5 ('')
+             46 CALL_METHOD              2
+
+248          48 BUILD_LIST               3
+             50 CALL_METHOD              1
+
+252          52 LOAD_CONST               3 (' ')
+             54 LOAD_METHOD              1 (join)
+             56 LOAD_FAST                1 (co_located)
+             58 CALL_METHOD              1
+
+248          60 BINARY_ADD
+             62 STORE_DEREF              0 (text_blob)
+
+255          64 LOAD_GLOBAL              3 (ACTION_KEYWORD_BOOST)
+             66 LOAD_METHOD              4 (items)
+             68 CALL_METHOD              0
+             70 GET_ITER
+        >>   72 FOR_ITER                29 (to 132)
+             74 UNPACK_SEQUENCE          2
+             76 STORE_FAST               4 (action)
+             78 STORE_FAST               5 (keywords)
+
+256          80 LOAD_GLOBAL              5 (sum)
+             82 LOAD_CLOSURE             0 (text_blob)
+             84 BUILD_TUPLE              1
+             86 LOAD_CONST               8 (<code object <genexpr> at 0x000002AA62BBF1B0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 256>)
+             88 LOAD_CONST               9 ('situation_score.<locals>.<genexpr>')
+             90 MAKE_FUNCTION            8 (closure)
+             92 LOAD_FAST                5 (keywords)
+             94 GET_ITER
+             96 CALL_FUNCTION            1
+             98 CALL_FUNCTION            1
+            100 STORE_FAST               6 (hits)
+
+257         102 LOAD_FAST                6 (hits)
+            104 LOAD_CONST              10 (0)
+            106 COMPARE_OP               4 (>)
+            108 POP_JUMP_IF_FALSE       65 (to 130)
+
+258         110 LOAD_FAST                3 (scores)
+            112 LOAD_FAST                4 (action)
+            114 DUP_TOP_TWO
+            116 BINARY_SUBSCR
+            118 LOAD_FAST                6 (hits)
+            120 LOAD_GLOBAL              6 (KEYWORD_BOOST_PER_HIT)
+            122 BINARY_MULTIPLY
+            124 INPLACE_ADD
+            126 ROT_THREE
+            128 STORE_SUBSCR
+        >>  130 JUMP_ABSOLUTE           36 (to 72)
+
+261     >>  132 LOAD_GLOBAL              7 (EMOTION_TO_ACTION_BOOST)
+            134 LOAD_METHOD              2 (get)
+            136 LOAD_FAST                2 (emotion)
+            138 BUILD_MAP                0
+            140 CALL_METHOD              2
+            142 STORE_FAST               7 (emotion_boost)
+
+262         144 LOAD_FAST                7 (emotion_boost)
+            146 LOAD_METHOD              4 (items)
+            148 CALL_METHOD              0
+            150 GET_ITER
+        >>  152 FOR_ITER                16 (to 186)
+            154 UNPACK_SEQUENCE          2
+            156 STORE_FAST               4 (action)
+            158 STORE_FAST               8 (boost)
+
+263         160 LOAD_FAST                4 (action)
+            162 LOAD_FAST                3 (scores)
+            164 CONTAINS_OP              0
+            166 POP_JUMP_IF_FALSE       92 (to 184)
+
+264         168 LOAD_FAST                3 (scores)
+            170 LOAD_FAST                4 (action)
+            172 DUP_TOP_TWO
+            174 BINARY_SUBSCR
+            176 LOAD_FAST                8 (boost)
+            178 INPLACE_ADD
+            180 ROT_THREE
+            182 STORE_SUBSCR
+        >>  184 JUMP_ABSOLUTE           76 (to 152)
+
+267     >>  186 LOAD_FAST                1 (co_located)
+            188 POP_JUMP_IF_FALSE      103 (to 206)
+
+268         190 LOAD_FAST                3 (scores)
+            192 LOAD_CONST              11 ('對話')
+            194 DUP_TOP_TWO
+            196 BINARY_SUBSCR
+            198 LOAD_CONST              12 (0.3)
+            200 INPLACE_ADD
+            202 ROT_THREE
+            204 STORE_SUBSCR
+
+270     >>  206 LOAD_FAST                3 (scores)
+            208 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF100, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 245>:
+245           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x000002AA62BBF1B0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 256>:
+              0 GEN_START                0
+
+256           2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (kw)
+              8 LOAD_FAST                1 (kw)
+             10 LOAD_DEREF               0 (text_blob)
+             12 CONTAINS_OP              0
+             14 POP_JUMP_IF_FALSE        2 (to 4)
+             16 LOAD_CONST               0 (1)
+             18 YIELD_VALUE
+             20 POP_TOP
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 LOAD_CONST               1 (None)
+             26 RETURN_VALUE
+
+Disassembly of <code object sample_action at 0x000002AA62BBF470, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 277>:
+282           0 LOAD_FAST                0 (probs)
+              2 POP_JUMP_IF_TRUE         4 (to 8)
+
+283           4 LOAD_CONST               1 ('休息')
+              6 RETURN_VALUE
+
+285     >>    8 LOAD_CLOSURE             1 (exclude)
+             10 BUILD_TUPLE              1
+             12 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBF310, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 285>)
+             14 LOAD_CONST               3 ('sample_action.<locals>.<dictcomp>')
+             16 MAKE_FUNCTION            8 (closure)
+
+286          18 LOAD_FAST                0 (probs)
+             20 LOAD_METHOD              0 (items)
+             22 CALL_METHOD              0
+
+285          24 GET_ITER
+             26 CALL_FUNCTION            1
+             28 STORE_DEREF              0 (candidates)
+
+289          30 LOAD_DEREF               0 (candidates)
+             32 POP_JUMP_IF_TRUE        19 (to 38)
+
+290          34 LOAD_CONST               1 ('休息')
+             36 RETURN_VALUE
+
+292     >>   38 LOAD_GLOBAL              1 (list)
+             40 LOAD_DEREF               0 (candidates)
+             42 LOAD_METHOD              2 (keys)
+             44 CALL_METHOD              0
+             46 CALL_FUNCTION            1
+             48 STORE_FAST               2 (actions)
+
+293          50 LOAD_CLOSURE             0 (candidates)
+             52 BUILD_TUPLE              1
+             54 LOAD_CONST               4 (<code object <listcomp> at 0x000002AA62BBF3C0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 293>)
+             56 LOAD_CONST               5 ('sample_action.<locals>.<listcomp>')
+             58 MAKE_FUNCTION            8 (closure)
+             60 LOAD_FAST                2 (actions)
+             62 GET_ITER
+             64 CALL_FUNCTION            1
+             66 STORE_FAST               3 (weights)
+
+294          68 LOAD_GLOBAL              3 (random)
+             70 LOAD_ATTR                4 (choices)
+             72 LOAD_FAST                2 (actions)
+             74 LOAD_FAST                3 (weights)
+             76 LOAD_CONST               6 (1)
+             78 LOAD_CONST               7 (('weights', 'k'))
+             80 CALL_FUNCTION_KW         3
+             82 LOAD_CONST               8 (0)
+             84 BINARY_SUBSCR
+             86 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF310, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 285>:
+285           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                13 (to 32)
+
+286           6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+
+287          12 LOAD_DEREF               0 (exclude)
+
+285          14 POP_JUMP_IF_FALSE       12 (to 24)
+
+287          16 LOAD_FAST                1 (a)
+             18 LOAD_DEREF               0 (exclude)
+             20 CONTAINS_OP              1
+             22 POP_JUMP_IF_FALSE        2 (to 4)
+
+286     >>   24 LOAD_FAST                1 (a)
+             26 LOAD_FAST                2 (p)
+
+287          28 MAP_ADD                  2
+             30 JUMP_ABSOLUTE            2 (to 4)
+        >>   32 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x000002AA62BBF3C0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 293>:
+293           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 6 (to 18)
+              6 STORE_FAST               1 (a)
+              8 LOAD_DEREF               0 (candidates)
+             10 LOAD_FAST                1 (a)
+             12 BINARY_SUBSCR
+             14 LIST_APPEND              2
+             16 JUMP_ABSOLUTE            2 (to 4)
+        >>   18 RETURN_VALUE
+
+Disassembly of <code object resolve_dialogue_target at 0x000002AA62BBF5D0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 301>:
+316           0 LOAD_FAST                1 (co_located)
+              2 POP_JUMP_IF_FALSE       44 (to 88)
+              4 LOAD_FAST                0 (probs)
+              6 LOAD_METHOD              0 (get)
+              8 LOAD_CONST               1 ('對話')
+             10 LOAD_CONST               2 (0)
+             12 CALL_METHOD              2
+             14 LOAD_CONST               2 (0)
+             16 COMPARE_OP               4 (>)
+             18 POP_JUMP_IF_FALSE       44 (to 88)
+
+317          20 LOAD_GLOBAL              1 (dict)
+             22 LOAD_FAST                0 (probs)
+             24 CALL_FUNCTION            1
+             26 STORE_FAST               3 (boosted)
+
+318          28 LOAD_FAST                0 (probs)
+             30 LOAD_CONST               1 ('對話')
+             32 BINARY_SUBSCR
+             34 LOAD_FAST                2 (boost_factor)
+             36 BINARY_MULTIPLY
+             38 LOAD_FAST                3 (boosted)
+             40 LOAD_CONST               1 ('對話')
+             42 STORE_SUBSCR
+
+319          44 LOAD_GLOBAL              2 (sum)
+             46 LOAD_FAST                3 (boosted)
+             48 LOAD_METHOD              3 (values)
+             50 CALL_METHOD              0
+             52 CALL_FUNCTION            1
+             54 STORE_DEREF              0 (s)
+
+320          56 LOAD_CLOSURE             0 (s)
+             58 BUILD_TUPLE              1
+             60 LOAD_CONST               3 (<code object <dictcomp> at 0x000002AA62BBF520, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 320>)
+             62 LOAD_CONST               4 ('resolve_dialogue_target.<locals>.<dictcomp>')
+             64 MAKE_FUNCTION            8 (closure)
+             66 LOAD_FAST                3 (boosted)
+             68 LOAD_METHOD              4 (items)
+             70 CALL_METHOD              0
+             72 GET_ITER
+             74 CALL_FUNCTION            1
+             76 STORE_FAST               3 (boosted)
+
+321          78 LOAD_GLOBAL              5 (sample_action)
+             80 LOAD_FAST                3 (boosted)
+             82 CALL_FUNCTION            1
+             84 STORE_FAST               4 (best)
+             86 JUMP_FORWARD             4 (to 96)
+
+323     >>   88 LOAD_GLOBAL              5 (sample_action)
+             90 LOAD_FAST                0 (probs)
+             92 CALL_FUNCTION            1
+             94 STORE_FAST               4 (best)
+
+325     >>   96 LOAD_FAST                4 (best)
+             98 LOAD_CONST               1 ('對話')
+            100 COMPARE_OP               2 (==)
+            102 POP_JUMP_IF_FALSE       71 (to 142)
+
+326         104 LOAD_FAST                1 (co_located)
+            106 POP_JUMP_IF_FALSE       60 (to 120)
+
+327         108 LOAD_CONST               1 ('對話')
+            110 LOAD_FAST                1 (co_located)
+            112 LOAD_CONST               2 (0)
+            114 BINARY_SUBSCR
+            116 BUILD_TUPLE              2
+            118 RETURN_VALUE
+
+329     >>  120 LOAD_GLOBAL              5 (sample_action)
+            122 LOAD_FAST                0 (probs)
+            124 LOAD_CONST               1 ('對話')
+            126 BUILD_LIST               1
+            128 LOAD_CONST               5 (('exclude',))
+            130 CALL_FUNCTION_KW         2
+            132 STORE_FAST               4 (best)
+
+330         134 LOAD_FAST                4 (best)
+            136 LOAD_CONST               6 ('')
+            138 BUILD_TUPLE              2
+            140 RETURN_VALUE
+
+332     >>  142 LOAD_FAST                4 (best)
+            144 LOAD_CONST               7 ('前往')
+            146 COMPARE_OP               2 (==)
+            148 POP_JUMP_IF_FALSE       77 (to 154)
+
+333         150 LOAD_CONST               8 (('前往', ''))
+            152 RETURN_VALUE
+
+335     >>  154 LOAD_FAST                4 (best)
+            156 LOAD_CONST               6 ('')
+            158 BUILD_TUPLE              2
+            160 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF520, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 320>:
+320           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (p)
+             16 LOAD_DEREF               0 (s)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object format_probs_display at 0x000002AA62BBF7E0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 342>:
+344           0 LOAD_GLOBAL              0 (sorted)
+              2 LOAD_FAST                0 (probs)
+              4 LOAD_METHOD              1 (items)
+              6 CALL_METHOD              0
+              8 LOAD_CONST               1 (<code object <lambda> at 0x000002AA62BBF680, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 344>)
+             10 LOAD_CONST               2 ('format_probs_display.<locals>.<lambda>')
+             12 MAKE_FUNCTION            0
+             14 LOAD_CONST               3 (True)
+             16 LOAD_CONST               4 (('key', 'reverse'))
+             18 CALL_FUNCTION_KW         3
+             20 STORE_FAST               2 (sorted_items)
+
+345          22 LOAD_CONST               5 (<code object <listcomp> at 0x000002AA62BBF730, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 345>)
+             24 LOAD_CONST               6 ('format_probs_display.<locals>.<listcomp>')
+             26 MAKE_FUNCTION            0
+             28 LOAD_FAST                2 (sorted_items)
+             30 LOAD_CONST               7 (None)
+             32 LOAD_FAST                1 (top_n)
+             34 BUILD_SLICE              2
+             36 BINARY_SUBSCR
+             38 GET_ITER
+             40 CALL_FUNCTION            1
+             42 STORE_FAST               3 (parts)
+
+346          44 LOAD_CONST               8 (', ')
+             46 LOAD_METHOD              2 (join)
+             48 LOAD_FAST                3 (parts)
+             50 CALL_METHOD              1
+             52 RETURN_VALUE
+
+Disassembly of <code object <lambda> at 0x000002AA62BBF680, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 344>:
+344           0 LOAD_FAST                0 (x)
+              2 LOAD_CONST               1 (1)
+              4 BINARY_SUBSCR
+              6 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x000002AA62BBF730, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 345>:
+345           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 FORMAT_VALUE             0
+             16 LOAD_CONST               0 (':')
+             18 LOAD_FAST                2 (p)
+             20 LOAD_CONST               1 ('.3f')
+             22 FORMAT_VALUE             4 (with format)
+             24 BUILD_STRING             3
+             26 LIST_APPEND              2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+Disassembly of <code object _softmax_dict at 0x000002AA62BBFB50, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 353>:
+355           0 LOAD_FAST                0 (scores)
+              2 POP_JUMP_IF_TRUE         4 (to 8)
+
+356           4 BUILD_MAP                0
+              6 RETURN_VALUE
+
+357     >>    8 LOAD_GLOBAL              0 (list)
+             10 LOAD_FAST                0 (scores)
+             12 LOAD_METHOD              1 (values)
+             14 CALL_METHOD              0
+             16 CALL_FUNCTION            1
+             18 STORE_FAST               2 (vals)
+
+358          20 LOAD_FAST                2 (vals)
+             22 POP_JUMP_IF_FALSE       16 (to 32)
+             24 LOAD_GLOBAL              2 (max)
+             26 LOAD_FAST                2 (vals)
+             28 CALL_FUNCTION            1
+             30 JUMP_FORWARD             1 (to 34)
+        >>   32 LOAD_CONST               1 (0.0)
+        >>   34 STORE_DEREF              0 (max_v)
+
+359          36 LOAD_CLOSURE             0 (max_v)
+             38 LOAD_CLOSURE             2 (temperature)
+             40 BUILD_TUPLE              2
+             42 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBF940, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 359>)
+             44 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+             46 MAKE_FUNCTION            8 (closure)
+             48 LOAD_FAST                0 (scores)
+             50 LOAD_METHOD              3 (items)
+             52 CALL_METHOD              0
+             54 GET_ITER
+             56 CALL_FUNCTION            1
+             58 STORE_FAST               3 (exps)
+
+360          60 LOAD_GLOBAL              4 (sum)
+             62 LOAD_FAST                3 (exps)
+             64 LOAD_METHOD              1 (values)
+             66 CALL_METHOD              0
+             68 CALL_FUNCTION            1
+             70 STORE_DEREF              3 (total)
+
+361          72 LOAD_DEREF               3 (total)
+             74 LOAD_CONST               4 (0)
+             76 COMPARE_OP               2 (==)
+             78 POP_JUMP_IF_FALSE       53 (to 106)
+
+362          80 LOAD_GLOBAL              5 (len)
+             82 LOAD_FAST                0 (scores)
+             84 CALL_FUNCTION            1
+             86 STORE_DEREF              1 (n)
+
+363          88 LOAD_CLOSURE             1 (n)
+             90 BUILD_TUPLE              1
+             92 LOAD_CONST               5 (<code object <dictcomp> at 0x000002AA62BBF9F0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 363>)
+             94 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+             96 MAKE_FUNCTION            8 (closure)
+             98 LOAD_FAST                0 (scores)
+            100 GET_ITER
+            102 CALL_FUNCTION            1
+            104 RETURN_VALUE
+
+364     >>  106 LOAD_CLOSURE             3 (total)
+            108 BUILD_TUPLE              1
+            110 LOAD_CONST               6 (<code object <dictcomp> at 0x000002AA62BBFAA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 364>)
+            112 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+            114 MAKE_FUNCTION            8 (closure)
+            116 LOAD_FAST                3 (exps)
+            118 LOAD_METHOD              3 (items)
+            120 CALL_METHOD              0
+            122 GET_ITER
+            124 CALL_FUNCTION            1
+            126 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF940, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 359>:
+359           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                14 (to 34)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_GLOBAL              0 (math)
+             16 LOAD_METHOD              1 (exp)
+             18 LOAD_FAST                2 (v)
+             20 LOAD_DEREF               0 (max_v)
+             22 BINARY_SUBTRACT
+             24 LOAD_DEREF               1 (temperature)
+             26 BINARY_TRUE_DIVIDE
+             28 CALL_METHOD              1
+             30 MAP_ADD                  2
+             32 JUMP_ABSOLUTE            2 (to 4)
+        >>   34 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF9F0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 363>:
+363           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 7 (to 20)
+              6 STORE_FAST               1 (k)
+              8 LOAD_FAST                1 (k)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_DEREF               0 (n)
+             14 BINARY_TRUE_DIVIDE
+             16 MAP_ADD                  2
+             18 JUMP_ABSOLUTE            2 (to 4)
+        >>   20 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBFAA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 364>:
+364           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (e)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_FAST                2 (e)
+             16 LOAD_DEREF               0 (total)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+    Code Object: compute_action_probabilities
+      Arg count: 9
+      Kwonly arg count: 0
+      Local vars: ('schedule_slot', 'stm_recent_verbs', 'perception', 'co_located', 'emotion', 'is_major_event', 'weights', 'action_values', 'return_breakdown', 'w', 'alpha', 'beta', 'gamma', 'delta', 'sched_scores', 'iner_scores', 'situ_scores', 'sched_probs', 'iner_probs', 'situ_probs', 'full_values', 'shifted', 'value_probs', 'final_probs', 'action', 'p')
+      Constants: ('\n    算出每個合法行動的機率（總和 = 1）。\n\n    參數：\n      schedule_slot     : 當前時間表時段 {time, action, location} 或 None\n      stm_recent_verbs  : 最近行動動詞列表（從 STM.get_recent_actions()）\n      perception        : {"location", "yolo_desc", "scene_text"}\n      co_located        : 同地點角色名字列表\n      emotion           : 當前情緒\n      is_major_event    : True 時切換到 EVENT 權重\n      weights           : 自訂 {alpha, beta, gamma, delta}（None = 用 config 預設）\n      action_values     : RL-style tick 間繼承價值分數 {action: float}\n                          由 ActionValueTracker.get_scores() 提供\n                          正值 → 上次這個行動帶來好結果 → 機率提升\n                          負值 → 上次這個行動帶來壞結果 → 機率抑制\n      return_breakdown  : True → 回傳含分項分數的 dict\n\n    回傳：\n      預設：{action: prob} 字典\n      return_breakdown=True：\n        {"probs": {...}, "breakdown": {"schedule":..., "inertia":...,\n                                       "situation":..., "value":...,\n                                       "weights": (...)}}\n    ', 'alpha', 0.4, 'beta', 0.3, 'gamma', 'delta', 0.15, 0.0, 0, <code object <dictcomp> at 0x000002AA62BBEAD0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 114>, 'compute_action_probabilities.<locals>.<dictcomp>', <code object <dictcomp> at 0x000002AA62BBEB80, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 117>, <code object <dictcomp> at 0x000002AA62BBEC30, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 120>, <code object <dictcomp> at 0x000002AA62BBECE0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 134>, ('schedule', 'inertia', 'situation', 'value', 'weights'), ('probs', 'breakdown'))
+      Names referenced: ('MARKOV_WEIGHTS_EVENT', 'MARKOV_WEIGHTS_NORMAL', 'get', 'schedule_score', 'inertia_score', 'situation_score', '_softmax_dict', 'VALID_ACTIONS', 'min', 'values', 'items', 'max', 'MIN_PROB_FLOOR', 'sum')
+      Free vars: ()
+      Cell vars: ('action_values', 'min_v', 'total')
+      Disassembly:
+ 91           0 LOAD_FAST                6 (weights)
+              2 JUMP_IF_TRUE_OR_POP      7 (to 14)
+              4 LOAD_FAST                5 (is_major_event)
+              6 POP_JUMP_IF_FALSE        6 (to 12)
+              8 LOAD_GLOBAL              0 (MARKOV_WEIGHTS_EVENT)
+             10 JUMP_FORWARD             1 (to 14)
+
+ 92     >>   12 LOAD_GLOBAL              1 (MARKOV_WEIGHTS_NORMAL)
+
+ 91     >>   14 STORE_FAST               9 (w)
+
+ 93          16 LOAD_FAST                9 (w)
+             18 LOAD_METHOD              2 (get)
+             20 LOAD_CONST               1 ('alpha')
+             22 LOAD_CONST               2 (0.4)
+             24 CALL_METHOD              2
+             26 STORE_FAST              10 (alpha)
+
+ 94          28 LOAD_FAST                9 (w)
+             30 LOAD_METHOD              2 (get)
+             32 LOAD_CONST               3 ('beta')
+             34 LOAD_CONST               4 (0.3)
+             36 CALL_METHOD              2
+             38 STORE_FAST              11 (beta)
+
+ 95          40 LOAD_FAST                9 (w)
+             42 LOAD_METHOD              2 (get)
+             44 LOAD_CONST               5 ('gamma')
+             46 LOAD_CONST               4 (0.3)
+             48 CALL_METHOD              2
+             50 STORE_FAST              12 (gamma)
+
+ 98          52 LOAD_DEREF               0 (action_values)
+             54 POP_JUMP_IF_FALSE       34 (to 68)
+             56 LOAD_FAST                9 (w)
+             58 LOAD_METHOD              2 (get)
+             60 LOAD_CONST               6 ('delta')
+             62 LOAD_CONST               7 (0.15)
+             64 CALL_METHOD              2
+             66 JUMP_FORWARD             1 (to 70)
+        >>   68 LOAD_CONST               8 (0.0)
+        >>   70 STORE_FAST              13 (delta)
+
+101          72 LOAD_GLOBAL              3 (schedule_score)
+             74 LOAD_FAST                0 (schedule_slot)
+             76 LOAD_FAST                2 (perception)
+             78 CALL_FUNCTION            2
+             80 STORE_FAST              14 (sched_scores)
+
+102          82 LOAD_GLOBAL              4 (inertia_score)
+             84 LOAD_FAST                1 (stm_recent_verbs)
+             86 JUMP_IF_TRUE_OR_POP     45 (to 90)
+             88 BUILD_LIST               0
+        >>   90 CALL_FUNCTION            1
+             92 STORE_FAST              15 (iner_scores)
+
+103          94 LOAD_GLOBAL              5 (situation_score)
+             96 LOAD_FAST                2 (perception)
+             98 JUMP_IF_TRUE_OR_POP     51 (to 102)
+            100 BUILD_MAP                0
+        >>  102 LOAD_FAST                3 (co_located)
+            104 JUMP_IF_TRUE_OR_POP     54 (to 108)
+            106 BUILD_LIST               0
+        >>  108 LOAD_FAST                4 (emotion)
+            110 CALL_FUNCTION            3
+            112 STORE_FAST              16 (situ_scores)
+
+106         114 LOAD_GLOBAL              6 (_softmax_dict)
+            116 LOAD_FAST               14 (sched_scores)
+            118 CALL_FUNCTION            1
+            120 STORE_FAST              17 (sched_probs)
+
+107         122 LOAD_GLOBAL              6 (_softmax_dict)
+            124 LOAD_FAST               15 (iner_scores)
+            126 CALL_FUNCTION            1
+            128 STORE_FAST              18 (iner_probs)
+
+108         130 LOAD_GLOBAL              6 (_softmax_dict)
+            132 LOAD_FAST               16 (situ_scores)
+            134 CALL_FUNCTION            1
+            136 STORE_FAST              19 (situ_probs)
+
+112         138 LOAD_DEREF               0 (action_values)
+            140 POP_JUMP_IF_FALSE      106 (to 212)
+            142 LOAD_FAST               13 (delta)
+            144 LOAD_CONST               9 (0)
+            146 COMPARE_OP               4 (>)
+            148 POP_JUMP_IF_FALSE      106 (to 212)
+
+114         150 LOAD_CLOSURE             0 (action_values)
+            152 BUILD_TUPLE              1
+            154 LOAD_CONST              10 (<code object <dictcomp> at 0x000002AA62BBEAD0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 114>)
+            156 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            158 MAKE_FUNCTION            8 (closure)
+            160 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            162 GET_ITER
+            164 CALL_FUNCTION            1
+            166 STORE_FAST              20 (full_values)
+
+116         168 LOAD_GLOBAL              8 (min)
+            170 LOAD_FAST               20 (full_values)
+            172 LOAD_METHOD              9 (values)
+            174 CALL_METHOD              0
+            176 CALL_FUNCTION            1
+            178 STORE_DEREF              1 (min_v)
+
+117         180 LOAD_CLOSURE             1 (min_v)
+            182 BUILD_TUPLE              1
+            184 LOAD_CONST              12 (<code object <dictcomp> at 0x000002AA62BBEB80, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 117>)
+            186 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            188 MAKE_FUNCTION            8 (closure)
+            190 LOAD_FAST               20 (full_values)
+            192 LOAD_METHOD             10 (items)
+            194 CALL_METHOD              0
+            196 GET_ITER
+            198 CALL_FUNCTION            1
+            200 STORE_FAST              21 (shifted)
+
+118         202 LOAD_GLOBAL              6 (_softmax_dict)
+            204 LOAD_FAST               21 (shifted)
+            206 CALL_FUNCTION            1
+            208 STORE_FAST              22 (value_probs)
+            210 JUMP_FORWARD             9 (to 230)
+
+120     >>  212 LOAD_CONST              13 (<code object <dictcomp> at 0x000002AA62BBEC30, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 120>)
+            214 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            216 MAKE_FUNCTION            0
+            218 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            220 GET_ITER
+            222 CALL_FUNCTION            1
+            224 STORE_FAST              22 (value_probs)
+
+121         226 LOAD_CONST               8 (0.0)
+            228 STORE_FAST              13 (delta)
+
+124     >>  230 BUILD_MAP                0
+            232 STORE_FAST              23 (final_probs)
+
+125         234 LOAD_GLOBAL              7 (VALID_ACTIONS)
+            236 GET_ITER
+        >>  238 FOR_ITER                41 (to 322)
+            240 STORE_FAST              24 (action)
+
+126         242 LOAD_FAST               10 (alpha)
+            244 LOAD_FAST               17 (sched_probs)
+            246 LOAD_METHOD              2 (get)
+            248 LOAD_FAST               24 (action)
+            250 LOAD_CONST               8 (0.0)
+            252 CALL_METHOD              2
+            254 BINARY_MULTIPLY
+
+127         256 LOAD_FAST               11 (beta)
+            258 LOAD_FAST               18 (iner_probs)
+            260 LOAD_METHOD              2 (get)
+            262 LOAD_FAST               24 (action)
+            264 LOAD_CONST               8 (0.0)
+            266 CALL_METHOD              2
+            268 BINARY_MULTIPLY
+
+126         270 BINARY_ADD
+
+128         272 LOAD_FAST               12 (gamma)
+            274 LOAD_FAST               19 (situ_probs)
+            276 LOAD_METHOD              2 (get)
+            278 LOAD_FAST               24 (action)
+            280 LOAD_CONST               8 (0.0)
+            282 CALL_METHOD              2
+            284 BINARY_MULTIPLY
+
+126         286 BINARY_ADD
+
+129         288 LOAD_FAST               13 (delta)
+            290 LOAD_FAST               22 (value_probs)
+            292 LOAD_METHOD              2 (get)
+            294 LOAD_FAST               24 (action)
+            296 LOAD_CONST               8 (0.0)
+            298 CALL_METHOD              2
+            300 BINARY_MULTIPLY
+
+126         302 BINARY_ADD
+            304 STORE_FAST              25 (p)
+
+130         306 LOAD_GLOBAL             11 (max)
+            308 LOAD_FAST               25 (p)
+            310 LOAD_GLOBAL             12 (MIN_PROB_FLOOR)
+            312 CALL_FUNCTION            2
+            314 LOAD_FAST               23 (final_probs)
+            316 LOAD_FAST               24 (action)
+            318 STORE_SUBSCR
+            320 JUMP_ABSOLUTE          119 (to 238)
+
+133     >>  322 LOAD_GLOBAL             13 (sum)
+            324 LOAD_FAST               23 (final_probs)
+            326 LOAD_METHOD              9 (values)
+            328 CALL_METHOD              0
+            330 CALL_FUNCTION            1
+            332 STORE_DEREF              2 (total)
+
+134         334 LOAD_CLOSURE             2 (total)
+            336 BUILD_TUPLE              1
+            338 LOAD_CONST              14 (<code object <dictcomp> at 0x000002AA62BBECE0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 134>)
+            340 LOAD_CONST              11 ('compute_action_probabilities.<locals>.<dictcomp>')
+            342 MAKE_FUNCTION            8 (closure)
+            344 LOAD_FAST               23 (final_probs)
+            346 LOAD_METHOD             10 (items)
+            348 CALL_METHOD              0
+            350 GET_ITER
+            352 CALL_FUNCTION            1
+            354 STORE_FAST              23 (final_probs)
+
+136         356 LOAD_FAST                8 (return_breakdown)
+            358 POP_JUMP_IF_FALSE      195 (to 390)
+
+138         360 LOAD_FAST               23 (final_probs)
+
+140         362 LOAD_FAST               17 (sched_probs)
+
+141         364 LOAD_FAST               18 (iner_probs)
+
+142         366 LOAD_FAST               19 (situ_probs)
+
+143         368 LOAD_FAST               22 (value_probs)
+
+144         370 LOAD_FAST               10 (alpha)
+            372 LOAD_FAST               11 (beta)
+            374 LOAD_FAST               12 (gamma)
+            376 LOAD_FAST               13 (delta)
+            378 BUILD_TUPLE              4
+
+139         380 LOAD_CONST              15 (('schedule', 'inertia', 'situation', 'value', 'weights'))
+            382 BUILD_CONST_KEY_MAP      5
+
+137         384 LOAD_CONST              16 (('probs', 'breakdown'))
+            386 BUILD_CONST_KEY_MAP      2
+            388 RETURN_VALUE
+
+147     >>  390 LOAD_FAST               23 (final_probs)
+            392 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEAD0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 114>:
+114           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_DEREF               0 (action_values)
+             12 LOAD_METHOD              0 (get)
+             14 LOAD_FAST                1 (a)
+             16 LOAD_CONST               0 (0.0)
+             18 CALL_METHOD              2
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEB80, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 117>:
+117           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (v)
+             16 LOAD_DEREF               0 (min_v)
+             18 BINARY_SUBTRACT
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEC30, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 120>:
+120           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_GLOBAL              0 (len)
+             14 LOAD_GLOBAL              1 (VALID_ACTIONS)
+             16 CALL_FUNCTION            1
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBECE0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 134>:
+134           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_GLOBAL              0 (round)
+             16 LOAD_FAST                2 (p)
+             18 LOAD_DEREF               0 (total)
+             20 BINARY_TRUE_DIVIDE
+             22 LOAD_CONST               0 (4)
+             24 CALL_FUNCTION            2
+             26 MAP_ADD                  2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: (0.0,)
+          Names referenced: ('get',)
+          Free vars: ('action_values',)
+          Cell vars: ()
+          Disassembly:
+114           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_DEREF               0 (action_values)
+             12 LOAD_METHOD              0 (get)
+             14 LOAD_FAST                1 (a)
+             16 LOAD_CONST               0 (0.0)
+             18 CALL_METHOD              2
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a', 'v')
+          Constants: ()
+          Names referenced: ()
+          Free vars: ('min_v',)
+          Cell vars: ()
+          Disassembly:
+117           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (v)
+             16 LOAD_DEREF               0 (min_v)
+             18 BINARY_SUBTRACT
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: (1.0,)
+          Names referenced: ('len', 'VALID_ACTIONS')
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+120           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_GLOBAL              0 (len)
+             14 LOAD_GLOBAL              1 (VALID_ACTIONS)
+             16 CALL_FUNCTION            1
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a', 'p')
+          Constants: (4,)
+          Names referenced: ('round',)
+          Free vars: ('total',)
+          Cell vars: ()
+          Disassembly:
+134           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_GLOBAL              0 (round)
+             16 LOAD_FAST                2 (p)
+             18 LOAD_DEREF               0 (total)
+             20 BINARY_TRUE_DIVIDE
+             22 LOAD_CONST               0 (4)
+             24 CALL_FUNCTION            2
+             26 MAP_ADD                  2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+    Code Object: schedule_score
+      Arg count: 2
+      Kwonly arg count: 0
+      Local vars: ('slot', 'perception', 'scores', 'target_action', 'target_loc', 'target_cat', 'action', 'current_loc')
+      Constants: ('\n    根據當前時間表時段，回傳每個行動的契合分數。\n\n    完全匹配 → 1.0\n    同類別   → 0.5\n    其他     → 0.0\n    位置匹配獎勵 +0.2（候選的可能目標地點符合 perception.location）\n    ', <code object <dictcomp> at 0x000002AA62BBEE40, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 163>, 'schedule_score.<locals>.<dictcomp>', 'action', '', 'location', None, 1.0, 0.5, '前往', 0.6, 0.3)
+      Names referenced: ('VALID_ACTIONS', 'get', 'ACTION_TO_CATEGORY', 'max')
+      Free vars: ()
+      Cell vars: ()
+      Disassembly:
+163           0 LOAD_CONST               1 (<code object <dictcomp> at 0x000002AA62BBEE40, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 163>)
+              2 LOAD_CONST               2 ('schedule_score.<locals>.<dictcomp>')
+              4 MAKE_FUNCTION            0
+              6 LOAD_GLOBAL              0 (VALID_ACTIONS)
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 STORE_FAST               2 (scores)
+
+165          14 LOAD_FAST                0 (slot)
+             16 POP_JUMP_IF_TRUE        11 (to 22)
+
+166          18 LOAD_FAST                2 (scores)
+             20 RETURN_VALUE
+
+168     >>   22 LOAD_FAST                0 (slot)
+             24 LOAD_METHOD              1 (get)
+             26 LOAD_CONST               3 ('action')
+             28 LOAD_CONST               4 ('')
+             30 CALL_METHOD              2
+             32 STORE_FAST               3 (target_action)
+
+169          34 LOAD_FAST                0 (slot)
+             36 LOAD_METHOD              1 (get)
+             38 LOAD_CONST               5 ('location')
+             40 LOAD_CONST               4 ('')
+             42 CALL_METHOD              2
+             44 STORE_FAST               4 (target_loc)
+
+170          46 LOAD_GLOBAL              2 (ACTION_TO_CATEGORY)
+             48 LOAD_METHOD              1 (get)
+             50 LOAD_FAST                3 (target_action)
+             52 LOAD_CONST               6 (None)
+             54 CALL_METHOD              2
+             56 STORE_FAST               5 (target_cat)
+
+172          58 LOAD_GLOBAL              0 (VALID_ACTIONS)
+             60 GET_ITER
+        >>   62 FOR_ITER                24 (to 112)
+             64 STORE_FAST               6 (action)
+
+174          66 LOAD_FAST                6 (action)
+             68 LOAD_FAST                3 (target_action)
+             70 COMPARE_OP               2 (==)
+             72 POP_JUMP_IF_FALSE       42 (to 84)
+
+175          74 LOAD_CONST               7 (1.0)
+             76 LOAD_FAST                2 (scores)
+             78 LOAD_FAST                6 (action)
+             80 STORE_SUBSCR
+             82 JUMP_ABSOLUTE           31 (to 62)
+
+177     >>   84 LOAD_FAST                5 (target_cat)
+             86 POP_JUMP_IF_FALSE       55 (to 110)
+             88 LOAD_GLOBAL              2 (ACTION_TO_CATEGORY)
+             90 LOAD_METHOD              1 (get)
+             92 LOAD_FAST                6 (action)
+             94 CALL_METHOD              1
+             96 LOAD_FAST                5 (target_cat)
+             98 COMPARE_OP               2 (==)
+            100 POP_JUMP_IF_FALSE       55 (to 110)
+
+178         102 LOAD_CONST               8 (0.5)
+            104 LOAD_FAST                2 (scores)
+            106 LOAD_FAST                6 (action)
+            108 STORE_SUBSCR
+        >>  110 JUMP_ABSOLUTE           31 (to 62)
+
+181     >>  112 LOAD_FAST                1 (perception)
+            114 POP_JUMP_IF_FALSE       95 (to 190)
+            116 LOAD_FAST                4 (target_loc)
+            118 POP_JUMP_IF_FALSE       95 (to 190)
+
+182         120 LOAD_FAST                1 (perception)
+            122 LOAD_METHOD              1 (get)
+            124 LOAD_CONST               5 ('location')
+            126 LOAD_CONST               4 ('')
+            128 CALL_METHOD              2
+            130 STORE_FAST               7 (current_loc)
+
+184         132 LOAD_FAST                4 (target_loc)
+            134 POP_JUMP_IF_FALSE       83 (to 166)
+            136 LOAD_FAST                7 (current_loc)
+            138 LOAD_FAST                4 (target_loc)
+            140 COMPARE_OP               3 (!=)
+            142 POP_JUMP_IF_FALSE       83 (to 166)
+
+185         144 LOAD_GLOBAL              3 (max)
+            146 LOAD_FAST                2 (scores)
+            148 LOAD_CONST               9 ('前往')
+            150 BINARY_SUBSCR
+            152 LOAD_CONST              10 (0.6)
+            154 CALL_FUNCTION            2
+            156 LOAD_FAST                2 (scores)
+            158 LOAD_CONST               9 ('前往')
+            160 STORE_SUBSCR
+
+190         162 LOAD_FAST                2 (scores)
+            164 RETURN_VALUE
+
+187     >>  166 LOAD_FAST                7 (current_loc)
+            168 LOAD_FAST                4 (target_loc)
+            170 COMPARE_OP               2 (==)
+            172 POP_JUMP_IF_FALSE       95 (to 190)
+
+188         174 LOAD_FAST                2 (scores)
+            176 LOAD_CONST               9 ('前往')
+            178 BINARY_SUBSCR
+            180 LOAD_CONST              11 (0.3)
+            182 BINARY_MULTIPLY
+            184 LOAD_FAST                2 (scores)
+            186 LOAD_CONST               9 ('前往')
+            188 STORE_SUBSCR
+
+190     >>  190 LOAD_FAST                2 (scores)
+            192 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEE40, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 163>:
+163           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: (0.0,)
+          Names referenced: ()
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+163           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+    Code Object: inertia_score
+      Arg count: 1
+      Kwonly arg count: 0
+      Local vars: ('stm_recent_verbs', 'current_verb', 'transitions', 'i', 'nxt', 'v', 'scores', 'action', 'count')
+      Constants: ('\n    根據最近行動動詞序列，計算轉移機率分數。\n\n    歷史不足（< 2 筆）→ 均勻分數（讓 schedule/situation 主導）\n    否則 → 從最後一個動詞的轉移統計 + Laplace 平滑\n    ', 2, <code object <dictcomp> at 0x000002AA62BBEFA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 206>, 'inertia_score.<locals>.<dictcomp>', -1, 1, 0)
+      Names referenced: ('len', 'VALID_ACTIONS', 'range', 'get', 'math', 'log')
+      Free vars: ()
+      Cell vars: ()
+      Disassembly:
+204           0 LOAD_GLOBAL              0 (len)
+              2 LOAD_FAST                0 (stm_recent_verbs)
+              4 CALL_FUNCTION            1
+              6 LOAD_CONST               1 (2)
+              8 COMPARE_OP               0 (<)
+             10 POP_JUMP_IF_FALSE       13 (to 26)
+
+206          12 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBEFA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 206>)
+             14 LOAD_CONST               3 ('inertia_score.<locals>.<dictcomp>')
+             16 MAKE_FUNCTION            0
+             18 LOAD_GLOBAL              1 (VALID_ACTIONS)
+             20 GET_ITER
+             22 CALL_FUNCTION            1
+             24 RETURN_VALUE
+
+208     >>   26 LOAD_FAST                0 (stm_recent_verbs)
+             28 LOAD_CONST               4 (-1)
+             30 BINARY_SUBSCR
+             32 STORE_FAST               1 (current_verb)
+
+209          34 BUILD_MAP                0
+             36 STORE_FAST               2 (transitions)
+
+210          38 LOAD_GLOBAL              2 (range)
+             40 LOAD_GLOBAL              0 (len)
+             42 LOAD_FAST                0 (stm_recent_verbs)
+             44 CALL_FUNCTION            1
+             46 LOAD_CONST               5 (1)
+             48 BINARY_SUBTRACT
+             50 CALL_FUNCTION            1
+             52 GET_ITER
+        >>   54 FOR_ITER                24 (to 104)
+             56 STORE_FAST               3 (i)
+
+211          58 LOAD_FAST                0 (stm_recent_verbs)
+             60 LOAD_FAST                3 (i)
+             62 BINARY_SUBSCR
+             64 LOAD_FAST                1 (current_verb)
+             66 COMPARE_OP               2 (==)
+             68 POP_JUMP_IF_FALSE       51 (to 102)
+
+212          70 LOAD_FAST                0 (stm_recent_verbs)
+             72 LOAD_FAST                3 (i)
+             74 LOAD_CONST               5 (1)
+             76 BINARY_ADD
+             78 BINARY_SUBSCR
+             80 STORE_FAST               4 (nxt)
+
+213          82 LOAD_FAST                2 (transitions)
+             84 LOAD_METHOD              3 (get)
+             86 LOAD_FAST                4 (nxt)
+             88 LOAD_CONST               6 (0)
+             90 CALL_METHOD              2
+             92 LOAD_CONST               5 (1)
+             94 BINARY_ADD
+             96 LOAD_FAST                2 (transitions)
+             98 LOAD_FAST                4 (nxt)
+            100 STORE_SUBSCR
+        >>  102 JUMP_ABSOLUTE           27 (to 54)
+
+215     >>  104 LOAD_FAST                2 (transitions)
+            106 POP_JUMP_IF_TRUE        69 (to 138)
+
+217         108 LOAD_FAST                0 (stm_recent_verbs)
+            110 GET_ITER
+        >>  112 FOR_ITER                12 (to 138)
+            114 STORE_FAST               5 (v)
+
+218         116 LOAD_FAST                2 (transitions)
+            118 LOAD_METHOD              3 (get)
+            120 LOAD_FAST                5 (v)
+            122 LOAD_CONST               6 (0)
+            124 CALL_METHOD              2
+            126 LOAD_CONST               5 (1)
+            128 BINARY_ADD
+            130 LOAD_FAST                2 (transitions)
+            132 LOAD_FAST                5 (v)
+            134 STORE_SUBSCR
+            136 JUMP_ABSOLUTE           56 (to 112)
+
+221     >>  138 BUILD_MAP                0
+            140 STORE_FAST               6 (scores)
+
+222         142 LOAD_GLOBAL              1 (VALID_ACTIONS)
+            144 GET_ITER
+        >>  146 FOR_ITER                17 (to 182)
+            148 STORE_FAST               7 (action)
+
+224         150 LOAD_FAST                2 (transitions)
+            152 LOAD_METHOD              3 (get)
+            154 LOAD_FAST                7 (action)
+            156 LOAD_CONST               6 (0)
+            158 CALL_METHOD              2
+            160 LOAD_CONST               5 (1)
+            162 BINARY_ADD
+            164 STORE_FAST               8 (count)
+
+225         166 LOAD_GLOBAL              4 (math)
+            168 LOAD_METHOD              5 (log)
+            170 LOAD_FAST                8 (count)
+            172 CALL_METHOD              1
+            174 LOAD_FAST                6 (scores)
+            176 LOAD_FAST                7 (action)
+            178 STORE_SUBSCR
+            180 JUMP_ABSOLUTE           73 (to 146)
+
+227     >>  182 LOAD_FAST                6 (scores)
+            184 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBEFA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 206>:
+206           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: (0.0,)
+          Names referenced: ()
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+206           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+    Code Object: situation_score
+      Arg count: 3
+      Kwonly arg count: 0
+      Local vars: ('perception', 'co_located', 'emotion', 'scores', 'action', 'keywords', 'hits', 'emotion_boost', 'boost')
+      Constants: ('\n    根據 perception、同地點角色、情緒，計算情境分數。\n\n    來源：\n      1. ACTION_KEYWORD_BOOST 命中（每命中 +0.15）\n      2. EMOTION_TO_ACTION_BOOST 加分\n      3. 同地點有人 → 對話 +0.3\n    ', <code object <dictcomp> at 0x000002AA62BBF100, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 245>, 'situation_score.<locals>.<dictcomp>', ' ', 'scene_text', '', 'yolo_desc', 'location', <code object <genexpr> at 0x000002AA62BBF1B0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 256>, 'situation_score.<locals>.<genexpr>', 0, '對話', 0.3)
+      Names referenced: ('VALID_ACTIONS', 'join', 'get', 'ACTION_KEYWORD_BOOST', 'items', 'sum', 'KEYWORD_BOOST_PER_HIT', 'EMOTION_TO_ACTION_BOOST')
+      Free vars: ()
+      Cell vars: ('text_blob',)
+      Disassembly:
+245           0 LOAD_CONST               1 (<code object <dictcomp> at 0x000002AA62BBF100, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 245>)
+              2 LOAD_CONST               2 ('situation_score.<locals>.<dictcomp>')
+              4 MAKE_FUNCTION            0
+              6 LOAD_GLOBAL              0 (VALID_ACTIONS)
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 STORE_FAST               3 (scores)
+
+248          14 LOAD_CONST               3 (' ')
+             16 LOAD_METHOD              1 (join)
+
+249          18 LOAD_FAST                0 (perception)
+             20 LOAD_METHOD              2 (get)
+             22 LOAD_CONST               4 ('scene_text')
+             24 LOAD_CONST               5 ('')
+             26 CALL_METHOD              2
+
+250          28 LOAD_FAST                0 (perception)
+             30 LOAD_METHOD              2 (get)
+             32 LOAD_CONST               6 ('yolo_desc')
+             34 LOAD_CONST               5 ('')
+             36 CALL_METHOD              2
+
+251          38 LOAD_FAST                0 (perception)
+             40 LOAD_METHOD              2 (get)
+             42 LOAD_CONST               7 ('location')
+             44 LOAD_CONST               5 ('')
+             46 CALL_METHOD              2
+
+248          48 BUILD_LIST               3
+             50 CALL_METHOD              1
+
+252          52 LOAD_CONST               3 (' ')
+             54 LOAD_METHOD              1 (join)
+             56 LOAD_FAST                1 (co_located)
+             58 CALL_METHOD              1
+
+248          60 BINARY_ADD
+             62 STORE_DEREF              0 (text_blob)
+
+255          64 LOAD_GLOBAL              3 (ACTION_KEYWORD_BOOST)
+             66 LOAD_METHOD              4 (items)
+             68 CALL_METHOD              0
+             70 GET_ITER
+        >>   72 FOR_ITER                29 (to 132)
+             74 UNPACK_SEQUENCE          2
+             76 STORE_FAST               4 (action)
+             78 STORE_FAST               5 (keywords)
+
+256          80 LOAD_GLOBAL              5 (sum)
+             82 LOAD_CLOSURE             0 (text_blob)
+             84 BUILD_TUPLE              1
+             86 LOAD_CONST               8 (<code object <genexpr> at 0x000002AA62BBF1B0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 256>)
+             88 LOAD_CONST               9 ('situation_score.<locals>.<genexpr>')
+             90 MAKE_FUNCTION            8 (closure)
+             92 LOAD_FAST                5 (keywords)
+             94 GET_ITER
+             96 CALL_FUNCTION            1
+             98 CALL_FUNCTION            1
+            100 STORE_FAST               6 (hits)
+
+257         102 LOAD_FAST                6 (hits)
+            104 LOAD_CONST              10 (0)
+            106 COMPARE_OP               4 (>)
+            108 POP_JUMP_IF_FALSE       65 (to 130)
+
+258         110 LOAD_FAST                3 (scores)
+            112 LOAD_FAST                4 (action)
+            114 DUP_TOP_TWO
+            116 BINARY_SUBSCR
+            118 LOAD_FAST                6 (hits)
+            120 LOAD_GLOBAL              6 (KEYWORD_BOOST_PER_HIT)
+            122 BINARY_MULTIPLY
+            124 INPLACE_ADD
+            126 ROT_THREE
+            128 STORE_SUBSCR
+        >>  130 JUMP_ABSOLUTE           36 (to 72)
+
+261     >>  132 LOAD_GLOBAL              7 (EMOTION_TO_ACTION_BOOST)
+            134 LOAD_METHOD              2 (get)
+            136 LOAD_FAST                2 (emotion)
+            138 BUILD_MAP                0
+            140 CALL_METHOD              2
+            142 STORE_FAST               7 (emotion_boost)
+
+262         144 LOAD_FAST                7 (emotion_boost)
+            146 LOAD_METHOD              4 (items)
+            148 CALL_METHOD              0
+            150 GET_ITER
+        >>  152 FOR_ITER                16 (to 186)
+            154 UNPACK_SEQUENCE          2
+            156 STORE_FAST               4 (action)
+            158 STORE_FAST               8 (boost)
+
+263         160 LOAD_FAST                4 (action)
+            162 LOAD_FAST                3 (scores)
+            164 CONTAINS_OP              0
+            166 POP_JUMP_IF_FALSE       92 (to 184)
+
+264         168 LOAD_FAST                3 (scores)
+            170 LOAD_FAST                4 (action)
+            172 DUP_TOP_TWO
+            174 BINARY_SUBSCR
+            176 LOAD_FAST                8 (boost)
+            178 INPLACE_ADD
+            180 ROT_THREE
+            182 STORE_SUBSCR
+        >>  184 JUMP_ABSOLUTE           76 (to 152)
+
+267     >>  186 LOAD_FAST                1 (co_located)
+            188 POP_JUMP_IF_FALSE      103 (to 206)
+
+268         190 LOAD_FAST                3 (scores)
+            192 LOAD_CONST              11 ('對話')
+            194 DUP_TOP_TWO
+            196 BINARY_SUBSCR
+            198 LOAD_CONST              12 (0.3)
+            200 INPLACE_ADD
+            202 ROT_THREE
+            204 STORE_SUBSCR
+
+270     >>  206 LOAD_FAST                3 (scores)
+            208 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF100, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 245>:
+245           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x000002AA62BBF1B0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 256>:
+              0 GEN_START                0
+
+256           2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (kw)
+              8 LOAD_FAST                1 (kw)
+             10 LOAD_DEREF               0 (text_blob)
+             12 CONTAINS_OP              0
+             14 POP_JUMP_IF_FALSE        2 (to 4)
+             16 LOAD_CONST               0 (1)
+             18 YIELD_VALUE
+             20 POP_TOP
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 LOAD_CONST               1 (None)
+             26 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: (0.0,)
+          Names referenced: ()
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+245           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 5 (to 16)
+              6 STORE_FAST               1 (a)
+              8 LOAD_FAST                1 (a)
+             10 LOAD_CONST               0 (0.0)
+             12 MAP_ADD                  2
+             14 JUMP_ABSOLUTE            2 (to 4)
+        >>   16 RETURN_VALUE
+
+        Code Object: <genexpr>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'kw')
+          Constants: (1, None)
+          Names referenced: ()
+          Free vars: ('text_blob',)
+          Cell vars: ()
+          Disassembly:
+              0 GEN_START                0
+
+256           2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 STORE_FAST               1 (kw)
+              8 LOAD_FAST                1 (kw)
+             10 LOAD_DEREF               0 (text_blob)
+             12 CONTAINS_OP              0
+             14 POP_JUMP_IF_FALSE        2 (to 4)
+             16 LOAD_CONST               0 (1)
+             18 YIELD_VALUE
+             20 POP_TOP
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 LOAD_CONST               1 (None)
+             26 RETURN_VALUE
+
+    Code Object: sample_action
+      Arg count: 2
+      Kwonly arg count: 0
+      Local vars: ('probs', 'exclude', 'actions', 'weights')
+      Constants: ('\n    加權隨機採樣（非 argmax）。\n    保持自然的行為變化。\n    ', '休息', <code object <dictcomp> at 0x000002AA62BBF310, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 285>, 'sample_action.<locals>.<dictcomp>', <code object <listcomp> at 0x000002AA62BBF3C0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 293>, 'sample_action.<locals>.<listcomp>', 1, ('weights', 'k'), 0)
+      Names referenced: ('items', 'list', 'keys', 'random', 'choices')
+      Free vars: ()
+      Cell vars: ('candidates', 'exclude')
+      Disassembly:
+282           0 LOAD_FAST                0 (probs)
+              2 POP_JUMP_IF_TRUE         4 (to 8)
+
+283           4 LOAD_CONST               1 ('休息')
+              6 RETURN_VALUE
+
+285     >>    8 LOAD_CLOSURE             1 (exclude)
+             10 BUILD_TUPLE              1
+             12 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBF310, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 285>)
+             14 LOAD_CONST               3 ('sample_action.<locals>.<dictcomp>')
+             16 MAKE_FUNCTION            8 (closure)
+
+286          18 LOAD_FAST                0 (probs)
+             20 LOAD_METHOD              0 (items)
+             22 CALL_METHOD              0
+
+285          24 GET_ITER
+             26 CALL_FUNCTION            1
+             28 STORE_DEREF              0 (candidates)
+
+289          30 LOAD_DEREF               0 (candidates)
+             32 POP_JUMP_IF_TRUE        19 (to 38)
+
+290          34 LOAD_CONST               1 ('休息')
+             36 RETURN_VALUE
+
+292     >>   38 LOAD_GLOBAL              1 (list)
+             40 LOAD_DEREF               0 (candidates)
+             42 LOAD_METHOD              2 (keys)
+             44 CALL_METHOD              0
+             46 CALL_FUNCTION            1
+             48 STORE_FAST               2 (actions)
+
+293          50 LOAD_CLOSURE             0 (candidates)
+             52 BUILD_TUPLE              1
+             54 LOAD_CONST               4 (<code object <listcomp> at 0x000002AA62BBF3C0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 293>)
+             56 LOAD_CONST               5 ('sample_action.<locals>.<listcomp>')
+             58 MAKE_FUNCTION            8 (closure)
+             60 LOAD_FAST                2 (actions)
+             62 GET_ITER
+             64 CALL_FUNCTION            1
+             66 STORE_FAST               3 (weights)
+
+294          68 LOAD_GLOBAL              3 (random)
+             70 LOAD_ATTR                4 (choices)
+             72 LOAD_FAST                2 (actions)
+             74 LOAD_FAST                3 (weights)
+             76 LOAD_CONST               6 (1)
+             78 LOAD_CONST               7 (('weights', 'k'))
+             80 CALL_FUNCTION_KW         3
+             82 LOAD_CONST               8 (0)
+             84 BINARY_SUBSCR
+             86 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF310, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 285>:
+285           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                13 (to 32)
+
+286           6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+
+287          12 LOAD_DEREF               0 (exclude)
+
+285          14 POP_JUMP_IF_FALSE       12 (to 24)
+
+287          16 LOAD_FAST                1 (a)
+             18 LOAD_DEREF               0 (exclude)
+             20 CONTAINS_OP              1
+             22 POP_JUMP_IF_FALSE        2 (to 4)
+
+286     >>   24 LOAD_FAST                1 (a)
+             26 LOAD_FAST                2 (p)
+
+287          28 MAP_ADD                  2
+             30 JUMP_ABSOLUTE            2 (to 4)
+        >>   32 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x000002AA62BBF3C0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 293>:
+293           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 6 (to 18)
+              6 STORE_FAST               1 (a)
+              8 LOAD_DEREF               0 (candidates)
+             10 LOAD_FAST                1 (a)
+             12 BINARY_SUBSCR
+             14 LIST_APPEND              2
+             16 JUMP_ABSOLUTE            2 (to 4)
+        >>   18 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a', 'p')
+          Constants: ()
+          Names referenced: ()
+          Free vars: ('exclude',)
+          Cell vars: ()
+          Disassembly:
+285           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                13 (to 32)
+
+286           6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+
+287          12 LOAD_DEREF               0 (exclude)
+
+285          14 POP_JUMP_IF_FALSE       12 (to 24)
+
+287          16 LOAD_FAST                1 (a)
+             18 LOAD_DEREF               0 (exclude)
+             20 CONTAINS_OP              1
+             22 POP_JUMP_IF_FALSE        2 (to 4)
+
+286     >>   24 LOAD_FAST                1 (a)
+             26 LOAD_FAST                2 (p)
+
+287          28 MAP_ADD                  2
+             30 JUMP_ABSOLUTE            2 (to 4)
+        >>   32 RETURN_VALUE
+
+        Code Object: <listcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a')
+          Constants: ()
+          Names referenced: ()
+          Free vars: ('candidates',)
+          Cell vars: ()
+          Disassembly:
+293           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 6 (to 18)
+              6 STORE_FAST               1 (a)
+              8 LOAD_DEREF               0 (candidates)
+             10 LOAD_FAST                1 (a)
+             12 BINARY_SUBSCR
+             14 LIST_APPEND              2
+             16 JUMP_ABSOLUTE            2 (to 4)
+        >>   18 RETURN_VALUE
+
+    Code Object: resolve_dialogue_target
+      Arg count: 3
+      Kwonly arg count: 0
+      Local vars: ('probs', 'co_located', 'boost_factor', 'boosted', 'best')
+      Constants: ('\n    決定最終動詞與目標。\n\n    若選到「對話」：\n      有人 → ("對話", 第一個同地點角色名字)\n      無人 → 排除「對話」重新採樣，回傳 (其他動詞, "")\n\n    若選到「前往」：\n      回傳 ("前往", "")  目標地點由 agent 從時間表/情境補\n\n    同地點有人時，對話機率先放大再採樣（不影響其他來源計算，只在這裡放大）\n    ', '對話', 0, <code object <dictcomp> at 0x000002AA62BBF520, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 320>, 'resolve_dialogue_target.<locals>.<dictcomp>', ('exclude',), '', '前往', ('前往', ''))
+      Names referenced: ('get', 'dict', 'sum', 'values', 'items', 'sample_action')
+      Free vars: ()
+      Cell vars: ('s',)
+      Disassembly:
+316           0 LOAD_FAST                1 (co_located)
+              2 POP_JUMP_IF_FALSE       44 (to 88)
+              4 LOAD_FAST                0 (probs)
+              6 LOAD_METHOD              0 (get)
+              8 LOAD_CONST               1 ('對話')
+             10 LOAD_CONST               2 (0)
+             12 CALL_METHOD              2
+             14 LOAD_CONST               2 (0)
+             16 COMPARE_OP               4 (>)
+             18 POP_JUMP_IF_FALSE       44 (to 88)
+
+317          20 LOAD_GLOBAL              1 (dict)
+             22 LOAD_FAST                0 (probs)
+             24 CALL_FUNCTION            1
+             26 STORE_FAST               3 (boosted)
+
+318          28 LOAD_FAST                0 (probs)
+             30 LOAD_CONST               1 ('對話')
+             32 BINARY_SUBSCR
+             34 LOAD_FAST                2 (boost_factor)
+             36 BINARY_MULTIPLY
+             38 LOAD_FAST                3 (boosted)
+             40 LOAD_CONST               1 ('對話')
+             42 STORE_SUBSCR
+
+319          44 LOAD_GLOBAL              2 (sum)
+             46 LOAD_FAST                3 (boosted)
+             48 LOAD_METHOD              3 (values)
+             50 CALL_METHOD              0
+             52 CALL_FUNCTION            1
+             54 STORE_DEREF              0 (s)
+
+320          56 LOAD_CLOSURE             0 (s)
+             58 BUILD_TUPLE              1
+             60 LOAD_CONST               3 (<code object <dictcomp> at 0x000002AA62BBF520, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 320>)
+             62 LOAD_CONST               4 ('resolve_dialogue_target.<locals>.<dictcomp>')
+             64 MAKE_FUNCTION            8 (closure)
+             66 LOAD_FAST                3 (boosted)
+             68 LOAD_METHOD              4 (items)
+             70 CALL_METHOD              0
+             72 GET_ITER
+             74 CALL_FUNCTION            1
+             76 STORE_FAST               3 (boosted)
+
+321          78 LOAD_GLOBAL              5 (sample_action)
+             80 LOAD_FAST                3 (boosted)
+             82 CALL_FUNCTION            1
+             84 STORE_FAST               4 (best)
+             86 JUMP_FORWARD             4 (to 96)
+
+323     >>   88 LOAD_GLOBAL              5 (sample_action)
+             90 LOAD_FAST                0 (probs)
+             92 CALL_FUNCTION            1
+             94 STORE_FAST               4 (best)
+
+325     >>   96 LOAD_FAST                4 (best)
+             98 LOAD_CONST               1 ('對話')
+            100 COMPARE_OP               2 (==)
+            102 POP_JUMP_IF_FALSE       71 (to 142)
+
+326         104 LOAD_FAST                1 (co_located)
+            106 POP_JUMP_IF_FALSE       60 (to 120)
+
+327         108 LOAD_CONST               1 ('對話')
+            110 LOAD_FAST                1 (co_located)
+            112 LOAD_CONST               2 (0)
+            114 BINARY_SUBSCR
+            116 BUILD_TUPLE              2
+            118 RETURN_VALUE
+
+329     >>  120 LOAD_GLOBAL              5 (sample_action)
+            122 LOAD_FAST                0 (probs)
+            124 LOAD_CONST               1 ('對話')
+            126 BUILD_LIST               1
+            128 LOAD_CONST               5 (('exclude',))
+            130 CALL_FUNCTION_KW         2
+            132 STORE_FAST               4 (best)
+
+330         134 LOAD_FAST                4 (best)
+            136 LOAD_CONST               6 ('')
+            138 BUILD_TUPLE              2
+            140 RETURN_VALUE
+
+332     >>  142 LOAD_FAST                4 (best)
+            144 LOAD_CONST               7 ('前往')
+            146 COMPARE_OP               2 (==)
+            148 POP_JUMP_IF_FALSE       77 (to 154)
+
+333         150 LOAD_CONST               8 (('前往', ''))
+            152 RETURN_VALUE
+
+335     >>  154 LOAD_FAST                4 (best)
+            156 LOAD_CONST               6 ('')
+            158 BUILD_TUPLE              2
+            160 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF520, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 320>:
+320           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (p)
+             16 LOAD_DEREF               0 (s)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a', 'p')
+          Constants: ()
+          Names referenced: ()
+          Free vars: ('s',)
+          Cell vars: ()
+          Disassembly:
+320           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 LOAD_FAST                2 (p)
+             16 LOAD_DEREF               0 (s)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+    Code Object: format_probs_display
+      Arg count: 2
+      Kwonly arg count: 0
+      Local vars: ('probs', 'top_n', 'sorted_items', 'parts')
+      Constants: ('格式化機率分布為可讀字串。', <code object <lambda> at 0x000002AA62BBF680, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 344>, 'format_probs_display.<locals>.<lambda>', True, ('key', 'reverse'), <code object <listcomp> at 0x000002AA62BBF730, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 345>, 'format_probs_display.<locals>.<listcomp>', None, ', ')
+      Names referenced: ('sorted', 'items', 'join')
+      Free vars: ()
+      Cell vars: ()
+      Disassembly:
+344           0 LOAD_GLOBAL              0 (sorted)
+              2 LOAD_FAST                0 (probs)
+              4 LOAD_METHOD              1 (items)
+              6 CALL_METHOD              0
+              8 LOAD_CONST               1 (<code object <lambda> at 0x000002AA62BBF680, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 344>)
+             10 LOAD_CONST               2 ('format_probs_display.<locals>.<lambda>')
+             12 MAKE_FUNCTION            0
+             14 LOAD_CONST               3 (True)
+             16 LOAD_CONST               4 (('key', 'reverse'))
+             18 CALL_FUNCTION_KW         3
+             20 STORE_FAST               2 (sorted_items)
+
+345          22 LOAD_CONST               5 (<code object <listcomp> at 0x000002AA62BBF730, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 345>)
+             24 LOAD_CONST               6 ('format_probs_display.<locals>.<listcomp>')
+             26 MAKE_FUNCTION            0
+             28 LOAD_FAST                2 (sorted_items)
+             30 LOAD_CONST               7 (None)
+             32 LOAD_FAST                1 (top_n)
+             34 BUILD_SLICE              2
+             36 BINARY_SUBSCR
+             38 GET_ITER
+             40 CALL_FUNCTION            1
+             42 STORE_FAST               3 (parts)
+
+346          44 LOAD_CONST               8 (', ')
+             46 LOAD_METHOD              2 (join)
+             48 LOAD_FAST                3 (parts)
+             50 CALL_METHOD              1
+             52 RETURN_VALUE
+
+Disassembly of <code object <lambda> at 0x000002AA62BBF680, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 344>:
+344           0 LOAD_FAST                0 (x)
+              2 LOAD_CONST               1 (1)
+              4 BINARY_SUBSCR
+              6 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x000002AA62BBF730, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 345>:
+345           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 FORMAT_VALUE             0
+             16 LOAD_CONST               0 (':')
+             18 LOAD_FAST                2 (p)
+             20 LOAD_CONST               1 ('.3f')
+             22 FORMAT_VALUE             4 (with format)
+             24 BUILD_STRING             3
+             26 LIST_APPEND              2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+        Code Object: <lambda>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('x',)
+          Constants: (None, 1)
+          Names referenced: ()
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+344           0 LOAD_FAST                0 (x)
+              2 LOAD_CONST               1 (1)
+              4 BINARY_SUBSCR
+              6 RETURN_VALUE
+
+        Code Object: <listcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'a', 'p')
+          Constants: (':', '.3f')
+          Names referenced: ()
+          Free vars: ()
+          Cell vars: ()
+          Disassembly:
+345           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                12 (to 30)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (a)
+             10 STORE_FAST               2 (p)
+             12 LOAD_FAST                1 (a)
+             14 FORMAT_VALUE             0
+             16 LOAD_CONST               0 (':')
+             18 LOAD_FAST                2 (p)
+             20 LOAD_CONST               1 ('.3f')
+             22 FORMAT_VALUE             4 (with format)
+             24 BUILD_STRING             3
+             26 LIST_APPEND              2
+             28 JUMP_ABSOLUTE            2 (to 4)
+        >>   30 RETURN_VALUE
+
+    Code Object: _softmax_dict
+      Arg count: 2
+      Kwonly arg count: 0
+      Local vars: ('scores', 'temperature', 'vals', 'exps')
+      Constants: ('對 scores 取 softmax，回傳機率分布。', 0.0, <code object <dictcomp> at 0x000002AA62BBF940, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 359>, '_softmax_dict.<locals>.<dictcomp>', 0, <code object <dictcomp> at 0x000002AA62BBF9F0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 363>, <code object <dictcomp> at 0x000002AA62BBFAA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 364>)
+      Names referenced: ('list', 'values', 'max', 'items', 'sum', 'len')
+      Free vars: ()
+      Cell vars: ('max_v', 'n', 'temperature', 'total')
+      Disassembly:
+355           0 LOAD_FAST                0 (scores)
+              2 POP_JUMP_IF_TRUE         4 (to 8)
+
+356           4 BUILD_MAP                0
+              6 RETURN_VALUE
+
+357     >>    8 LOAD_GLOBAL              0 (list)
+             10 LOAD_FAST                0 (scores)
+             12 LOAD_METHOD              1 (values)
+             14 CALL_METHOD              0
+             16 CALL_FUNCTION            1
+             18 STORE_FAST               2 (vals)
+
+358          20 LOAD_FAST                2 (vals)
+             22 POP_JUMP_IF_FALSE       16 (to 32)
+             24 LOAD_GLOBAL              2 (max)
+             26 LOAD_FAST                2 (vals)
+             28 CALL_FUNCTION            1
+             30 JUMP_FORWARD             1 (to 34)
+        >>   32 LOAD_CONST               1 (0.0)
+        >>   34 STORE_DEREF              0 (max_v)
+
+359          36 LOAD_CLOSURE             0 (max_v)
+             38 LOAD_CLOSURE             2 (temperature)
+             40 BUILD_TUPLE              2
+             42 LOAD_CONST               2 (<code object <dictcomp> at 0x000002AA62BBF940, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 359>)
+             44 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+             46 MAKE_FUNCTION            8 (closure)
+             48 LOAD_FAST                0 (scores)
+             50 LOAD_METHOD              3 (items)
+             52 CALL_METHOD              0
+             54 GET_ITER
+             56 CALL_FUNCTION            1
+             58 STORE_FAST               3 (exps)
+
+360          60 LOAD_GLOBAL              4 (sum)
+             62 LOAD_FAST                3 (exps)
+             64 LOAD_METHOD              1 (values)
+             66 CALL_METHOD              0
+             68 CALL_FUNCTION            1
+             70 STORE_DEREF              3 (total)
+
+361          72 LOAD_DEREF               3 (total)
+             74 LOAD_CONST               4 (0)
+             76 COMPARE_OP               2 (==)
+             78 POP_JUMP_IF_FALSE       53 (to 106)
+
+362          80 LOAD_GLOBAL              5 (len)
+             82 LOAD_FAST                0 (scores)
+             84 CALL_FUNCTION            1
+             86 STORE_DEREF              1 (n)
+
+363          88 LOAD_CLOSURE             1 (n)
+             90 BUILD_TUPLE              1
+             92 LOAD_CONST               5 (<code object <dictcomp> at 0x000002AA62BBF9F0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 363>)
+             94 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+             96 MAKE_FUNCTION            8 (closure)
+             98 LOAD_FAST                0 (scores)
+            100 GET_ITER
+            102 CALL_FUNCTION            1
+            104 RETURN_VALUE
+
+364     >>  106 LOAD_CLOSURE             3 (total)
+            108 BUILD_TUPLE              1
+            110 LOAD_CONST               6 (<code object <dictcomp> at 0x000002AA62BBFAA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 364>)
+            112 LOAD_CONST               3 ('_softmax_dict.<locals>.<dictcomp>')
+            114 MAKE_FUNCTION            8 (closure)
+            116 LOAD_FAST                3 (exps)
+            118 LOAD_METHOD              3 (items)
+            120 CALL_METHOD              0
+            122 GET_ITER
+            124 CALL_FUNCTION            1
+            126 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF940, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 359>:
+359           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                14 (to 34)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_GLOBAL              0 (math)
+             16 LOAD_METHOD              1 (exp)
+             18 LOAD_FAST                2 (v)
+             20 LOAD_DEREF               0 (max_v)
+             22 BINARY_SUBTRACT
+             24 LOAD_DEREF               1 (temperature)
+             26 BINARY_TRUE_DIVIDE
+             28 CALL_METHOD              1
+             30 MAP_ADD                  2
+             32 JUMP_ABSOLUTE            2 (to 4)
+        >>   34 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBF9F0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 363>:
+363           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 7 (to 20)
+              6 STORE_FAST               1 (k)
+              8 LOAD_FAST                1 (k)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_DEREF               0 (n)
+             14 BINARY_TRUE_DIVIDE
+             16 MAP_ADD                  2
+             18 JUMP_ABSOLUTE            2 (to 4)
+        >>   20 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x000002AA62BBFAA0, file "C:\Users\Rayyu\Desktop\agi\presentation\AI-Town-main\AI-Town-main\tests\..\core\markov_engine.py", line 364>:
+364           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (e)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_FAST                2 (e)
+             16 LOAD_DEREF               0 (total)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'k', 'v')
+          Constants: ()
+          Names referenced: ('math', 'exp')
+          Free vars: ('max_v', 'temperature')
+          Cell vars: ()
+          Disassembly:
+359           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                14 (to 34)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (v)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_GLOBAL              0 (math)
+             16 LOAD_METHOD              1 (exp)
+             18 LOAD_FAST                2 (v)
+             20 LOAD_DEREF               0 (max_v)
+             22 BINARY_SUBTRACT
+             24 LOAD_DEREF               1 (temperature)
+             26 BINARY_TRUE_DIVIDE
+             28 CALL_METHOD              1
+             30 MAP_ADD                  2
+             32 JUMP_ABSOLUTE            2 (to 4)
+        >>   34 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'k')
+          Constants: (1.0,)
+          Names referenced: ()
+          Free vars: ('n',)
+          Cell vars: ()
+          Disassembly:
+363           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 7 (to 20)
+              6 STORE_FAST               1 (k)
+              8 LOAD_FAST                1 (k)
+             10 LOAD_CONST               0 (1.0)
+             12 LOAD_DEREF               0 (n)
+             14 BINARY_TRUE_DIVIDE
+             16 MAP_ADD                  2
+             18 JUMP_ABSOLUTE            2 (to 4)
+        >>   20 RETURN_VALUE
+
+        Code Object: <dictcomp>
+          Arg count: 1
+          Kwonly arg count: 0
+          Local vars: ('.0', 'k', 'e')
+          Constants: ()
+          Names referenced: ()
+          Free vars: ('total',)
+          Cell vars: ()
+          Disassembly:
+364           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                 9 (to 24)
+              6 UNPACK_SEQUENCE          2
+              8 STORE_FAST               1 (k)
+             10 STORE_FAST               2 (e)
+             12 LOAD_FAST                1 (k)
+             14 LOAD_FAST                2 (e)
+             16 LOAD_DEREF               0 (total)
+             18 BINARY_TRUE_DIVIDE
+             20 MAP_ADD                  2
+             22 JUMP_ABSOLUTE            2 (to 4)
+        >>   24 RETURN_VALUE
+

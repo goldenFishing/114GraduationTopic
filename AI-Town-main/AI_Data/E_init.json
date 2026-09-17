@@ -1,0 +1,401 @@
+{
+  "name": "Emma",
+  "name_code": "E",
+  "role": "餐廳員工",
+  "gender": "女",
+  "age": 31,
+  "residence": "獨棟房子 2",
+  "personality_short": "開朗愛開玩笑，能察覺別人情緒，但不一定會說破。",
+  "personality": "Emma個性活潑，喜歡開玩笑，能讓周圍的氣氛變輕鬆。討厭太多規矩，做事隨性，但該負責的事還是會做好。對別人的情緒很敏感，常能看出對方的狀態，但會選擇時機再說或不說。對自己跟Claire之間的感情有點摸不清楚，知道有感覺但還沒想好怎麼辦。",
+  "habit": "Emma工作時店裡沒客人會滑手機。常常需要外出採買食材或跑腿，因此在各地方都可能碰到。喜歡找Amy聊天，兩人常約吃飯。偶爾去超市時會跟Ben聊幾句。",
+  "relationships": {
+    "A": {
+      "initial": "最好的朋友，Emma和Amy兩人無話不談。Emma在Amy面前可以完全放鬆，也是Emma最常分享心事的人。",
+      "summary": "兩人關係維持原狀。"
+    },
+    "B": {
+      "initial": "認識但不深交，Emma在超市採買時偶爾跟Ben聊天，關係輕鬆隨意。",
+      "summary": "兩人關係維持原狀。"
+    },
+    "C": {
+      "initial": "Emma對Claire有好感，兩人互相吸引但都沒說出口。Emma知道自己喜歡Claire，但還在觀察，還沒決定要不要主動。",
+      "summary": "兩人關係維持原狀。"
+    },
+    "D": {
+      "initial": "Emma知道David這個人，覺得他是個認真穩重的人。沒有意識到David對她有一點好感，只把David當作普通認識的人。",
+      "summary": "兩人關係維持原狀。"
+    }
+  },
+  "emotion": "平靜",
+  "stm": {
+    "capacity": 15,
+    "turns": [
+      {
+        "turn_id": "D013_T000",
+        "time": "00:00",
+        "perception": {
+          "location": "",
+          "yolo_desc": "",
+          "scene_text": "（昨日經歷濃縮摘要）"
+        },
+        "event": {
+          "input_text": "",
+          "action": "回顧",
+          "target": "",
+          "content": ""
+        },
+        "inner": {
+          "thought": "今天度過了平凡的一天，沒有特別的事件。",
+          "emotion": "平靜"
+        }
+      },
+      {
+        "turn_id": "D012_T018",
+        "time": "07:00",
+        "perception": {
+          "location": "公寓",
+          "yolo_desc": "",
+          "scene_text": "第1天 21:00"
+        },
+        "event": {
+          "input_text": "",
+          "action": "對話",
+          "target": "Amy",
+          "content": ""
+        },
+        "inner": {
+          "thought": "",
+          "emotion": "平靜"
+        }
+      },
+      {
+        "turn_id": "D012_T019",
+        "time": "07:00",
+        "perception": {
+          "location": "公寓",
+          "yolo_desc": "",
+          "scene_text": "第1天 22:00"
+        },
+        "event": {
+          "input_text": "",
+          "action": "整理家裡",
+          "target": "",
+          "content": ""
+        },
+        "inner": {
+          "thought": "",
+          "emotion": "平靜"
+        }
+      },
+      {
+        "turn_id": "D012_T020",
+        "time": "07:00",
+        "perception": {
+          "location": "公寓",
+          "yolo_desc": "",
+          "scene_text": "第1天 23:00"
+        },
+        "event": {
+          "input_text": "",
+          "action": "備料",
+          "target": "",
+          "content": ""
+        },
+        "inner": {
+          "thought": "",
+          "emotion": "平靜"
+        }
+      },
+      {
+        "turn_id": "D012_T021",
+        "time": "07:00",
+        "perception": {
+          "location": "公寓",
+          "yolo_desc": "",
+          "scene_text": "第1天 00:00"
+        },
+        "event": {
+          "input_text": "",
+          "action": "備料",
+          "target": "",
+          "content": ""
+        },
+        "inner": {
+          "thought": "",
+          "emotion": "平靜"
+        }
+      },
+      {
+        "turn_id": "D012_T022",
+        "time": "07:00",
+        "perception": {
+          "location": "公寓",
+          "yolo_desc": "",
+          "scene_text": "第1天 01:00"
+        },
+        "event": {
+          "input_text": "",
+          "action": "睡覺",
+          "target": "",
+          "content": ""
+        },
+        "inner": {
+          "thought": "",
+          "emotion": "平靜"
+        }
+      }
+    ]
+  },
+  "ltm": {
+    "ltm_summary": "今天度過了平凡的一天，沒有特別的事件。",
+    "propositions": [
+      {
+        "id": "L001",
+        "subject": "Emma",
+        "relation": "對話",
+        "object": "Amy",
+        "location": "公寓二樓",
+        "time": "第1天 19:00",
+        "strength": 0.9988505747126437,
+        "access_count": 85,
+        "encoded_day": 1
+      },
+      {
+        "id": "L002",
+        "subject": "Emma",
+        "relation": "前往",
+        "object": "獨棟房子 2",
+        "location": "公寓",
+        "time": "第2天 08:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 2
+      },
+      {
+        "id": "L003",
+        "subject": "Emma",
+        "relation": "對話",
+        "object": "Amy",
+        "location": "公寓二樓",
+        "time": "第2天 19:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 2
+      },
+      {
+        "id": "L004",
+        "subject": "Emma",
+        "relation": "對話",
+        "object": "Amy",
+        "location": "公寓二樓",
+        "time": "第2天 19:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 2
+      },
+      {
+        "id": "L005",
+        "subject": "Emma",
+        "relation": "對話",
+        "object": "Amy",
+        "location": "公寓二樓",
+        "time": "第2天 19:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 3
+      },
+      {
+        "id": "L006",
+        "subject": "Emma",
+        "relation": "工作",
+        "object": "店",
+        "location": "公寓二樓",
+        "time": "第3天 08:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 3
+      },
+      {
+        "id": "L007",
+        "subject": "Emma",
+        "relation": "現在場景",
+        "object": "公寓",
+        "location": "公寓二樓",
+        "time": "第3天 14:00",
+        "strength": 0.9988095238095238,
+        "access_count": 82,
+        "encoded_day": 3
+      },
+      {
+        "id": "L008",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.9666666666666667,
+        "access_count": 1,
+        "encoded_day": 4
+      },
+      {
+        "id": "L009",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.9666666666666667,
+        "access_count": 1,
+        "encoded_day": 5
+      },
+      {
+        "id": "L010",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.9666666666666667,
+        "access_count": 1,
+        "encoded_day": 6
+      },
+      {
+        "id": "L011",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.6999999999999997,
+        "access_count": 0,
+        "encoded_day": 7
+      },
+      {
+        "id": "L012",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.7499999999999998,
+        "access_count": 0,
+        "encoded_day": 8
+      },
+      {
+        "id": "L013",
+        "subject": "Ben",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.7999999999999998,
+        "access_count": 0,
+        "encoded_day": 9
+      },
+      {
+        "id": "L014",
+        "subject": "Amy",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.8499999999999999,
+        "access_count": 0,
+        "encoded_day": 10
+      },
+      {
+        "id": "L015",
+        "subject": "Amy",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.8999999999999999,
+        "access_count": 0,
+        "encoded_day": 11
+      },
+      {
+        "id": "L016",
+        "subject": "Amy",
+        "relation": "工作",
+        "object": "平凡",
+        "location": null,
+        "time": "今天",
+        "strength": 0.95,
+        "access_count": 0,
+        "encoded_day": 12
+      }
+    ]
+  },
+  "state": {
+    "day": 13,
+    "current_location": "公寓",
+    "current_action": "睡覺",
+    "today_actions": []
+  },
+  "schedule": {
+    "slots": [
+      {
+        "time": "07:00",
+        "action": "起床",
+        "location": "公寓",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "09:00",
+        "action": "工作",
+        "location": "辦公室",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "12:00",
+        "action": "吃飯",
+        "location": "公司附近",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "13:00",
+        "action": "工作",
+        "location": "辦公室",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "17:30",
+        "action": "服務客人",
+        "location": "餐廳",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "18:00",
+        "action": "回家",
+        "location": "公寓",
+        "type": "fixed",
+        "completed": false
+      },
+      {
+        "time": "23:00",
+        "action": "睡覺",
+        "location": "公寓",
+        "type": "fixed",
+        "completed": false
+      }
+    ]
+  },
+  "confusion_weights": {
+    "w1": 0.3,
+    "w2": 0.3,
+    "w3": 0.4,
+    "threshold": 0.55
+  },
+  "sleep_pattern": {
+    "default_wake_time": "09:30",
+    "force_wake_time": "11:00",
+    "default_sleep_time": "00:30",
+    "force_sleep_time": "02:00"
+  }
+}

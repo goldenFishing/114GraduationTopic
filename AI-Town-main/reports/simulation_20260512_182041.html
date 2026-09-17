@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>AI-Town 模擬報告</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+
+body { font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
+       background: #f5f5f7; color: #1d1d1f; margin: 0; padding: 0; }
+header { background: #1d1d1f; color: white; padding: 20px 30px; }
+header h1 { margin: 0 0 8px 0; font-size: 24px; }
+header .meta { font-size: 13px; color: #a1a1a6; }
+nav { background: white; padding: 10px 30px; border-bottom: 1px solid #d2d2d7;
+      display: flex; gap: 8px; }
+.tab-btn { padding: 8px 16px; border: none; background: #f5f5f7;
+           border-radius: 6px; cursor: pointer; font-size: 14px; }
+.tab-btn.active { background: #007aff; color: white; }
+main { padding: 24px 30px; }
+.tab { display: none; }
+.tab.active { display: block; }
+h2 { font-size: 20px; margin: 0 0 16px 0; }
+table.overview-table { border-collapse: collapse; background: white;
+                        border-radius: 8px; overflow: hidden; width: 100%; }
+.overview-table th, .overview-table td { padding: 10px 14px; text-align: left;
+                                          border-bottom: 1px solid #e5e5ea; }
+.overview-table th { background: #fafafa; font-weight: 600; }
+.char-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.char-tab-btn { padding: 6px 14px; border: 1px solid #d2d2d7;
+                background: white; border-radius: 6px; cursor: pointer; }
+.char-tab-btn.active { background: #007aff; color: white; border-color: #007aff; }
+.char-panel { display: none; }
+.char-panel.active { display: block; }
+.stm-card { background: white; padding: 14px; margin-bottom: 12px;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.stm-head { display: flex; gap: 14px; font-size: 12px; color: #86868b;
+            margin-bottom: 8px; }
+.stm-time { font-weight: bold; color: #007aff; }
+.stm-body > div { margin: 4px 0; font-size: 14px; }
+.stm-action { color: #1d1d1f; font-weight: 500; }
+.stm-content { background: #f5f5f7; padding: 6px 10px; border-radius: 4px;
+                color: #424245; }
+.stm-thought { color: #6e6e73; font-style: italic; }
+.stm-emo { font-size: 12px; color: #86868b; }
+.ltm-summary { background: white; padding: 12px 16px; border-radius: 8px;
+                margin-bottom: 12px; }
+.ltm-graph { background: white; border-radius: 8px; }
+.legend { display: flex; gap: 16px; margin-bottom: 12px; font-size: 13px; }
+.legend .lg-person { color: #007aff; }
+.legend .lg-location { color: #34c759; }
+.legend .lg-concept { color: #ff9500; }
+.dlg-card { background: white; padding: 14px; margin-bottom: 12px;
+            border-radius: 8px; border-left: 3px solid #34c759; }
+.dlg-card.rejected { border-left-color: #ff3b30; }
+.dlg-head { font-size: 13px; color: #86868b; margin-bottom: 10px; }
+.dlg-turn { padding: 4px 0; font-size: 14px; }
+.empty { color: #86868b; padding: 20px; text-align: center; }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>AI-Town 模擬報告</h1>
+  <div class="meta">
+    生成時間：2026-05-12 18:20:41　|
+    總天數：1　|
+    總 ticks：8　|
+    模型呼叫：0　|
+    對話次數：1
+  </div>
+</header>
+
+<nav>
+  <button class="tab-btn active" onclick="showTab('overview')">總覽</button>
+  <button class="tab-btn" onclick="showTab('stm')">STM 流</button>
+  <button class="tab-btn" onclick="showTab('ltm')">LTM 圖譜</button>
+  <button class="tab-btn" onclick="showTab('confusion')">困惑度曲線</button>
+  <button class="tab-btn" onclick="showTab('dialogue')">對話記錄</button>
+  <button class="tab-btn" onclick="showTab('sleep')">睡眠濃縮</button>
+</nav>
+
+<main>
+
+<section id="overview" class="tab active">
+  <h2>角色總覽（最終狀態）</h2>
+  <table class="overview-table">
+    <thead>
+      <tr>
+        <th>名字</th><th>代號</th><th>第幾天</th>
+        <th>位置</th><th>行動</th><th>情緒</th>
+        <th>STM 筆數</th><th>LTM 命題</th><th>狀態</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Amy</td>
+          <td>A</td>
+          <td>5</td>
+          <td>公寓二樓</td>
+          <td>睡覺</td>
+          <td>平靜</td>
+          <td>3</td>
+          <td>10</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Ben</td>
+          <td>B</td>
+          <td>5</td>
+          <td>公寓</td>
+          <td>睡覺</td>
+          <td>平靜</td>
+          <td>6</td>
+          <td>10</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Claire</td>
+          <td>C</td>
+          <td>5</td>
+          <td>公寓</td>
+          <td>睡覺</td>
+          <td>平靜</td>
+          <td>6</td>
+          <td>10</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>David</td>
+          <td>D</td>
+          <td>5</td>
+          <td>獨棟房子</td>
+          <td>睡覺</td>
+          <td>平靜</td>
+          <td>6</td>
+          <td>10</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Emma</td>
+          <td>E</td>
+          <td>5</td>
+          <td>獨棟房子 2</td>
+          <td>睡覺</td>
+          <td>平靜</td>
+          <td>3</td>
+          <td>8</td>
+          <td>活動中</td>
+        </tr></tbody>
+  </table>
+</section>
+
+
+<section id="stm" class="tab">
+  <h2>STM 流</h2>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('stm', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('stm', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('stm', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('stm', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('stm', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="stm-panel-A">
+          
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">00:00</span>
+                <span class="stm-id">D005_T000</span>
+                <span class="stm-loc">📍 </span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回顧</div>
+                
+                <div class="stm-thought">💭 今天度過了平凡的一天，沒有特別的事件。</div>
+                <div class="stm-emo">😶 平靜</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T001</span>
+                <span class="stm-loc">📍 公寓二樓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 休息</div>
+                
+                
+                <div class="stm-emo">😶 不安</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T002</span>
+                <span class="stm-loc">📍 公寓二樓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 睡覺</div>
+                
+                
+                <div class="stm-emo">😶 不安</div>
+              </div>
+            </div>
+        </div>
+        <div class="char-panel " id="stm-panel-B">
+          
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">00:00</span>
+                <span class="stm-id">D005_T000</span>
+                <span class="stm-loc">📍 </span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回顧</div>
+                
+                <div class="stm-thought">💭 今天度過了平凡的一天，沒有特別的事件。</div>
+                <div class="stm-emo">😶 平靜</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T004</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 吃飯</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T005</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                <div class="stm-input">📥 Ben</div>
+                <div class="stm-action">▶ 休息 → [CONTENT]</div>
+                <div class="stm-content">💬 「[THOUGHT] 今天有點累，想稍微休息一下。」</div>
+                <div class="stm-thought">💭 今天有點累，想稍微休息一下。</div>
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T006</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 整理店面</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T007</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 收銀</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T008</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 睡覺</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+        </div>
+        <div class="char-panel " id="stm-panel-C">
+          
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">00:00</span>
+                <span class="stm-id">D005_T000</span>
+                <span class="stm-loc">📍 </span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回顧</div>
+                
+                <div class="stm-thought">💭 今天度過了平凡的一天，沒有特別的事件。</div>
+                <div class="stm-emo">😶 平靜</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:30</span>
+                <span class="stm-id">D004_T002</span>
+                <span class="stm-loc">📍 公寓二樓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 運動</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:30</span>
+                <span class="stm-id">D004_T003</span>
+                <span class="stm-loc">📍 公寓二樓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 前往 → 公寓</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:30</span>
+                <span class="stm-id">D004_T004</span>
+                <span class="stm-loc">📍 公寓二樓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 對話 → Ben</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:30</span>
+                <span class="stm-id">D004_T005</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回家</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:30</span>
+                <span class="stm-id">D004_T006</span>
+                <span class="stm-loc">📍 公寓</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 睡覺</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+        </div>
+        <div class="char-panel " id="stm-panel-D">
+          
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">00:00</span>
+                <span class="stm-id">D005_T000</span>
+                <span class="stm-loc">📍 </span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回顧</div>
+                
+                <div class="stm-thought">💭 今天度過了平凡的一天，沒有特別的事件。</div>
+                <div class="stm-emo">😶 平靜</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T004</span>
+                <span class="stm-loc">📍 獨棟房子</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 整理店面</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T005</span>
+                <span class="stm-loc">📍 獨棟房子</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 休息</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T006</span>
+                <span class="stm-loc">📍 獨棟房子</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 吃飯</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T007</span>
+                <span class="stm-loc">📍 獨棟房子</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 買東西</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">07:00</span>
+                <span class="stm-id">D004_T008</span>
+                <span class="stm-loc">📍 獨棟房子</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 睡覺</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+        </div>
+        <div class="char-panel " id="stm-panel-E">
+          
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">00:00</span>
+                <span class="stm-id">D005_T000</span>
+                <span class="stm-loc">📍 </span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 回顧</div>
+                
+                <div class="stm-thought">💭 今天度過了平凡的一天，沒有特別的事件。</div>
+                <div class="stm-emo">😶 平靜</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T001</span>
+                <span class="stm-loc">📍 獨棟房子 2</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 滑手機</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+            <div class="stm-card">
+              <div class="stm-head">
+                <span class="stm-time">08:00</span>
+                <span class="stm-id">D004_T002</span>
+                <span class="stm-loc">📍 獨棟房子 2</span>
+              </div>
+              <div class="stm-body">
+                
+                
+                <div class="stm-action">▶ 睡覺</div>
+                
+                
+                <div class="stm-emo">😶 疲憊</div>
+              </div>
+            </div>
+        </div></div>
+</section>
+
+
+<section id="ltm" class="tab">
+  <h2>LTM 圖譜（可拖移、可點擊節點）</h2>
+  <div class="legend">
+    <span class="lg-person">● 角色</span>
+    <span class="lg-location">● 地點</span>
+    <span class="lg-concept">● 概念</span>
+  </div>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('ltm', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="ltm-panel-A">
+          <div class="ltm-summary">📝 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+          <div class="ltm-graph" id="ltm-graph-A" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-B">
+          <div class="ltm-summary">📝 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+          <div class="ltm-graph" id="ltm-graph-B" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-C">
+          <div class="ltm-summary">📝 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+          <div class="ltm-graph" id="ltm-graph-C" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-D">
+          <div class="ltm-summary">📝 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+          <div class="ltm-graph" id="ltm-graph-D" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-E">
+          <div class="ltm-summary">📝 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+          <div class="ltm-graph" id="ltm-graph-E" style="height:500px;"></div>
+        </div></div>
+</section>
+
+
+<section id="confusion" class="tab">
+  <h2>困惑度曲線（U/K/S/C）</h2>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('conf', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('conf', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('conf', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('conf', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('conf', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="conf-panel-A">
+          <canvas id="conf-chart-A" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-B">
+          <canvas id="conf-chart-B" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-C">
+          <canvas id="conf-chart-C" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-D">
+          <canvas id="conf-chart-D" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-E">
+          <canvas id="conf-chart-E" height="200"></canvas>
+        </div></div>
+</section>
+
+
+<section id="dialogue" class="tab">
+  <h2>對話記錄</h2>
+  <div class="dialogue-list">
+                <div class="dlg-card accepted">
+                  <div class="dlg-head">
+                    第 1 天 10:00
+                    Claire → Ben
+                    [接受]
+                    1 來回
+                  </div>
+                  <div class="dlg-body"><div class="dlg-turn"><b>Claire：</b>Ben</div><div class="dlg-turn"><b>Ben：</b>[THOUGHT] 今天有點累，想稍微休息一下。</div></div>
+                </div></div>
+</section>
+
+
+<section id="sleep" class="tab">
+  <h2>睡眠濃縮報告</h2>
+  <div class="empty">（睡眠濃縮詳細資料，需 simulate.py 收集後注入）</div>
+</section>
+
+</main>
+
+<script>
+const CHARS = {"A": {"name": "Amy", "ltm": {"nodes": [{"id": "公寓", "label": "公寓", "group": "location", "value": 0.833, "title": "公寓（location）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.958, "title": "Amy（person）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.952, "title": "公寓二樓（location）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.95, "title": "平凡（concept）"}], "edges": [{"from": "公寓", "to": "公寓", "label": "位置", "value": 4, "title": "位置（強度 0.8）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.988）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.988）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.98）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.98）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.98）", "arrows": "to"}, {"from": "公寓", "to": "公寓二樓", "label": "位置", "value": 4, "title": "位置（強度 0.9）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.9）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.9）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "B": {"name": "Ben", "ltm": {"nodes": [{"id": "Amy", "label": "Amy", "group": "person", "value": 0.967, "title": "Amy（person）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.982, "title": "公寓二樓（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.976, "title": "Ben（person）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.967, "title": "公寓（location）"}, {"id": "二樓", "label": "二樓", "group": "concept", "value": 0.967, "title": "二樓（concept）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.967, "title": "Claire（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.95, "title": "平凡（concept）"}], "edges": [{"from": "Amy", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.967）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.994）", "arrows": "to"}, {"from": "公寓", "to": "二樓", "label": "location", "value": 4, "title": "location（強度 0.967）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.988）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.988）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.988）", "arrows": "to"}, {"from": "Ben", "to": "Claire", "label": "對話", "value": 4, "title": "對話（強度 0.967）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.967）", "arrows": "to"}, {"from": "Ben", "to": "公寓", "label": "location", "value": 4, "title": "location（強度 0.967）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "C": {"name": "Claire", "ltm": {"nodes": [{"id": "公寓", "label": "公寓", "group": "location", "value": 0.8, "title": "公寓（location）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.888, "title": "公寓二樓（location）"}, {"id": "工作", "label": "工作", "group": "concept", "value": 0.825, "title": "工作（concept）"}, {"id": "完成", "label": "完成", "group": "concept", "value": 0.8, "title": "完成（concept）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.825, "title": "Amy（person）"}, {"id": "咖啡廳", "label": "咖啡廳", "group": "location", "value": 0.8, "title": "咖啡廳（location）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.92, "title": "Claire（person）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.95, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.95, "title": "平凡（concept）"}], "edges": [{"from": "公寓", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.8）", "arrows": "to"}, {"from": "工作", "to": "完成", "label": "需要", "value": 4, "title": "需要（強度 0.8）", "arrows": "to"}, {"from": "Amy", "to": "咖啡廳", "label": "聊天", "value": 4, "title": "聊天（強度 0.8）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "朋友", "value": 4, "title": "朋友（強度 0.85）", "arrows": "to"}, {"from": "工作", "to": "", "label": "目前", "value": 4, "title": "目前（強度 0.85）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.98）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.9）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.9）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.9）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "D": {"name": "David", "ltm": {"nodes": [{"id": "David", "label": "David", "group": "person", "value": 0.867, "title": "David（person）"}, {"id": "咖啡廳", "label": "咖啡廳", "group": "location", "value": 0.867, "title": "咖啡廳（location）"}, {"id": "工作", "label": "工作", "group": "concept", "value": 0.81, "title": "工作（concept）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.85, "title": "公寓（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.95, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.95, "title": "平凡（concept）"}], "edges": [{"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.8）", "arrows": "to"}, {"from": "工作", "to": "工作", "label": "目前", "value": 4, "title": "目前（強度 0.8）", "arrows": "to"}, {"from": "工作", "to": "工作", "label": "目前", "value": 4, "title": "目前（強度 0.8）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.85）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.85）", "arrows": "to"}, {"from": "工作", "to": "公寓", "label": "目前", "value": 4, "title": "目前（強度 0.85）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.9）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.9）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.9）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "E": {"name": "Emma", "ltm": {"nodes": [{"id": "Emma", "label": "Emma", "group": "person", "value": 0.884, "title": "Emma（person）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.885, "title": "Amy（person）"}, {"id": "獨棟房子 2", "label": "獨棟房子 2", "group": "location", "value": 0.85, "title": "獨棟房子 2（location）"}, {"id": "店", "label": "店", "group": "concept", "value": 0.9, "title": "店（concept）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.9, "title": "公寓（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.95, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.95, "title": "平凡（concept）"}], "edges": [{"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.94）", "arrows": "to"}, {"from": "Emma", "to": "獨棟房子 2", "label": "前往", "value": 4, "title": "前往（強度 0.85）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.85）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.85）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.9）", "arrows": "to"}, {"from": "Emma", "to": "店", "label": "工作", "value": 4, "title": "工作（強度 0.9）", "arrows": "to"}, {"from": "Emma", "to": "公寓", "label": "現在場景", "value": 4, "title": "現在場景（強度 0.9）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}};
+const DAYS = [{"day": 1, "ticks": [{"tick": 1, "time": "06:00", "day": 1, "execute": {"A": {"action": "起床泡咖啡", "target": "公寓", "completed": true}, "B": {"action": "起床", "target": "公寓", "completed": true}, "C": {"action": "起床準備上班", "target": "公寓", "completed": true}, "D": {"action": "起床", "target": "獨棟房子", "completed": true}, "E": {"action": "起床", "target": "獨棟房子 2", "completed": true}}, "decide": {"A": {"action": "休息", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9854, "K": 0.0, "S": 0.0, "C": 0.3942, "mode": "intuitive"}, "action_probs": {"前往": 0.0614, "回家": 0.0463, "賣咖啡": 0.0463, "整理店面": 0.0463, "打烊": 0.0463, "備料": 0.0463, "煮飯": 0.0463, "服務客人": 0.0463, "收銀": 0.0463, "補貨": 0.0463, "工作": 0.0463, "吃飯": 0.0463, "買東西": 0.0463, "散步": 0.0485, "休息": 0.0477, "整理家裡": 0.0463, "滑手機": 0.0477, "運動": 0.0463, "對話": 0.0541, "起床": 0.0463, "睡覺": 0.0463}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.045577837099639654, "回家": 0.045577837099639654, "賣咖啡": 0.045577837099639654, "整理店面": 0.045577837099639654, "打烊": 0.045577837099639654, "備料": 0.045577837099639654, "煮飯": 0.045577837099639654, "服務客人": 0.045577837099639654, "收銀": 0.045577837099639654, "補貨": 0.045577837099639654, "工作": 0.045577837099639654, "吃飯": 0.045577837099639654, "買東西": 0.045577837099639654, "散步": 0.05295389185185288, "休息": 0.05037130007131106, "整理家裡": 0.045577837099639654, "滑手機": 0.05037130007131106, "運動": 0.045577837099639654, "對話": 0.07148027731165076, "起床": 0.045577837099639654, "睡覺": 0.045577837099639654}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "B": {"action": "散步", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.2908, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "服務客人", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9852, "K": 0.0, "S": 0.0, "C": 0.2956, "mode": "intuitive"}, "action_probs": {"前往": 0.0612, "回家": 0.0461, "賣咖啡": 0.0461, "整理店面": 0.0461, "打烊": 0.0461, "備料": 0.0461, "煮飯": 0.0461, "服務客人": 0.0461, "收銀": 0.0461, "補貨": 0.0461, "工作": 0.0461, "吃飯": 0.0461, "買東西": 0.0461, "散步": 0.0461, "休息": 0.0508, "整理家裡": 0.0461, "滑手機": 0.0475, "運動": 0.0461, "對話": 0.0538, "起床": 0.0461, "睡覺": 0.0491}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "吃飯", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "E": {"action": "滑手機", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.2908, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": []}, {"tick": 2, "time": "07:00", "day": 1, "execute": {"A": {"action": "休息", "target": "", "completed": true}, "B": {"action": "散步", "target": "", "completed": true}, "C": {"action": "服務客人", "target": "", "completed": true}, "D": {"action": "吃飯", "target": "", "completed": true}, "E": {"action": "滑手機", "target": "", "completed": true}}, "decide": {"A": {"action": "睡覺", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": true, "_meta": {"confusion": {"U": 0.9854, "K": 0.0, "S": 0.0, "C": 0.3942, "mode": "intuitive"}, "action_probs": {"前往": 0.0614, "回家": 0.0463, "賣咖啡": 0.0463, "整理店面": 0.0463, "打烊": 0.0463, "備料": 0.0463, "煮飯": 0.0463, "服務客人": 0.0463, "收銀": 0.0463, "補貨": 0.0463, "工作": 0.0463, "吃飯": 0.0463, "買東西": 0.0463, "散步": 0.0485, "休息": 0.0477, "整理家裡": 0.0463, "滑手機": 0.0477, "運動": 0.0463, "對話": 0.0541, "起床": 0.0463, "睡覺": 0.0463}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.045577837099639654, "回家": 0.045577837099639654, "賣咖啡": 0.045577837099639654, "整理店面": 0.045577837099639654, "打烊": 0.045577837099639654, "備料": 0.045577837099639654, "煮飯": 0.045577837099639654, "服務客人": 0.045577837099639654, "收銀": 0.045577837099639654, "補貨": 0.045577837099639654, "工作": 0.045577837099639654, "吃飯": 0.045577837099639654, "買東西": 0.045577837099639654, "散步": 0.05295389185185288, "休息": 0.05037130007131106, "整理家裡": 0.045577837099639654, "滑手機": 0.05037130007131106, "運動": 0.045577837099639654, "對話": 0.07148027731165076, "起床": 0.045577837099639654, "睡覺": 0.045577837099639654}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "B": {"action": "散步", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.2908, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "運動", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9796, "K": 0.0, "S": 0.0, "C": 0.2939, "mode": "intuitive"}, "action_probs": {"前往": 0.0615, "回家": 0.0465, "賣咖啡": 0.0465, "整理店面": 0.0465, "打烊": 0.0465, "備料": 0.0465, "煮飯": 0.0465, "服務客人": 0.0465, "收銀": 0.0465, "補貨": 0.0465, "工作": 0.0465, "吃飯": 0.0465, "買東西": 0.0465, "散步": 0.0465, "休息": 0.0513, "整理家裡": 0.0465, "滑手機": 0.0479, "運動": 0.0465, "對話": 0.0465, "起床": 0.0465, "睡覺": 0.0495}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "煮飯", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "E": {"action": "睡覺", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": true, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.2908, "mode": "intuitive"}, "action_probs": {"前往": 0.0452, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0452, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0452, "對話": 0.0452, "起床": 0.0747, "睡覺": 0.0594}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "A"]}, {"tick": 3, "time": "08:00", "day": 1, "execute": {"B": {"action": "散步", "target": "", "completed": true}, "C": {"action": "運動", "target": "", "completed": true}, "D": {"action": "煮飯", "target": "", "completed": true}}, "decide": {"B": {"action": "吃飯", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9696, "K": 0.0, "S": 0.0, "C": 0.2909, "mode": "intuitive"}, "action_probs": {"前往": 0.0446, "回家": 0.0446, "賣咖啡": 0.0446, "整理店面": 0.0446, "打烊": 0.0446, "備料": 0.0446, "煮飯": 0.0446, "服務客人": 0.0446, "收銀": 0.0446, "補貨": 0.0446, "工作": 0.0446, "吃飯": 0.0446, "買東西": 0.0446, "散步": 0.0582, "休息": 0.0494, "整理家裡": 0.0446, "滑手機": 0.046, "運動": 0.0446, "對話": 0.0446, "起床": 0.074, "睡覺": 0.0588}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.045454545454545456, "回家": 0.045454545454545456, "賣咖啡": 0.045454545454545456, "整理店面": 0.045454545454545456, "打烊": 0.045454545454545456, "備料": 0.045454545454545456, "煮飯": 0.045454545454545456, "服務客人": 0.045454545454545456, "收銀": 0.045454545454545456, "補貨": 0.045454545454545456, "工作": 0.045454545454545456, "吃飯": 0.045454545454545456, "買東西": 0.045454545454545456, "散步": 0.09090909090909091, "休息": 0.045454545454545456, "整理家裡": 0.045454545454545456, "滑手機": 0.045454545454545456, "運動": 0.045454545454545456, "對話": 0.045454545454545456, "起床": 0.045454545454545456, "睡覺": 0.045454545454545456}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "前往", "target": "公寓", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.996, "K": 0.0, "S": 0.0, "C": 0.2988, "mode": "intuitive"}, "action_probs": {"前往": 0.0603, "回家": 0.0452, "賣咖啡": 0.0452, "整理店面": 0.0452, "打烊": 0.0452, "備料": 0.0452, "煮飯": 0.0452, "服務客人": 0.0583, "收銀": 0.0452, "補貨": 0.0452, "工作": 0.0452, "吃飯": 0.0452, "買東西": 0.0452, "散步": 0.0452, "休息": 0.0501, "整理家裡": 0.0452, "滑手機": 0.0467, "運動": 0.0583, "對話": 0.0452, "起床": 0.0452, "睡覺": 0.0483}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.043478260869565216, "回家": 0.043478260869565216, "賣咖啡": 0.043478260869565216, "整理店面": 0.043478260869565216, "打烊": 0.043478260869565216, "備料": 0.043478260869565216, "煮飯": 0.043478260869565216, "服務客人": 0.08695652173913043, "收銀": 0.043478260869565216, "補貨": 0.043478260869565216, "工作": 0.043478260869565216, "吃飯": 0.043478260869565216, "買東西": 0.043478260869565216, "散步": 0.043478260869565216, "休息": 0.043478260869565216, "整理家裡": 0.043478260869565216, "滑手機": 0.043478260869565216, "運動": 0.08695652173913043, "對話": 0.043478260869565216, "起床": 0.043478260869565216, "睡覺": 0.043478260869565216}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "買東西", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9696, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.044, "回家": 0.044, "賣咖啡": 0.044, "整理店面": 0.044, "打烊": 0.044, "備料": 0.044, "煮飯": 0.057, "服務客人": 0.044, "收銀": 0.044, "補貨": 0.044, "工作": 0.044, "吃飯": 0.057, "買東西": 0.044, "散步": 0.044, "休息": 0.0488, "整理家裡": 0.044, "滑手機": 0.0455, "運動": 0.044, "對話": 0.044, "起床": 0.0734, "睡覺": 0.0582}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.043478260869565216, "回家": 0.043478260869565216, "賣咖啡": 0.043478260869565216, "整理店面": 0.043478260869565216, "打烊": 0.043478260869565216, "備料": 0.043478260869565216, "煮飯": 0.08695652173913043, "服務客人": 0.043478260869565216, "收銀": 0.043478260869565216, "補貨": 0.043478260869565216, "工作": 0.043478260869565216, "吃飯": 0.08695652173913043, "買東西": 0.043478260869565216, "散步": 0.043478260869565216, "休息": 0.043478260869565216, "整理家裡": 0.043478260869565216, "滑手機": 0.043478260869565216, "運動": 0.043478260869565216, "對話": 0.043478260869565216, "起床": 0.043478260869565216, "睡覺": 0.043478260869565216}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "A"]}, {"tick": 4, "time": "09:00", "day": 1, "execute": {"B": {"action": "吃飯", "target": "", "completed": true}, "C": {"action": "前往", "target": "公寓", "completed": true}, "D": {"action": "買東西", "target": "", "completed": true}}, "decide": {"B": {"action": "吃飯", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9912, "K": 0.0, "S": 0.0, "C": 0.2974, "mode": "intuitive"}, "action_probs": {"前往": 0.0431, "回家": 0.0431, "賣咖啡": 0.0431, "整理店面": 0.0431, "打烊": 0.0431, "備料": 0.0431, "煮飯": 0.0431, "服務客人": 0.0431, "收銀": 0.0431, "補貨": 0.0431, "工作": 0.0431, "吃飯": 0.0556, "買東西": 0.0431, "散步": 0.0681, "休息": 0.0478, "整理家裡": 0.0431, "滑手機": 0.0445, "運動": 0.0431, "對話": 0.0508, "起床": 0.0725, "睡覺": 0.0572}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.04166666666666667, "回家": 0.04166666666666667, "賣咖啡": 0.04166666666666667, "整理店面": 0.04166666666666667, "打烊": 0.04166666666666667, "備料": 0.04166666666666667, "煮飯": 0.04166666666666667, "服務客人": 0.04166666666666667, "收銀": 0.04166666666666667, "補貨": 0.04166666666666667, "工作": 0.04166666666666667, "吃飯": 0.08333333333333334, "買東西": 0.04166666666666667, "散步": 0.12500000000000003, "休息": 0.04166666666666667, "整理家裡": 0.04166666666666667, "滑手機": 0.04166666666666667, "運動": 0.04166666666666667, "對話": 0.04166666666666667, "起床": 0.04166666666666667, "睡覺": 0.04166666666666667}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "對話", "target": "Ben", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9698, "K": 0.0, "S": 0.0, "C": 0.2909, "mode": "intuitive"}, "action_probs": {"前往": 0.0719, "回家": 0.0443, "賣咖啡": 0.0443, "整理店面": 0.0443, "打烊": 0.0443, "備料": 0.0443, "煮飯": 0.0443, "服務客人": 0.0568, "收銀": 0.0443, "補貨": 0.0443, "工作": 0.0443, "吃飯": 0.0443, "買東西": 0.0443, "散步": 0.0443, "休息": 0.049, "整理家裡": 0.0443, "滑手機": 0.0457, "運動": 0.0568, "對話": 0.052, "起床": 0.0443, "睡覺": 0.0473}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.08349871142475417, "回家": 0.045825064428762316, "賣咖啡": 0.045825064428762316, "整理店面": 0.045825064428762316, "打烊": 0.045825064428762316, "備料": 0.045825064428762316, "煮飯": 0.045825064428762316, "服務客人": 0.045825064428762316, "收銀": 0.045825064428762316, "補貨": 0.045825064428762316, "工作": 0.045825064428762316, "吃飯": 0.045825064428762316, "買東西": 0.045825064428762316, "散步": 0.045825064428762316, "休息": 0.045825064428762316, "整理家裡": 0.045825064428762316, "滑手機": 0.045825064428762316, "運動": 0.045825064428762316, "對話": 0.045825064428762316, "起床": 0.045825064428762316, "睡覺": 0.045825064428762316}, "inertia": {"前往": 0.08333333333333333, "回家": 0.041666666666666664, "賣咖啡": 0.041666666666666664, "整理店面": 0.041666666666666664, "打烊": 0.041666666666666664, "備料": 0.041666666666666664, "煮飯": 0.041666666666666664, "服務客人": 0.08333333333333333, "收銀": 0.041666666666666664, "補貨": 0.041666666666666664, "工作": 0.041666666666666664, "吃飯": 0.041666666666666664, "買東西": 0.041666666666666664, "散步": 0.041666666666666664, "休息": 0.041666666666666664, "整理家裡": 0.041666666666666664, "滑手機": 0.041666666666666664, "運動": 0.08333333333333333, "對話": 0.041666666666666664, "起床": 0.041666666666666664, "睡覺": 0.041666666666666664}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "整理店面", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.0435, "回家": 0.0435, "賣咖啡": 0.0435, "整理店面": 0.0435, "打烊": 0.0435, "備料": 0.0435, "煮飯": 0.056, "服務客人": 0.0435, "收銀": 0.0435, "補貨": 0.0435, "工作": 0.0435, "吃飯": 0.056, "買東西": 0.056, "散步": 0.0435, "休息": 0.0483, "整理家裡": 0.0435, "滑手機": 0.0449, "運動": 0.0435, "對話": 0.0435, "起床": 0.0729, "睡覺": 0.0576}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.041666666666666664, "回家": 0.041666666666666664, "賣咖啡": 0.041666666666666664, "整理店面": 0.041666666666666664, "打烊": 0.041666666666666664, "備料": 0.041666666666666664, "煮飯": 0.08333333333333333, "服務客人": 0.041666666666666664, "收銀": 0.041666666666666664, "補貨": 0.041666666666666664, "工作": 0.041666666666666664, "吃飯": 0.08333333333333333, "買東西": 0.08333333333333333, "散步": 0.041666666666666664, "休息": 0.041666666666666664, "整理家裡": 0.041666666666666664, "滑手機": 0.041666666666666664, "運動": 0.041666666666666664, "對話": 0.041666666666666664, "起床": 0.041666666666666664, "睡覺": 0.041666666666666664}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "A"]}, {"tick": 5, "time": "10:00", "day": 1, "execute": {"B": {"action": "對話", "target": "Claire", "content": "[THOUGHT] 今天有點累，想稍微休息一下。", "accepted": true, "rounds": 1}, "C": {"action": "對話", "target": "Ben", "content": "Ben", "accepted": true, "rounds": 1}, "D": {"action": "整理店面", "target": "", "completed": true}}, "decide": {"B": {"action": "整理店面", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9872, "K": 0.0, "S": 0.0, "C": 0.2962, "mode": "intuitive"}, "action_probs": {"前往": 0.0421, "回家": 0.0421, "賣咖啡": 0.0421, "整理店面": 0.0421, "打烊": 0.0421, "備料": 0.0421, "煮飯": 0.0421, "服務客人": 0.0421, "收銀": 0.0421, "補貨": 0.0421, "工作": 0.0421, "吃飯": 0.0652, "買東西": 0.0421, "散步": 0.0652, "休息": 0.0584, "整理家裡": 0.0421, "滑手機": 0.0436, "運動": 0.0421, "對話": 0.0498, "起床": 0.0716, "睡覺": 0.0562}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.038461538461538464, "回家": 0.038461538461538464, "賣咖啡": 0.038461538461538464, "整理店面": 0.038461538461538464, "打烊": 0.038461538461538464, "備料": 0.038461538461538464, "煮飯": 0.038461538461538464, "服務客人": 0.038461538461538464, "收銀": 0.038461538461538464, "補貨": 0.038461538461538464, "工作": 0.038461538461538464, "吃飯": 0.11538461538461539, "買東西": 0.038461538461538464, "散步": 0.11538461538461539, "休息": 0.07692307692307693, "整理家裡": 0.038461538461538464, "滑手機": 0.038461538461538464, "運動": 0.038461538461538464, "對話": 0.038461538461538464, "起床": 0.038461538461538464, "睡覺": 0.038461538461538464}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "回家", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9846, "K": 0.0, "S": 0.0, "C": 0.2954, "mode": "intuitive"}, "action_probs": {"前往": 0.0565, "回家": 0.0445, "賣咖啡": 0.0445, "整理店面": 0.0445, "打烊": 0.0445, "備料": 0.0445, "煮飯": 0.0445, "服務客人": 0.0565, "收銀": 0.0445, "補貨": 0.0445, "工作": 0.0445, "吃飯": 0.0445, "買東西": 0.0445, "散步": 0.0445, "休息": 0.0493, "整理家裡": 0.0445, "滑手機": 0.046, "運動": 0.0565, "對話": 0.0642, "起床": 0.0445, "睡覺": 0.0475}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "inertia": {"前往": 0.08, "回家": 0.04, "賣咖啡": 0.04, "整理店面": 0.04, "打烊": 0.04, "備料": 0.04, "煮飯": 0.04, "服務客人": 0.08, "收銀": 0.04, "補貨": 0.04, "工作": 0.04, "吃飯": 0.04, "買東西": 0.04, "散步": 0.04, "休息": 0.04, "整理家裡": 0.04, "滑手機": 0.04, "運動": 0.08, "對話": 0.08, "起床": 0.04, "睡覺": 0.04}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "休息", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9694, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.043, "回家": 0.043, "賣咖啡": 0.043, "整理店面": 0.055, "打烊": 0.043, "備料": 0.043, "煮飯": 0.055, "服務客人": 0.043, "收銀": 0.043, "補貨": 0.043, "工作": 0.043, "吃飯": 0.055, "買東西": 0.055, "散步": 0.043, "休息": 0.0478, "整理家裡": 0.043, "滑手機": 0.0444, "運動": 0.043, "對話": 0.043, "起床": 0.0724, "睡覺": 0.0571}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.04, "回家": 0.04, "賣咖啡": 0.04, "整理店面": 0.08, "打烊": 0.04, "備料": 0.04, "煮飯": 0.08, "服務客人": 0.04, "收銀": 0.04, "補貨": 0.04, "工作": 0.04, "吃飯": 0.08, "買東西": 0.08, "散步": 0.04, "休息": 0.04, "整理家裡": 0.04, "滑手機": 0.04, "運動": 0.04, "對話": 0.04, "起床": 0.04, "睡覺": 0.04}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [{"initiator": "C", "responder": "B", "accepted": true, "turns": [{"speaker": "C", "msg": "Ben"}, {"speaker": "B", "msg": "[THOUGHT] 今天有點累，想稍微休息一下。"}]}], "sleeping_today": ["E", "A"]}, {"tick": 6, "time": "11:00", "day": 1, "execute": {"B": {"action": "整理店面", "target": "", "completed": true}, "C": {"action": "回家", "target": "", "completed": true}, "D": {"action": "休息", "target": "", "completed": true}}, "decide": {"B": {"action": "收銀", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9856, "K": 0.0, "S": 0.0, "C": 0.2957, "mode": "intuitive"}, "action_probs": {"前往": 0.0417, "回家": 0.0417, "賣咖啡": 0.0417, "整理店面": 0.0528, "打烊": 0.0417, "備料": 0.0417, "煮飯": 0.0417, "服務客人": 0.0417, "收銀": 0.0417, "補貨": 0.0417, "工作": 0.0417, "吃飯": 0.0639, "買東西": 0.0417, "散步": 0.0639, "休息": 0.0575, "整理家裡": 0.0417, "滑手機": 0.0431, "運動": 0.0417, "對話": 0.0494, "起床": 0.0711, "睡覺": 0.0558}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.037037037037037035, "回家": 0.037037037037037035, "賣咖啡": 0.037037037037037035, "整理店面": 0.07407407407407407, "打烊": 0.037037037037037035, "備料": 0.037037037037037035, "煮飯": 0.037037037037037035, "服務客人": 0.037037037037037035, "收銀": 0.037037037037037035, "補貨": 0.037037037037037035, "工作": 0.037037037037037035, "吃飯": 0.1111111111111111, "買東西": 0.037037037037037035, "散步": 0.1111111111111111, "休息": 0.07407407407407407, "整理家裡": 0.037037037037037035, "滑手機": 0.037037037037037035, "運動": 0.037037037037037035, "對話": 0.037037037037037035, "起床": 0.037037037037037035, "睡覺": 0.037037037037037035}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "C": {"action": "睡覺", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": true, "_meta": {"confusion": {"U": 0.9846, "K": 0.0, "S": 0.0, "C": 0.2954, "mode": "intuitive"}, "action_probs": {"前往": 0.0556, "回家": 0.0556, "賣咖啡": 0.0441, "整理店面": 0.0441, "打烊": 0.0441, "備料": 0.0441, "煮飯": 0.0441, "服務客人": 0.0556, "收銀": 0.0441, "補貨": 0.0441, "工作": 0.0441, "吃飯": 0.0441, "買東西": 0.0441, "散步": 0.0441, "休息": 0.0488, "整理家裡": 0.0441, "滑手機": 0.0455, "運動": 0.0556, "對話": 0.0633, "起床": 0.0441, "睡覺": 0.0471}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.047619047619047616, "回家": 0.047619047619047616, "賣咖啡": 0.047619047619047616, "整理店面": 0.047619047619047616, "打烊": 0.047619047619047616, "備料": 0.047619047619047616, "煮飯": 0.047619047619047616, "服務客人": 0.047619047619047616, "收銀": 0.047619047619047616, "補貨": 0.047619047619047616, "工作": 0.047619047619047616, "吃飯": 0.047619047619047616, "買東西": 0.047619047619047616, "散步": 0.047619047619047616, "休息": 0.047619047619047616, "整理家裡": 0.047619047619047616, "滑手機": 0.047619047619047616, "運動": 0.047619047619047616, "對話": 0.047619047619047616, "起床": 0.047619047619047616, "睡覺": 0.047619047619047616}, "inertia": {"前往": 0.07692307692307693, "回家": 0.07692307692307693, "賣咖啡": 0.038461538461538464, "整理店面": 0.038461538461538464, "打烊": 0.038461538461538464, "備料": 0.038461538461538464, "煮飯": 0.038461538461538464, "服務客人": 0.07692307692307693, "收銀": 0.038461538461538464, "補貨": 0.038461538461538464, "工作": 0.038461538461538464, "吃飯": 0.038461538461538464, "買東西": 0.038461538461538464, "散步": 0.038461538461538464, "休息": 0.038461538461538464, "整理家裡": 0.038461538461538464, "滑手機": 0.038461538461538464, "運動": 0.07692307692307693, "對話": 0.07692307692307693, "起床": 0.038461538461538464, "睡覺": 0.038461538461538464}, "situation": {"前往": 0.0449544382219865, "回家": 0.0449544382219865, "賣咖啡": 0.0449544382219865, "整理店面": 0.0449544382219865, "打烊": 0.0449544382219865, "備料": 0.0449544382219865, "煮飯": 0.0449544382219865, "服務客人": 0.0449544382219865, "收銀": 0.0449544382219865, "補貨": 0.0449544382219865, "工作": 0.0449544382219865, "吃飯": 0.0449544382219865, "買東西": 0.0449544382219865, "散步": 0.0449544382219865, "休息": 0.06068214437357979, "整理家裡": 0.0449544382219865, "滑手機": 0.0496823377613678, "運動": 0.0449544382219865, "對話": 0.07050259325540642, "起床": 0.0449544382219865, "睡覺": 0.05490747483587527}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "吃飯", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.974, "K": 0.0, "S": 0.0, "C": 0.3896, "mode": "intuitive"}, "action_probs": {"前往": 0.0425, "回家": 0.0425, "賣咖啡": 0.0425, "整理店面": 0.054, "打烊": 0.0425, "備料": 0.0425, "煮飯": 0.054, "服務客人": 0.0425, "收銀": 0.0425, "補貨": 0.0425, "工作": 0.0425, "吃飯": 0.054, "買東西": 0.054, "散步": 0.0425, "休息": 0.0589, "整理家裡": 0.0425, "滑手機": 0.044, "運動": 0.0425, "對話": 0.0425, "起床": 0.0719, "睡覺": 0.0567}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.038461538461538464, "回家": 0.038461538461538464, "賣咖啡": 0.038461538461538464, "整理店面": 0.07692307692307693, "打烊": 0.038461538461538464, "備料": 0.038461538461538464, "煮飯": 0.07692307692307693, "服務客人": 0.038461538461538464, "收銀": 0.038461538461538464, "補貨": 0.038461538461538464, "工作": 0.038461538461538464, "吃飯": 0.07692307692307693, "買東西": 0.07692307692307693, "散步": 0.038461538461538464, "休息": 0.07692307692307693, "整理家裡": 0.038461538461538464, "滑手機": 0.038461538461538464, "運動": 0.038461538461538464, "對話": 0.038461538461538464, "起床": 0.038461538461538464, "睡覺": 0.038461538461538464}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "A", "C"]}, {"tick": 7, "time": "12:00", "day": 1, "execute": {"B": {"action": "收銀", "target": "", "completed": true}, "D": {"action": "吃飯", "target": "", "completed": true}}, "decide": {"B": {"action": "睡覺", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": true, "_meta": {"confusion": {"U": 0.984, "K": 0.0, "S": 0.0, "C": 0.2952, "mode": "intuitive"}, "action_probs": {"前往": 0.0417, "回家": 0.0417, "賣咖啡": 0.0417, "整理店面": 0.0524, "打烊": 0.0417, "備料": 0.0417, "煮飯": 0.0417, "服務客人": 0.0417, "收銀": 0.0524, "補貨": 0.0417, "工作": 0.0417, "吃飯": 0.0631, "買東西": 0.0417, "散步": 0.0631, "休息": 0.0572, "整理家裡": 0.0417, "滑手機": 0.0431, "運動": 0.0417, "對話": 0.0417, "起床": 0.0711, "睡覺": 0.0558}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.03571428571428571, "回家": 0.03571428571428571, "賣咖啡": 0.03571428571428571, "整理店面": 0.07142857142857142, "打烊": 0.03571428571428571, "備料": 0.03571428571428571, "煮飯": 0.03571428571428571, "服務客人": 0.03571428571428571, "收銀": 0.07142857142857142, "補貨": 0.03571428571428571, "工作": 0.03571428571428571, "吃飯": 0.10714285714285714, "買東西": 0.03571428571428571, "散步": 0.10714285714285714, "休息": 0.07142857142857142, "整理家裡": 0.03571428571428571, "滑手機": 0.03571428571428571, "運動": 0.03571428571428571, "對話": 0.03571428571428571, "起床": 0.03571428571428571, "睡覺": 0.03571428571428571}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}, "D": {"action": "買東西", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": false, "_meta": {"confusion": {"U": 0.9696, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.0446, "回家": 0.0446, "賣咖啡": 0.0446, "整理店面": 0.0446, "打烊": 0.0446, "備料": 0.0446, "煮飯": 0.0582, "服務客人": 0.0446, "收銀": 0.0446, "補貨": 0.0446, "工作": 0.0446, "吃飯": 0.0446, "買東西": 0.0446, "散步": 0.0446, "休息": 0.0494, "整理家裡": 0.0446, "滑手機": 0.046, "運動": 0.0446, "對話": 0.0446, "起床": 0.074, "睡覺": 0.0588}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.045454545454545456, "回家": 0.045454545454545456, "賣咖啡": 0.045454545454545456, "整理店面": 0.045454545454545456, "打烊": 0.045454545454545456, "備料": 0.045454545454545456, "煮飯": 0.09090909090909091, "服務客人": 0.045454545454545456, "收銀": 0.045454545454545456, "補貨": 0.045454545454545456, "工作": 0.045454545454545456, "吃飯": 0.045454545454545456, "買東西": 0.045454545454545456, "散步": 0.045454545454545456, "休息": 0.045454545454545456, "整理家裡": 0.045454545454545456, "滑手機": 0.045454545454545456, "運動": 0.045454545454545456, "對話": 0.045454545454545456, "起床": 0.045454545454545456, "睡覺": 0.045454545454545456}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "A", "C", "B"]}, {"tick": 8, "time": "13:00", "day": 1, "execute": {"D": {"action": "買東西", "target": "", "completed": true}}, "decide": {"D": {"action": "睡覺", "target": "", "content": "", "thought": "", "ham": [], "should_sleep": true, "_meta": {"confusion": {"U": 0.9696, "K": 0.0, "S": 0.0, "C": 0.3878, "mode": "intuitive"}, "action_probs": {"前往": 0.0446, "回家": 0.0446, "賣咖啡": 0.0446, "整理店面": 0.0582, "打烊": 0.0446, "備料": 0.0446, "煮飯": 0.0446, "服務客人": 0.0446, "收銀": 0.0446, "補貨": 0.0446, "工作": 0.0446, "吃飯": 0.0446, "買東西": 0.0446, "散步": 0.0446, "休息": 0.0494, "整理家裡": 0.0446, "滑手機": 0.046, "運動": 0.0446, "對話": 0.0446, "起床": 0.074, "睡覺": 0.0588}, "is_major_event": false, "breakdown": {"schedule": {"前往": 0.04279538953953334, "回家": 0.04279538953953334, "賣咖啡": 0.04279538953953334, "整理店面": 0.04279538953953334, "打烊": 0.04279538953953334, "備料": 0.04279538953953334, "煮飯": 0.04279538953953334, "服務客人": 0.04279538953953334, "收銀": 0.04279538953953334, "補貨": 0.04279538953953334, "工作": 0.04279538953953334, "吃飯": 0.04279538953953334, "買東西": 0.04279538953953334, "散步": 0.04279538953953334, "休息": 0.04279538953953334, "整理家裡": 0.04279538953953334, "滑手機": 0.04279538953953334, "運動": 0.04279538953953334, "對話": 0.04279538953953334, "起床": 0.11632992972713978, "睡覺": 0.07055766902172637}, "inertia": {"前往": 0.045454545454545456, "回家": 0.045454545454545456, "賣咖啡": 0.045454545454545456, "整理店面": 0.09090909090909091, "打烊": 0.045454545454545456, "備料": 0.045454545454545456, "煮飯": 0.045454545454545456, "服務客人": 0.045454545454545456, "收銀": 0.045454545454545456, "補貨": 0.045454545454545456, "工作": 0.045454545454545456, "吃飯": 0.045454545454545456, "買東西": 0.045454545454545456, "散步": 0.045454545454545456, "休息": 0.045454545454545456, "整理家裡": 0.045454545454545456, "滑手機": 0.045454545454545456, "運動": 0.045454545454545456, "對話": 0.045454545454545456, "起床": 0.045454545454545456, "睡覺": 0.045454545454545456}, "situation": {"前往": 0.04613305260202804, "回家": 0.04613305260202804, "賣咖啡": 0.04613305260202804, "整理店面": 0.04613305260202804, "打烊": 0.04613305260202804, "備料": 0.04613305260202804, "煮飯": 0.04613305260202804, "服務客人": 0.04613305260202804, "收銀": 0.04613305260202804, "補貨": 0.04613305260202804, "工作": 0.04613305260202804, "吃飯": 0.04613305260202804, "買東西": 0.04613305260202804, "散步": 0.04613305260202804, "休息": 0.062273107375214604, "整理家裡": 0.04613305260202804, "滑手機": 0.05098490809781547, "運動": 0.04613305260202804, "對話": 0.04613305260202804, "起床": 0.04613305260202804, "睡覺": 0.05634703769046526}, "weights": [0.4, 0.3, 0.3]}}, "mode": "intuitive"}}, "interrupts": {}, "dialogues": [], "sleeping_today": ["E", "B", "C", "D", "A"]}], "sleep_reports": {}}];
+
+
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+  // 觸發 LTM 圖譜/曲線重繪
+  if (name === 'ltm') initLTMGraphs();
+  if (name === 'confusion') initConfusionCharts();
+}
+
+function showCharTab(section, code) {
+  const prefix = section === 'stm' ? 'stm-panel-'
+              : section === 'ltm' ? 'ltm-panel-'
+              : 'conf-panel-';
+  const parent = document.getElementById(section === 'conf' ? 'confusion'
+                                                            : section);
+  parent.querySelectorAll('.char-panel').forEach(p => p.classList.remove('active'));
+  parent.querySelectorAll('.char-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(prefix + code).classList.add('active');
+  event.target.classList.add('active');
+}
+
+let ltmInitDone = false;
+function initLTMGraphs() {
+  if (ltmInitDone) return;
+  ltmInitDone = true;
+  Object.keys(CHARS).forEach(code => {
+    const container = document.getElementById('ltm-graph-' + code);
+    if (!container) return;
+    const data = CHARS[code].ltm;
+    if (!data.nodes.length) {
+      container.innerHTML = '<div style="padding:20px;color:#86868b">（尚無 LTM 命題）</div>';
+      return;
+    }
+    new vis.Network(container, data, {
+      nodes: { shape: 'dot', font: { size: 14 } },
+      edges: { font: { size: 11, align: 'middle' } },
+      groups: {
+        person:   { color: { background: '#007aff', border: '#0056cc' } },
+        location: { color: { background: '#34c759', border: '#248a3d' } },
+        concept:  { color: { background: '#ff9500', border: '#c97a00' } },
+      },
+      physics: { stabilization: true },
+    });
+  });
+}
+
+let confInitDone = false;
+function initConfusionCharts() {
+  if (confInitDone) return;
+  confInitDone = true;
+  Object.keys(CHARS).forEach(code => {
+    const canvas = document.getElementById('conf-chart-' + code);
+    if (!canvas) return;
+    const c = CHARS[code].curves;
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: c.labels,
+        datasets: [
+          { label: 'U', data: c.U_values, borderColor: '#007aff', fill: false },
+          { label: 'K', data: c.K_values, borderColor: '#ff3b30', fill: false },
+          { label: 'S', data: c.S_values, borderColor: '#ff9500', fill: false },
+          { label: 'C', data: c.C_values, borderColor: '#34c759', fill: false,
+            borderWidth: 3 },
+        ]
+      },
+      options: { scales: { y: { min: 0, max: 1 } } }
+    });
+  });
+}
+
+</script>
+</body>
+</html>

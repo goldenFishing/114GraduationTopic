@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>AI-Town 模擬報告</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Outfit', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0d0f14; color: #c9d1d9; margin: 0;
+  line-height: 1.5;
+  background-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 90%),
+                    radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.05) 0%, transparent 90%);
+  background-attachment: fixed;
+}
+header {
+  background: #161b22;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+  padding: 20px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00f0ff, #5856d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.meta { font-size: 13px; color: #8b949e; letter-spacing: 0.5px; }
+
+/* -- Nav --------------------------------------------- */
+nav#main-nav {
+  background: rgba(22, 27, 34, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 10px 28px;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1);
+  display: flex; gap: 8px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+.tab-btn {
+  padding: 8px 16px; border: 1px solid rgba(240, 246, 252, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px; cursor: pointer; font-size: 13px; color: #8b949e;
+  font-weight: 500;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #c9d1d9;
+  transform: translateY(-1px);
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #00f0ff, #007aff);
+  color: #0d0f14;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* -- Main -------------------------------------------- */
+main { padding: 24px 28px; }
+.tab { display: none; }
+.tab.active { display: block; animation: fadeIn 0.4s ease-out; }
+h2 {
+  font-size: 22px; margin: 0 0 8px; font-weight: 600;
+  color: #f0f6fc; border-left: 4px solid #00f0ff; padding-left: 10px;
+}
+h3 { font-size: 18px; margin: 20px 0 12px; color: #f0f6fc; }
+.section-desc { font-size: 14px; color: #8b949e; margin: 0 0 20px; line-height: 1.6; }
+
+/* -- Overview ---------------------------------------- */
+.overview-table {
+  border-collapse: collapse;
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; overflow: hidden; width: 100%; margin-bottom: 24px;
+}
+.overview-table th, .overview-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1); font-size: 14px;
+}
+.overview-table th {
+  background: rgba(48, 54, 61, 0.8);
+  color: #f0f6fc; font-weight: 600; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.overview-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.stat-card {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; padding: 18px 24px;
+  flex: 1; min-width: 160px; text-align: center;
+  transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-num {
+  font-size: 32px; font-weight: 700;
+  background: linear-gradient(135deg, #00f0ff, #5856d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label { font-size: 13px; color: #8b949e; margin-top: 6px; font-weight: 500; }
+
+/* -- Char tabs (common) ------------------------------ */
+.char-tabs {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.char-tab-btn {
+  padding: 6px 14px; border: 1px solid rgba(240, 246, 252, 0.1);
+  background: rgba(22, 27, 34, 0.4);
+  color: #8b949e; border-radius: 15px; cursor: pointer; font-size: 13px;
+  transition: all 0.2s;
+}
+.char-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f0f6fc;
+}
+.char-tab-btn.active {
+  background: rgba(0, 240, 255, 0.1);
+  color: #00f0ff;
+  border-color: #00f0ff;
+  font-weight: 600;
+}
+.char-panel { display: none; }
+.char-panel.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+/* -- Daily Log --------------------------------------- */
+.day-header {
+  font-size: 14px; font-weight: 700; color: #00f0ff;
+  background: rgba(0, 240, 255, 0.1); padding: 6px 14px;
+  border-radius: 6px; margin: 24px 0 12px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  letter-spacing: 0.5px;
+}
+.tick-entry {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  border-radius: 10px; margin-bottom: 8px;
+  padding: 12px 16px; border-left: 4px solid #30363d;
+  transition: all 0.2s;
+}
+.tick-entry:hover {
+  background: rgba(22, 27, 34, 0.8);
+  border-color: rgba(240, 246, 252, 0.12);
+  transform: translateX(2px);
+}
+.tick-entry.intuitive { border-left-color: #00ff66; }
+.tick-entry.deliberate { border-left-color: #ff9500; }
+
+.tick-hdr {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 4px;
+}
+.tick-time {
+  font-size: 14px; font-weight: 700; color: #00f0ff; min-width: 50px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.mode-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  font-weight: 600; white-space: nowrap;
+}
+.mode-badge.intuitive  { background: rgba(0, 255, 102, 0.12); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.2); }
+.mode-badge.deliberate { background: rgba(255, 149, 0, 0.12); color: #ff9500; border: 1px solid rgba(255, 149, 0, 0.2); }
+.major-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  background: rgba(255, 0, 127, 0.12); color: #ff007f; font-weight: 600;
+  border: 1px solid rgba(255, 0, 127, 0.25);
+}
+.reward-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  font-weight: 600; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+}
+.reward-badge.positive { background: rgba(0, 255, 102, 0.1); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.15); }
+.reward-badge.negative { background: rgba(255, 59, 48, 0.1); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.15); }
+.reward-badge.zero { background: rgba(255, 255, 255, 0.05); color: #8b949e; }
+
+.tick-action { flex-shrink: 0; font-size: 15px; font-weight: 600; color: #f0f6fc; }
+.tick-cv {
+  font-size: 12px; color: #8b949e; margin-left: auto; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1px 6px; border-radius: 4px;
+}
+
+/* Dynamic weight badges inside tick */
+.tick-weights {
+  display: flex; gap: 6px; margin-left: 10px; flex-wrap: wrap;
+}
+.w-badge {
+  font-size: 11px; padding: 1px 6px; border-radius: 4px;
+  font-weight: 500; font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.w-badge.w-alpha { color: #d4a5ff; border-color: rgba(212, 165, 255, 0.2); }
+.w-badge.w-beta  { color: #79c0ff; border-color: rgba(121, 192, 255, 0.2); }
+.w-badge.w-gamma { color: #56d364; border-color: rgba(86, 211, 100, 0.2); }
+.w-badge.w-delta { color: #e3b341; border-color: rgba(227, 179, 65, 0.2); }
+
+/* Markov probability bars */
+.tick-probs {
+  margin-top: 10px; display: flex; flex-direction: column; gap: 4px;
+  background: rgba(0, 0, 0, 0.15); padding: 8px 12px; border-radius: 6px;
+}
+.prob-item { display: flex; align-items: center; gap: 8px; }
+.prob-item.selected .prob-action { font-weight: 700; color: #00f0ff; }
+.prob-action {
+  font-size: 11px; width: 64px; text-align: right;
+  color: #8b949e; flex-shrink: 0;
+}
+.prob-bar-wrap {
+  flex: 1; height: 6px; background: rgba(255,255,255,0.05);
+  border-radius: 3px; overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%; background: rgba(0, 255, 102, 0.25); border-radius: 3px;
+}
+.prob-item.selected .prob-bar-fill {
+  background: linear-gradient(90deg, #00ff66, #00f0ff);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+.prob-pct {
+  font-size: 11px; color: #8b949e; width: 38px; flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Q-values list */
+.tick-q-values {
+  margin-top: 8px; display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.02); padding: 6px 12px; border-radius: 6px;
+  flex-wrap: wrap; border: 1px solid rgba(255,255,255,0.03);
+}
+.q-label { font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase; }
+.q-pills { display: flex; gap: 5px; flex-wrap: wrap; }
+.score-pill {
+  font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex; gap: 4px;
+}
+.score-pill.selected {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: rgba(0, 240, 255, 0.3);
+}
+.score-pill.selected .score-act { color: #00f0ff; font-weight: 600; }
+.score-pill.pos .score-val { color: #00ff66; }
+.score-pill.neg .score-val { color: #ff3b30; }
+.score-pill.zero .score-val { color: #8b949e; }
+.score-act { color: #8b949e; }
+
+/* Model output */
+.tick-thought {
+  font-size: 13px; color: #d4a5ff; margin-top: 8px; font-style: italic;
+  background: rgba(212, 165, 255, 0.03); padding: 8px 12px; border-radius: 6px;
+  border-left: 2px solid rgba(212, 165, 255, 0.3);
+}
+.tick-content {
+  font-size: 14px; background: rgba(255, 255, 255, 0.03); padding: 8px 12px;
+  border-radius: 6px; margin-top: 6px; color: #e6edf3;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* -- Schedule ---------------------------------------- */
+.sched-table {
+  border-collapse: collapse; width: 100%;
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.sched-table th, .sched-table td {
+  padding: 10px 16px; text-align: left;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1); font-size: 14px;
+}
+.sched-table th {
+  background: rgba(48, 54, 61, 0.8);
+  color: #f0f6fc; font-weight: 600; font-size: 13px;
+}
+.sched-table tr.completed td { color: #8b949e; }
+.sched-time { font-weight: 600; color: #00f0ff; font-family: 'JetBrains Mono', monospace; }
+.done-mark { color: #00ff66; font-weight: bold; }
+.sched-sleep-info {
+  display: flex; gap: 16px; font-size: 13px; color: #c9d1d9;
+  background: rgba(255, 255, 255, 0.03); padding: 10px 16px; border-radius: 8px;
+  margin-bottom: 12px; flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sched-note { font-size: 12px; color: #8b949e; margin-top: 8px; }
+.sched-section-title { font-size: 15px; margin: 16px 0 8px; color: #f0f6fc; font-weight: 600; }
+.sched-sub-desc { font-size: 12px; color: #8b949e; margin: 0 0 10px; }
+
+/* Schedule compare table */
+.sched-compare-table {
+  border-collapse: collapse; width: 100%;
+  background: rgba(22, 27, 34, 0.6);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; overflow: hidden; margin-bottom: 8px;
+}
+.sched-compare-table th, .sched-compare-table td {
+  padding: 9px 14px; text-align: left;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.07); font-size: 13px;
+}
+.sched-compare-table th {
+  background: rgba(48, 54, 61, 0.8);
+  color: #f0f6fc; font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.sched-compare-table tr.sched-match { background: rgba(0, 255, 102, 0.04); }
+.sched-compare-table tr.sched-diff  { background: rgba(255, 149, 0, 0.05); }
+.sched-compare-table tr.sched-match td:first-child { border-left: 3px solid #00ff66; }
+.sched-compare-table tr.sched-diff  td:first-child { border-left: 3px solid #ff9500; }
+.sched-plan-action { font-weight: 600; color: #79c0ff; margin-right: 8px; }
+.sched-plan-loc    { font-size: 11px; color: #8b949e; }
+.sched-plan-col    { min-width: 160px; }
+.sched-actual-col  { color: #c9d1d9; line-height: 1.7; }
+.sched-day-pill {
+  font-size: 10px; background: rgba(0, 240, 255, 0.1); color: #00f0ff;
+  border-radius: 4px; padding: 1px 5px; font-family: 'JetBrains Mono', monospace;
+  font-weight: 600; margin-right: 4px;
+}
+
+/* -- LTM --------------------------------------------- */
+.ltm-summary {
+  background: rgba(22, 27, 34, 0.6);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  padding: 12px 16px; border-radius: 8px;
+  margin-bottom: 12px; font-size: 14px; color: #c9d1d9;
+}
+.ltm-count { color: #8b949e; font-size: 12px; margin-left: 6px; }
+.legend { display: flex; gap: 12px; margin-bottom: 16px; font-size: 13px; }
+.lg-node {
+  padding: 3px 12px; border-radius: 12px; font-weight: 600;
+}
+.lg-node.person   { background: rgba(0, 122, 255, 0.2); color: #79c0ff; border: 1px solid rgba(0, 122, 255, 0.4); }
+.lg-node.location { background: rgba(0, 255, 102, 0.15); color: #56d364; border: 1px solid rgba(0, 255, 102, 0.3); }
+.lg-node.concept  { background: rgba(227, 179, 65, 0.15); color: #e3b341; border: 1px solid rgba(227, 179, 65, 0.3); }
+
+/* -- Confusion Chart --------------------------------- */
+.conf-chart-wrap {
+  position: relative;
+  height: 340px;
+  background: rgba(22, 27, 34, 0.4);
+  border-radius: 10px;
+  border: 1px solid rgba(240, 246, 252, 0.07);
+  padding: 8px;
+}
+.conf-legend {
+  display: flex; gap: 16px; margin-top: 12px; font-size: 12px;
+  flex-wrap: wrap; background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 6px;
+}
+.conf-note { font-size: 12px; color: #8b949e; margin-top: 6px; }
+.lg-u { color: #58a6ff; font-weight: 600; }
+.lg-k { color: #ff7b72; font-weight: 600; }
+.lg-s { color: #ffa657; font-weight: 600; }
+.lg-c { color: #56d364; font-weight: 700; }
+.lg-th { color: #8b949e; font-weight: 600; }
+
+/* -- Dialogue ---------------------------------------- */
+.dialogue-list { max-height: 80vh; overflow-y: auto; }
+.dlg-group-header {
+  font-size: 15px; margin: 24px 0 10px; color: #f0f6fc;
+  font-weight: 600;
+}
+.dlg-card {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  padding: 14px 16px; margin-bottom: 10px;
+  border-radius: 10px; border-left: 4px solid #00ff66;
+  transition: all 0.2s;
+}
+.dlg-card:hover { border-color: rgba(240, 246, 252, 0.12); transform: translateX(2px); }
+.dlg-card.rejected { border-left-color: #ff3b30; opacity: 0.6; }
+.dlg-head { font-size: 12px; color: #8b949e; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+.dlg-turn { padding: 4px 0; font-size: 14px; }
+.dlg-turn b { color: #f0f6fc; }
+.dlg-empty { color: #8b949e; font-size: 13px; }
+
+/* -- Sleep ------------------------------------------- */
+.sleep-card {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  padding: 16px 20px;
+  margin-bottom: 14px; border-radius: 10px;
+  border-left: 4px solid #5856d6;
+  transition: all 0.2s;
+}
+.sleep-card:hover { border-color: rgba(240, 246, 252, 0.12); transform: translateY(-2px); }
+.sleep-head {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 12px;
+}
+.sleep-who { font-weight: 700; font-size: 18px; color: #f0f6fc; }
+.sleep-day { color: #00f0ff; font-size: 13px; font-weight: 600; }
+.sleep-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.sleep-badge {
+  background: rgba(255, 255, 255, 0.03); padding: 4px 10px;
+  border-radius: 6px; font-size: 12px; color: #c9d1d9;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sleep-row { font-size: 14px; margin-top: 8px; color: #c9d1d9; line-height: 1.6; }
+.sleep-rel { font-size: 14px; margin-top: 8px; color: #d4a5ff; font-weight: 500; }
+.sleep-weights {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.15); padding: 6px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.sleep-weights span { font-weight: 600; color: #f0f6fc; }
+
+/* -- Utilities --------------------------------------- */
+.empty {
+  color: #8b949e; padding: 40px; text-align: center;
+  font-size: 15px; line-height: 2;
+  background: rgba(22, 27, 34, 0.3); border-radius: 12px;
+  border: 1px dashed rgba(240, 246, 252, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>Town AI-Town 模擬報告</h1>
+  <div class="meta">
+    生成時間：2026-05-25 14:38:50 ｜
+    天數：1 ｜
+    Ticks：20 ｜
+    模型呼叫（深思）：0 ｜
+    對話嘗試：0（接受 0）
+  </div>
+</header>
+
+<nav id="main-nav">
+  <button class="tab-btn active" data-tab="overview">Overview 總覽</button>
+  <button class="tab-btn" data-tab="daily-log">Daily Log 每日日誌</button>
+  <button class="tab-btn" data-tab="schedule">Schedule 時間表</button>
+  <button class="tab-btn" data-tab="ltm">LTM LTM 圖譜</button>
+  <button class="tab-btn" data-tab="confusion">Confusion 困惑度曲線</button>
+  <button class="tab-btn" data-tab="dialogue">Content:  對話記錄</button>
+  <button class="tab-btn" data-tab="sleep">Sleep 睡眠濃縮</button>
+</nav>
+
+<main>
+
+<section id="overview" class="tab active">
+  <h2>角色總覽（最終狀態）</h2>
+  <table class="overview-table">
+    <thead><tr>
+      <th>名字</th><th>代號</th><th>日期</th>
+      <th>位置</th><th>行動</th><th>情緒</th>
+      <th>STM</th><th>LTM 命題</th><th>狀態</th>
+    </tr></thead>
+    <tbody><tr>
+          <td><b>Amy</b></td><td>A</td><td>第 3 天</td>
+          <td>A家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>6</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Ben</b></td><td>B</td><td>第 3 天</td>
+          <td>B家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>5</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Claire</b></td><td>C</td><td>第 3 天</td>
+          <td>C家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>5</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>David</b></td><td>D</td><td>第 3 天</td>
+          <td>D家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>5</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Emma</b></td><td>E</td><td>第 3 天</td>
+          <td>E家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>5</td><td>Intuitive 活動中</td>
+        </tr></tbody>
+  </table>
+  <div class="stat-row"><div class="stat-card"><div class="stat-num">20</div><div class="stat-label">總 Ticks</div></div><div class="stat-card"><div class="stat-num">0</div><div class="stat-label">深思模式次數</div></div><div class="stat-card"><div class="stat-num">0</div><div class="stat-label">對話嘗試</div></div><div class="stat-card"><div class="stat-num">0</div><div class="stat-label">對話接受</div></div></div>
+</section>
+
+<section id="daily-log" class="tab">
+  <h2>每日決策日誌</h2>
+  <p class="section-desc">
+    Intuitive 直覺模式（Markov / System 1）顯示行動機率分布；
+    Deliberate 深思模式（Model / System 2）顯示模型思考與輸出。
+    [!]  代表重大事件（K≥0.6）。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('log-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels"><div class="char-panel active" id="log-panel-A"><div class="empty">（無決策記錄）</div></div><div class="char-panel " id="log-panel-B"><div class="empty">（無決策記錄）</div></div><div class="char-panel " id="log-panel-C"><div class="empty">（無決策記錄）</div></div><div class="char-panel " id="log-panel-D"><div class="empty">（無決策記錄）</div></div><div class="char-panel " id="log-panel-E"><div class="empty">（無決策記錄）</div></div></div>
+</section>
+
+<section id="schedule" class="tab">
+  <h2>角色時間表</h2>
+  <p class="section-desc">
+    左欄為職業原始計劃（範本），右欄為近期實際行為。
+    下方顯示睡眠後生成的下一天排程。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('sched-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="sched-panel-A">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>LTM 摘要：Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識常客 David，也與好友 Emma 保持聯繫。對 Ben 的追求始終保持模糊態度。</span>
+</div>
+
+  <h3 class="sched-section-title">計劃 vs 實際行為對比</h3>
+  <p class="sched-sub-desc">綠色 = 行動與計劃相符；橘色 = 有偏差。顯示最近 0 天記錄。</p>
+  <table class="sched-compare-table">
+    <thead>
+      <tr>
+        <th style="width:70px">時間</th>
+        <th>📋 原始計劃（職業範本）</th>
+        <th>✅ 實際行為（最近 0 天）</th>
+      </tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td class="sched-plan-col"><span class="sched-plan-action">起床</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">08:00</td><td class="sched-plan-col"><span class="sched-plan-action">前往</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">09:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">12:00</td><td class="sched-plan-col"><span class="sched-plan-action">吃飯</span><span class="sched-plan-loc">公司附近</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">13:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">18:00</td><td class="sched-plan-col"><span class="sched-plan-action">回家</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">19:00</td><td class="sched-plan-col"><span class="sched-plan-action">整理家裡</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">23:00</td><td class="sched-plan-col"><span class="sched-plan-action">睡覺</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr></tbody>
+  </table>
+
+  <h3 class="sched-section-title" style="margin-top:24px">下一天排程（睡眠後生成）</h3>
+  <table class="sched-table">
+    <thead><tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr></thead>
+    <tbody><tr class=""><td class="sched-time">06:00</td><td>起床</td><td style="color:#8b949e">A家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">07:00</td><td>前往</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">08:00</td><td>整理店面</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">09:00</td><td>賣咖啡</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td style="color:#8b949e">咖啡店後場</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">13:00</td><td>賣咖啡</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">18:00</td><td>打烊</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">19:00</td><td>回家</td><td style="color:#8b949e">A家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td style="color:#8b949e">A家</td><td class="done-mark">·</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 下一天排程在睡眠濃縮後由模型依當天事件重新生成，或使用職業預設模板。</div>
+</div>
+<div class="char-panel " id="sched-panel-B">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>LTM 摘要：Ben 工作時喜歡找同事聊天，偶爾在街上遇到 David。下班後打遊戲是他的日常放鬆方式。</span>
+</div>
+
+  <h3 class="sched-section-title">計劃 vs 實際行為對比</h3>
+  <p class="sched-sub-desc">綠色 = 行動與計劃相符；橘色 = 有偏差。顯示最近 0 天記錄。</p>
+  <table class="sched-compare-table">
+    <thead>
+      <tr>
+        <th style="width:70px">時間</th>
+        <th>📋 原始計劃（職業範本）</th>
+        <th>✅ 實際行為（最近 0 天）</th>
+      </tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td class="sched-plan-col"><span class="sched-plan-action">起床</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">08:00</td><td class="sched-plan-col"><span class="sched-plan-action">前往</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">09:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">12:00</td><td class="sched-plan-col"><span class="sched-plan-action">吃飯</span><span class="sched-plan-loc">公司附近</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">13:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">18:00</td><td class="sched-plan-col"><span class="sched-plan-action">回家</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">19:00</td><td class="sched-plan-col"><span class="sched-plan-action">整理家裡</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">23:00</td><td class="sched-plan-col"><span class="sched-plan-action">睡覺</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr></tbody>
+  </table>
+
+  <h3 class="sched-section-title" style="margin-top:24px">下一天排程（睡眠後生成）</h3>
+  <table class="sched-table">
+    <thead><tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr></thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td style="color:#8b949e">B家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">08:00</td><td>前往</td><td style="color:#8b949e">超市</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">09:00</td><td>補貨</td><td style="color:#8b949e">超市</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">11:00</td><td>收銀</td><td style="color:#8b949e">超市</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">13:00</td><td>吃飯</td><td style="color:#8b949e">超市附近</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">14:00</td><td>收銀</td><td style="color:#8b949e">超市</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">17:00</td><td>補貨</td><td style="color:#8b949e">超市</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">19:00</td><td>回家</td><td style="color:#8b949e">B家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td style="color:#8b949e">B家</td><td class="done-mark">·</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 下一天排程在睡眠濃縮後由模型依當天事件重新生成，或使用職業預設模板。</div>
+</div>
+<div class="char-panel " id="sched-panel-C">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>LTM 摘要：Claire 的日常圍繞著辦公室和廣場，偶爾去咖啡店放鬆。</span>
+</div>
+
+  <h3 class="sched-section-title">計劃 vs 實際行為對比</h3>
+  <p class="sched-sub-desc">綠色 = 行動與計劃相符；橘色 = 有偏差。顯示最近 0 天記錄。</p>
+  <table class="sched-compare-table">
+    <thead>
+      <tr>
+        <th style="width:70px">時間</th>
+        <th>📋 原始計劃（職業範本）</th>
+        <th>✅ 實際行為（最近 0 天）</th>
+      </tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td class="sched-plan-col"><span class="sched-plan-action">起床</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">08:00</td><td class="sched-plan-col"><span class="sched-plan-action">前往</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">09:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">12:00</td><td class="sched-plan-col"><span class="sched-plan-action">吃飯</span><span class="sched-plan-loc">公司附近</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">13:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">18:00</td><td class="sched-plan-col"><span class="sched-plan-action">回家</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">19:00</td><td class="sched-plan-col"><span class="sched-plan-action">整理家裡</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">23:00</td><td class="sched-plan-col"><span class="sched-plan-action">睡覺</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr></tbody>
+  </table>
+
+  <h3 class="sched-section-title" style="margin-top:24px">下一天排程（睡眠後生成）</h3>
+  <table class="sched-table">
+    <thead><tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr></thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td style="color:#8b949e">C家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">08:00</td><td>前往</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td style="color:#8b949e">公司附近</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td style="color:#8b949e">C家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">19:00</td><td>整理家裡</td><td style="color:#8b949e">C家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td style="color:#8b949e">C家</td><td class="done-mark">·</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 下一天排程在睡眠濃縮後由模型依當天事件重新生成，或使用職業預設模板。</div>
+</div>
+<div class="char-panel " id="sched-panel-D">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>LTM 摘要：David 是公司老闆，工時長，習慣早上去咖啡店買咖啡再去辦公室。常與 Claire 開會討論工作。</span>
+</div>
+
+  <h3 class="sched-section-title">計劃 vs 實際行為對比</h3>
+  <p class="sched-sub-desc">綠色 = 行動與計劃相符；橘色 = 有偏差。顯示最近 0 天記錄。</p>
+  <table class="sched-compare-table">
+    <thead>
+      <tr>
+        <th style="width:70px">時間</th>
+        <th>📋 原始計劃（職業範本）</th>
+        <th>✅ 實際行為（最近 0 天）</th>
+      </tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td class="sched-plan-col"><span class="sched-plan-action">起床</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">08:00</td><td class="sched-plan-col"><span class="sched-plan-action">前往</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">09:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">12:00</td><td class="sched-plan-col"><span class="sched-plan-action">吃飯</span><span class="sched-plan-loc">公司附近</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">13:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">18:00</td><td class="sched-plan-col"><span class="sched-plan-action">回家</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">19:00</td><td class="sched-plan-col"><span class="sched-plan-action">整理家裡</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">23:00</td><td class="sched-plan-col"><span class="sched-plan-action">睡覺</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr></tbody>
+  </table>
+
+  <h3 class="sched-section-title" style="margin-top:24px">下一天排程（睡眠後生成）</h3>
+  <table class="sched-table">
+    <thead><tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr></thead>
+    <tbody><tr class=""><td class="sched-time">01:00</td><td>睡覺</td><td style="color:#8b949e">D家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">08:00</td><td>起床</td><td style="color:#8b949e">D家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">09:00</td><td>前往</td><td style="color:#8b949e">咖啡店</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">10:00</td><td>前往</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">11:00</td><td>工作</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">13:00</td><td>吃飯</td><td style="color:#8b949e">公司附近</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">14:00</td><td>工作</td><td style="color:#8b949e">辦公室</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">20:00</td><td>回家</td><td style="color:#8b949e">D家</td><td class="done-mark">·</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 下一天排程在睡眠濃縮後由模型依當天事件重新生成，或使用職業預設模板。</div>
+</div>
+<div class="char-panel " id="sched-panel-E">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>LTM 摘要：Emma 記得在超市遇見 Ben 聊過幾句。餐廳的備料和服務工作佔去她大部分時間，回家後常感到疲憊。</span>
+</div>
+
+  <h3 class="sched-section-title">計劃 vs 實際行為對比</h3>
+  <p class="sched-sub-desc">綠色 = 行動與計劃相符；橘色 = 有偏差。顯示最近 0 天記錄。</p>
+  <table class="sched-compare-table">
+    <thead>
+      <tr>
+        <th style="width:70px">時間</th>
+        <th>📋 原始計劃（職業範本）</th>
+        <th>✅ 實際行為（最近 0 天）</th>
+      </tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td class="sched-plan-col"><span class="sched-plan-action">起床</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">08:00</td><td class="sched-plan-col"><span class="sched-plan-action">前往</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">09:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">12:00</td><td class="sched-plan-col"><span class="sched-plan-action">吃飯</span><span class="sched-plan-loc">公司附近</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">13:00</td><td class="sched-plan-col"><span class="sched-plan-action">工作</span><span class="sched-plan-loc">辦公室</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">18:00</td><td class="sched-plan-col"><span class="sched-plan-action">回家</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">19:00</td><td class="sched-plan-col"><span class="sched-plan-action">整理家裡</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr><tr class=""><td class="sched-time">23:00</td><td class="sched-plan-col"><span class="sched-plan-action">睡覺</span><span class="sched-plan-loc">C家</span></td><td class="sched-actual-col"><span style="color:#586069">—</span></td></tr></tbody>
+  </table>
+
+  <h3 class="sched-section-title" style="margin-top:24px">下一天排程（睡眠後生成）</h3>
+  <table class="sched-table">
+    <thead><tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr></thead>
+    <tbody><tr class=""><td class="sched-time">01:00</td><td>睡覺</td><td style="color:#8b949e">E家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">10:00</td><td>起床</td><td style="color:#8b949e">E家</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">11:00</td><td>前往</td><td style="color:#8b949e">餐廳</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">12:00</td><td>服務客人</td><td style="color:#8b949e">餐廳</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">14:00</td><td>吃飯</td><td style="color:#8b949e">餐廳</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">15:00</td><td>休息</td><td style="color:#8b949e">餐廳</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">18:00</td><td>服務客人</td><td style="color:#8b949e">餐廳</td><td class="done-mark">·</td></tr><tr class=""><td class="sched-time">22:00</td><td>回家</td><td style="color:#8b949e">E家</td><td class="done-mark">·</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 下一天排程在睡眠濃縮後由模型依當天事件重新生成，或使用職業預設模板。</div>
+</div></div>
+</section>
+
+<section id="ltm" class="tab">
+  <h2>LTM 記憶圖譜（互動：拖移 / 縮放 / 懸停查看詳情）</h2>
+  <div class="legend">
+    <span class="lg-node person">● 角色</span>
+    <span class="lg-node location">● 地點</span>
+    <span class="lg-node concept">● 概念</span>
+  </div>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('ltm-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="ltm-panel-A">
+  <div class="ltm-summary">Summary Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識常客 David，也與好友 Emma 保持聯繫。對 Ben 的追求始終保持模糊態度。 <span class="ltm-count">(6 條命題)</span></div>
+  <div id="ltm-graph-A" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-B">
+  <div class="ltm-summary">Summary Ben 工作時喜歡找同事聊天，偶爾在街上遇到 David。下班後打遊戲是他的日常放鬆方式。 <span class="ltm-count">(5 條命題)</span></div>
+  <div id="ltm-graph-B" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-C">
+  <div class="ltm-summary">Summary Claire 的日常圍繞著辦公室和廣場，偶爾去咖啡店放鬆。 <span class="ltm-count">(5 條命題)</span></div>
+  <div id="ltm-graph-C" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-D">
+  <div class="ltm-summary">Summary David 是公司老闆，工時長，習慣早上去咖啡店買咖啡再去辦公室。常與 Claire 開會討論工作。 <span class="ltm-count">(5 條命題)</span></div>
+  <div id="ltm-graph-D" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-E">
+  <div class="ltm-summary">Summary Emma 記得在超市遇見 Ben 聊過幾句。餐廳的備料和服務工作佔去她大部分時間，回家後常感到疲憊。 <span class="ltm-count">(5 條命題)</span></div>
+  <div id="ltm-graph-E" style="height:540px;background:white;border-radius:8px;"></div>
+</div></div>
+</section>
+
+<section id="confusion" class="tab">
+  <h2>困惑度曲線（雙歷程理論 Kahneman 2011）</h2>
+  <p class="section-desc">
+    C 值超過閾值 -> 深思（System 2）；以下 -> 直覺（System 1 / Markov）。
+    情緒不好時閾值升高（更傾向直覺）。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('conf-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="conf-panel-A">
+  <div class="conf-chart-wrap">
+    <canvas id="conf-chart-A"></canvas>
+  </div>
+  <div class="conf-legend">
+    <span class="lg-u">— U 不確定性</span>
+    <span class="lg-k">— K 困惑度峰值</span>
+    <span class="lg-s">— S 情境複雜度</span>
+    <span class="lg-c">— C 最終值（粗線）</span>
+    <span class="lg-th">- - 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    ▲ 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-B">
+  <div class="conf-chart-wrap">
+    <canvas id="conf-chart-B"></canvas>
+  </div>
+  <div class="conf-legend">
+    <span class="lg-u">— U 不確定性</span>
+    <span class="lg-k">— K 困惑度峰值</span>
+    <span class="lg-s">— S 情境複雜度</span>
+    <span class="lg-c">— C 最終值（粗線）</span>
+    <span class="lg-th">- - 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    ▲ 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-C">
+  <div class="conf-chart-wrap">
+    <canvas id="conf-chart-C"></canvas>
+  </div>
+  <div class="conf-legend">
+    <span class="lg-u">— U 不確定性</span>
+    <span class="lg-k">— K 困惑度峰值</span>
+    <span class="lg-s">— S 情境複雜度</span>
+    <span class="lg-c">— C 最終值（粗線）</span>
+    <span class="lg-th">- - 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    ▲ 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-D">
+  <div class="conf-chart-wrap">
+    <canvas id="conf-chart-D"></canvas>
+  </div>
+  <div class="conf-legend">
+    <span class="lg-u">— U 不確定性</span>
+    <span class="lg-k">— K 困惑度峰值</span>
+    <span class="lg-s">— S 情境複雜度</span>
+    <span class="lg-c">— C 最終值（粗線）</span>
+    <span class="lg-th">- - 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    ▲ 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-E">
+  <div class="conf-chart-wrap">
+    <canvas id="conf-chart-E"></canvas>
+  </div>
+  <div class="conf-legend">
+    <span class="lg-u">— U 不確定性</span>
+    <span class="lg-k">— K 困惑度峰值</span>
+    <span class="lg-s">— S 情境複雜度</span>
+    <span class="lg-c">— C 最終值（粗線）</span>
+    <span class="lg-th">- - 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    ▲ 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div></div>
+</section>
+
+<section id="dialogue" class="tab">
+  <h2>對話記錄</h2>
+  <div class="dialogue-list"><div class="empty">（無對話記錄）</div></div>
+</section>
+
+<section id="sleep" class="tab">
+  <h2>睡眠濃縮報告</h2>
+  <p class="section-desc">
+    睡眠時進行 STM->LTM 轉移（Diekelmann & Born 2010）。
+    HAM 命題從當天敘述中抽取，重要的存入長期記憶。
+  </p>
+  <div class="sleep-list">
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Amy</span>
+    <span class="sleep-day">第 2 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 6</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識常客 David，也與好友 Emma 保持聯繫。對 Ben 的追求始終保持模糊態度。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：06:00起床  07:00前往  08:00整理店面  09:00賣咖啡  12:00吃飯  13:00賣咖啡  18:00打烊  19:00回家</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.40</span><span class="w-badge w-beta">β: 0.35</span><span class="w-badge w-gamma">γ: 0.25</span></div>
+  <div class="sleep-rel">Relationship 關係更新：Ben: Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識；David: Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識；Emma: Amy 長期在咖啡店工作，每天早起整理店面、製作咖啡。她認識</div>
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Ben</span>
+    <span class="sleep-day">第 2 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 5</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：Ben 工作時喜歡找同事聊天，偶爾在街上遇到 David。下班後打遊戲是他的日常放鬆方式。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  08:00前往  09:00補貨  11:00收銀  13:00吃飯  14:00收銀  17:00補貨  19:00回家</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.40</span><span class="w-badge w-beta">β: 0.35</span><span class="w-badge w-gamma">γ: 0.25</span></div>
+  <div class="sleep-rel">Relationship 關係更新：David: Ben度過了充實但有些疲憊的一天，在工作中維持了一貫的節奏。</div>
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Claire</span>
+    <span class="sleep-day">第 2 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 5</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：Claire 的日常圍繞著辦公室和廣場，偶爾去咖啡店放鬆。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  08:00前往  09:00工作  12:00吃飯  13:00工作  18:00回家  19:00整理家裡  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.40</span><span class="w-badge w-beta">β: 0.35</span><span class="w-badge w-gamma">γ: 0.25</span></div>
+  <div class="sleep-rel">Relationship 關係更新：David: 今天Claire遇到了一些小事，整體還算順利。</div>
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">David</span>
+    <span class="sleep-day">第 2 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 5</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：David 是公司老闆，工時長，習慣早上去咖啡店買咖啡再去辦公室。常與 Claire 開會討論工作。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：01:00睡覺  08:00起床  09:00前往  10:00前往  11:00工作  13:00吃飯  14:00工作  20:00回家</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.40</span><span class="w-badge w-beta">β: 0.35</span><span class="w-badge w-gamma">γ: 0.25</span></div>
+  <div class="sleep-rel">Relationship 關係更新：Claire: David的這一天平靜無波，按照習慣完成了日常事務。</div>
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Emma</span>
+    <span class="sleep-day">第 2 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 5</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：Emma 記得在超市遇見 Ben 聊過幾句。餐廳的備料和服務工作佔去她大部分時間，回家後常感到疲憊。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：01:00睡覺  10:00起床  11:00前往  12:00服務客人  14:00吃飯  15:00休息  18:00服務客人  22:00回家</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.40</span><span class="w-badge w-beta">β: 0.35</span><span class="w-badge w-gamma">γ: 0.25</span></div>
+  <div class="sleep-rel">Relationship 關係更新：Amy: 今天Emma和熟悉的人有些互動，心情還算愉快。；Ben: 今天Emma和熟悉的人有些互動，心情還算愉快。</div>
+</div></div>
+</section>
+</main>
+
+<script>
+const LTM_DATA  = {"A": {"nodes": [{"id": "Amy", "label": "Amy", "group": "person", "value": 0.877, "title": "Amy（person）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.887, "title": "Ben（person）"}, {"id": "開心", "label": "開心", "group": "concept", "value": 0.85, "title": "開心（concept）"}, {"id": "咖啡店", "label": "咖啡店", "group": "location", "value": 0.844, "title": "咖啡店（location）"}, {"id": "拿鐵", "label": "拿鐵", "group": "concept", "value": 0.921, "title": "拿鐵（concept）"}, {"id": "David", "label": "David", "group": "person", "value": 0.767, "title": "David（person）"}], "edges": [{"from": "Amy", "to": "Ben", "label": "遇見", "value": 4, "title": "遇見（強度 0.81）", "arrows": "to"}, {"from": "Amy", "to": "開心", "label": "感到", "value": 4, "title": "感到（強度 0.85）", "arrows": "to"}, {"from": "咖啡店", "to": "拿鐵", "label": "提供", "value": 4, "title": "提供（強度 0.92）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "光顧", "value": 3, "title": "光顧（強度 0.77）", "arrows": "to"}, {"from": "Amy", "to": "Ben", "label": "遇見", "value": 4, "title": "遇見（強度 0.90）", "arrows": "to"}, {"from": "Amy", "to": "Ben", "label": "遇見", "value": 4, "title": "遇見（強度 0.95）", "arrows": "to"}]}, "B": {"nodes": [{"id": "Ben", "label": "Ben", "group": "person", "value": 0.883, "title": "Ben（person）"}, {"id": "超市", "label": "超市", "group": "location", "value": 0.871, "title": "超市（location）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.887, "title": "Amy（person）"}, {"id": "遊戲", "label": "遊戲", "group": "concept", "value": 0.855, "title": "遊戲（concept）"}, {"id": "下班後的放鬆", "label": "下班後的放鬆", "group": "concept", "value": 0.855, "title": "下班後的放鬆（concept）"}], "edges": [{"from": "Ben", "to": "超市", "label": "補貨", "value": 4, "title": "補貨（強度 0.87）", "arrows": "to"}, {"from": "Ben", "to": "Amy", "label": "遇見", "value": 4, "title": "遇見（強度 0.81）", "arrows": "to"}, {"from": "遊戲", "to": "下班後的放鬆", "label": "是", "value": 4, "title": "是（強度 0.85）", "arrows": "to"}, {"from": "Ben", "to": "Amy", "label": "遇見", "value": 4, "title": "遇見（強度 0.90）", "arrows": "to"}, {"from": "Ben", "to": "Amy", "label": "遇見", "value": 4, "title": "遇見（強度 0.95）", "arrows": "to"}]}, "C": {"nodes": [{"id": "Claire", "label": "Claire", "group": "person", "value": 0.874, "title": "Claire（person）"}, {"id": "辦公室", "label": "辦公室", "group": "location", "value": 0.898, "title": "辦公室（location）"}, {"id": "David", "label": "David", "group": "person", "value": 0.817, "title": "David（person）"}, {"id": "任務", "label": "任務", "group": "concept", "value": 0.817, "title": "任務（concept）"}, {"id": "Emma", "label": "Emma", "group": "person", "value": 0.867, "title": "Emma（person）"}], "edges": [{"from": "Claire", "to": "辦公室", "label": "工作", "value": 4, "title": "工作（強度 0.90）", "arrows": "to"}, {"from": "David", "to": "任務", "label": "交辦", "value": 4, "title": "交辦（強度 0.82）", "arrows": "to"}, {"from": "Claire", "to": "Emma", "label": "遇見", "value": 3, "title": "遇見（強度 0.75）", "arrows": "to"}, {"from": "Claire", "to": "Emma", "label": "遇見", "value": 4, "title": "遇見（強度 0.90）", "arrows": "to"}, {"from": "Claire", "to": "Emma", "label": "遇見", "value": 4, "title": "遇見（強度 0.95）", "arrows": "to"}]}, "D": {"nodes": [{"id": "David", "label": "David", "group": "person", "value": 0.909, "title": "David（person）"}, {"id": "會議", "label": "會議", "group": "concept", "value": 0.91, "title": "會議（concept）"}, {"id": "咖啡店", "label": "咖啡店", "group": "location", "value": 0.875, "title": "咖啡店（location）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.851, "title": "Claire（person）"}, {"id": "David的下屬", "label": "David的下屬", "group": "concept", "value": 0.851, "title": "David的下屬（concept）"}, {"id": "疲憊", "label": "疲憊", "group": "concept", "value": 0.925, "title": "疲憊（concept）"}], "edges": [{"from": "David", "to": "會議", "label": "主持", "value": 4, "title": "主持（強度 0.91）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "去", "value": 4, "title": "去（強度 0.88）", "arrows": "to"}, {"from": "Claire", "to": "David的下屬", "label": "是", "value": 4, "title": "是（強度 0.85）", "arrows": "to"}, {"from": "David", "to": "疲憊", "label": "感到", "value": 4, "title": "感到（強度 0.90）", "arrows": "to"}, {"from": "David", "to": "疲憊", "label": "感到", "value": 4, "title": "感到（強度 0.95）", "arrows": "to"}]}, "E": {"nodes": [{"id": "Emma", "label": "Emma", "group": "person", "value": 0.882, "title": "Emma（person）"}, {"id": "餐廳", "label": "餐廳", "group": "location", "value": 0.898, "title": "餐廳（location）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.78, "title": "Claire（person）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.921, "title": "Amy（person）"}, {"id": "Emma的好友", "label": "Emma的好友", "group": "concept", "value": 0.921, "title": "Emma的好友（concept）"}, {"id": "開心", "label": "開心", "group": "concept", "value": 0.925, "title": "開心（concept）"}], "edges": [{"from": "Emma", "to": "餐廳", "label": "服務客人", "value": 4, "title": "服務客人（強度 0.90）", "arrows": "to"}, {"from": "Emma", "to": "Claire", "label": "遇見", "value": 3, "title": "遇見（強度 0.78）", "arrows": "to"}, {"from": "Amy", "to": "Emma的好友", "label": "是", "value": 4, "title": "是（強度 0.92）", "arrows": "to"}, {"from": "Emma", "to": "開心", "label": "感到", "value": 4, "title": "感到（強度 0.90）", "arrows": "to"}, {"from": "Emma", "to": "開心", "label": "感到", "value": 4, "title": "感到（強度 0.95）", "arrows": "to"}]}};
+const CONF_DATA = {};
+
+// -- Tab switching ----------------------------------------------
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var name = this.dataset.tab;
+    document.querySelectorAll('.tab').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    document.getElementById(name).classList.add('active');
+    this.classList.add('active');
+
+    // 觸發需要可見容器的元件
+    if (name === 'ltm')       { initActiveLTMGraph(); }
+    if (name === 'confusion') {
+      // 第一次進入 confusion tab 時，初始化當前可見角色的圖表
+      var _activeConf = document.querySelector('#confusion .char-panel.active');
+      if (_activeConf) {
+        var _cCode = _activeConf.id.replace('conf-panel-', '');
+        _buildConfusionChart(_cCode);
+      }
+      resizeConfusionCharts();
+    }
+  });
+});
+
+// -- Character panel switching ----------------------------------
+function showCharTab(panelPrefix, code, btn) {
+  var section = btn.closest('.tab');
+  section.querySelectorAll('.char-panel').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  btn.closest('.char-tabs').querySelectorAll('.char-tab-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  document.getElementById(panelPrefix + code).classList.add('active');
+  btn.classList.add('active');
+
+  // LTM：切換角色時初始化該角色的圖
+  if (panelPrefix === 'ltm-panel-') {
+    initLTMGraph(code);
+  }
+  // Confusion：切換角色時建立圖表（面板顯示後才能正確取得容器尺寸）
+  if (panelPrefix === 'conf-panel-') {
+    requestAnimationFrame(function() {
+      _buildConfusionChart(code);
+      resizeConfusionCharts();
+    });
+  }
+}
+
+// -- LTM vis.js Graphs ------------------------------------------
+var ltmNetworks = {};
+var ltmInitDone = false;
+
+function initActiveLTMGraph() {
+  if (ltmInitDone) return;
+  ltmInitDone = true;
+  // 只初始化當前可見的
+  var active = document.querySelector('#ltm .char-panel.active');
+  if (active) {
+    var code = active.id.replace('ltm-panel-', '');
+    initLTMGraph(code);
+  }
+}
+
+function initLTMGraph(code) {
+  if (ltmNetworks[code]) {
+    ltmNetworks[code].redraw();
+    ltmNetworks[code].fit();
+    return;
+  }
+  var container = document.getElementById('ltm-graph-' + code);
+  if (!container) return;
+
+  var data = LTM_DATA[code];
+  if (!data || !data.nodes || data.nodes.length === 0) {
+    container.innerHTML =
+      '<div style="padding:30px;color:#8b949e;text-align:center">' +
+      '（尚無 LTM 命題）</div>';
+    return;
+  }
+
+  var options = {
+    nodes: {
+      shape: 'dot',
+      scaling: {
+        min: 14, max: 42,
+        label: { enabled: true, min: 12, max: 18 }
+      },
+      font: { size: 14, color: '#e6edf3', face: 'Outfit, Microsoft JhengHei, Arial, sans-serif' },
+      borderWidth: 2,
+    },
+    edges: {
+      font: { size: 11, color: '#8b949e', align: 'middle',
+              face: 'Outfit, Microsoft JhengHei, Arial, sans-serif' },
+      smooth: { type: 'continuous' },
+      arrows: { to: { enabled: true, scaleFactor: 0.65 } },
+      color: { color: '#30363d', highlight: '#00f0ff', opacity: 0.8 },
+    },
+    groups: {
+      person:   { color: { background: 'rgba(0, 122, 255, 0.2)', border: '#58a6ff',
+                            highlight: { background: 'rgba(0, 122, 255, 0.35)', border: '#79c0ff' } } },
+      location: { color: { background: 'rgba(0, 255, 102, 0.15)', border: '#56d364',
+                            highlight: { background: 'rgba(0, 255, 102, 0.3)', border: '#39d353' } } },
+      concept:  { color: { background: 'rgba(227, 179, 65, 0.15)', border: '#e3b341',
+                            highlight: { background: 'rgba(227, 179, 65, 0.3)', border: '#f2cc60' } } },
+    },
+    physics: {
+      enabled: true,
+      barnesHut: {
+        gravitationalConstant: -4000,
+        centralGravity: 0.25,
+        springLength: 200,
+        springConstant: 0.03,
+        damping: 0.12,
+        avoidOverlap: 1.0,
+      },
+      stabilization: {
+        enabled: true,
+        iterations: 400,
+        updateInterval: 25,
+        fit: true,
+      },
+    },
+    layout: {
+      improvedLayout: true,
+      randomSeed: 42,
+    },
+    interaction: {
+      hover: true,
+      tooltipDelay: 150,
+      zoomView: true,
+      dragView: true,
+      navigationButtons: true,
+    },
+  };
+
+  ltmNetworks[code] = new vis.Network(
+    container,
+    { nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges) },
+    options
+  );
+}
+
+// -- Confusion Charts (chart.js) --------------------------------
+var confCharts = {};
+
+function _buildConfusionChart(code) {
+  var canvas = document.getElementById('conf-chart-' + code);
+  if (!canvas) return;
+  if (confCharts[code]) { confCharts[code].resize(); return; }
+
+  var c = CONF_DATA[code];
+  if (!c || !c.labels || c.labels.length === 0) {
+    var msg = canvas.parentNode.querySelector('.conf-no-data');
+    if (!msg) {
+      var d = document.createElement('div');
+      d.className = 'conf-no-data';
+      d.style.cssText = 'padding:10px;color:#8b949e';
+      d.textContent = '（無困惑度數據）';
+      canvas.insertAdjacentElement('afterend', d);
+    }
+    return;
+  }
+
+  // C 點：深思時用橘色三角形，直覺時用綠色圓點
+  var cPointStyle  = c.modes.map(function(m) {
+    return m === 'deliberate' ? 'triangle' : 'circle';
+  });
+  var cPointColor  = c.modes.map(function(m) {
+    return m === 'deliberate' ? '#ff9500' : '#00ff66';
+  });
+  var cPointRadius = c.modes.map(function(m) {
+    return m === 'deliberate' ? 9 : 4;
+  });
+
+  confCharts[code] = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: c.labels,
+      datasets: [
+        { label: 'U 不確定性', data: c.U,
+          borderColor: '#58a6ff', backgroundColor: 'transparent',
+          pointRadius: 3, tension: 0.3 },
+        { label: 'K 困惑度',   data: c.K,
+          borderColor: '#ff7b72', backgroundColor: 'transparent',
+          pointRadius: 3, tension: 0.3 },
+        { label: 'S 情境複雜', data: c.S,
+          borderColor: '#ffa657', backgroundColor: 'transparent',
+          pointRadius: 3, tension: 0.3 },
+        { label: 'C 最終值',   data: c.C,
+          borderColor: '#56d364', borderWidth: 3,
+          backgroundColor: 'transparent',
+          pointRadius: cPointRadius,
+          pointStyle:  cPointStyle,
+          pointBackgroundColor: cPointColor,
+          tension: 0.3 },
+        { label: '閾值', data: c.thresholds,
+          borderColor: '#8b949e', borderDash: [7, 4],
+          backgroundColor: 'transparent',
+          pointRadius: 0, tension: 0 },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { min: 0, max: 1.05, grid: { color: 'rgba(240, 246, 252, 0.1)' }, ticks: { color: '#8b949e' } },
+        x: { grid: { display: false },
+             ticks: { color: '#8b949e', maxRotation: 45, font: { size: 11 } } },
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { boxWidth: 12, font: { size: 12 }, color: '#c9d1d9' }
+        },
+        tooltip: { mode: 'index', intersect: false },
+      },
+      animation: { duration: 0 },
+    },
+  });
+}
+
+function initConfusionCharts() {
+  // 初始化所有角色的困惑度圖表（首次載入第一個角色，其餘延遲到 tab 切換）
+  // 注意：此函式必須在 confusion tab 可見後才呼叫，避免 chart.js 在 0px 容器初始化
+  var firstCode = Object.keys(CONF_DATA)[0];
+  if (firstCode) _buildConfusionChart(firstCode);
+}
+
+function resizeConfusionCharts() {
+  Object.values(confCharts).forEach(function(ch) {
+    if (ch) ch.resize();
+  });
+}
+
+// 不在 DOMContentLoaded 初始化 confusion chart：
+// chart.js 在隱藏容器（display:none 的 tab）中初始化會得到 0px 高度，導致圖表破版。
+// 改為點擊 confusion tab 時才初始化（見上方 tab 切換邏輯）。
+
+</script>
+</body>
+</html>

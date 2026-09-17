@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>AI-Town 模擬報告</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Outfit', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0d0f14; color: #c9d1d9; margin: 0;
+  line-height: 1.5;
+  background-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 90%),
+                    radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.05) 0%, transparent 90%);
+  background-attachment: fixed;
+}
+header {
+  background: #161b22;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+  padding: 20px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00f0ff, #5856d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.meta { font-size: 13px; color: #8b949e; letter-spacing: 0.5px; }
+
+/* -- Nav --------------------------------------------- */
+nav#main-nav {
+  background: rgba(22, 27, 34, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 10px 28px;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1);
+  display: flex; gap: 8px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+.tab-btn {
+  padding: 8px 16px; border: 1px solid rgba(240, 246, 252, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px; cursor: pointer; font-size: 13px; color: #8b949e;
+  font-weight: 500;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #c9d1d9;
+  transform: translateY(-1px);
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #00f0ff, #007aff);
+  color: #0d0f14;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+/* -- Main -------------------------------------------- */
+main { padding: 24px 28px; }
+.tab { display: none; }
+.tab.active { display: block; animation: fadeIn 0.4s ease-out; }
+h2 {
+  font-size: 22px; margin: 0 0 8px; font-weight: 600;
+  color: #f0f6fc; border-left: 4px solid #00f0ff; padding-left: 10px;
+}
+h3 { font-size: 18px; margin: 20px 0 12px; color: #f0f6fc; }
+.section-desc { font-size: 14px; color: #8b949e; margin: 0 0 20px; line-height: 1.6; }
+
+/* -- Overview ---------------------------------------- */
+.overview-table {
+  border-collapse: collapse;
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; overflow: hidden; width: 100%; margin-bottom: 24px;
+}
+.overview-table th, .overview-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1); font-size: 14px;
+}
+.overview-table th {
+  background: rgba(48, 54, 61, 0.8);
+  color: #f0f6fc; font-weight: 600; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.overview-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.stat-card {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; padding: 18px 24px;
+  flex: 1; min-width: 160px; text-align: center;
+  transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-num {
+  font-size: 32px; font-weight: 700;
+  background: linear-gradient(135deg, #00f0ff, #5856d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label { font-size: 13px; color: #8b949e; margin-top: 6px; font-weight: 500; }
+
+/* -- Char tabs (common) ------------------------------ */
+.char-tabs {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.char-tab-btn {
+  padding: 6px 14px; border: 1px solid rgba(240, 246, 252, 0.1);
+  background: rgba(22, 27, 34, 0.4);
+  color: #8b949e; border-radius: 15px; cursor: pointer; font-size: 13px;
+  transition: all 0.2s;
+}
+.char-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f0f6fc;
+}
+.char-tab-btn.active {
+  background: rgba(0, 240, 255, 0.1);
+  color: #00f0ff;
+  border-color: #00f0ff;
+  font-weight: 600;
+}
+.char-panel { display: none; }
+.char-panel.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+/* -- Daily Log --------------------------------------- */
+.day-header {
+  font-size: 14px; font-weight: 700; color: #00f0ff;
+  background: rgba(0, 240, 255, 0.1); padding: 6px 14px;
+  border-radius: 6px; margin: 24px 0 12px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  letter-spacing: 0.5px;
+}
+.tick-entry {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  border-radius: 10px; margin-bottom: 8px;
+  padding: 12px 16px; border-left: 4px solid #30363d;
+  transition: all 0.2s;
+}
+.tick-entry:hover {
+  background: rgba(22, 27, 34, 0.8);
+  border-color: rgba(240, 246, 252, 0.12);
+  transform: translateX(2px);
+}
+.tick-entry.intuitive { border-left-color: #00ff66; }
+.tick-entry.deliberate { border-left-color: #ff9500; }
+
+.tick-hdr {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 4px;
+}
+.tick-time {
+  font-size: 14px; font-weight: 700; color: #00f0ff; min-width: 50px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.mode-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  font-weight: 600; white-space: nowrap;
+}
+.mode-badge.intuitive  { background: rgba(0, 255, 102, 0.12); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.2); }
+.mode-badge.deliberate { background: rgba(255, 149, 0, 0.12); color: #ff9500; border: 1px solid rgba(255, 149, 0, 0.2); }
+.major-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  background: rgba(255, 0, 127, 0.12); color: #ff007f; font-weight: 600;
+  border: 1px solid rgba(255, 0, 127, 0.25);
+}
+.reward-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 12px;
+  font-weight: 600; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+}
+.reward-badge.positive { background: rgba(0, 255, 102, 0.1); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.15); }
+.reward-badge.negative { background: rgba(255, 59, 48, 0.1); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.15); }
+.reward-badge.zero { background: rgba(255, 255, 255, 0.05); color: #8b949e; }
+
+.tick-action { flex-shrink: 0; font-size: 15px; font-weight: 600; color: #f0f6fc; }
+.tick-cv {
+  font-size: 12px; color: #8b949e; margin-left: auto; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1px 6px; border-radius: 4px;
+}
+
+/* Dynamic weight badges inside tick */
+.tick-weights {
+  display: flex; gap: 6px; margin-left: 10px; flex-wrap: wrap;
+}
+.w-badge {
+  font-size: 11px; padding: 1px 6px; border-radius: 4px;
+  font-weight: 500; font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.w-badge.w-alpha { color: #d4a5ff; border-color: rgba(212, 165, 255, 0.2); }
+.w-badge.w-beta  { color: #79c0ff; border-color: rgba(121, 192, 255, 0.2); }
+.w-badge.w-gamma { color: #56d364; border-color: rgba(86, 211, 100, 0.2); }
+.w-badge.w-delta { color: #e3b341; border-color: rgba(227, 179, 65, 0.2); }
+
+/* Markov probability bars */
+.tick-probs {
+  margin-top: 10px; display: flex; flex-direction: column; gap: 4px;
+  background: rgba(0, 0, 0, 0.15); padding: 8px 12px; border-radius: 6px;
+}
+.prob-item { display: flex; align-items: center; gap: 8px; }
+.prob-item.selected .prob-action { font-weight: 700; color: #00f0ff; }
+.prob-action {
+  font-size: 11px; width: 64px; text-align: right;
+  color: #8b949e; flex-shrink: 0;
+}
+.prob-bar-wrap {
+  flex: 1; height: 6px; background: rgba(255,255,255,0.05);
+  border-radius: 3px; overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%; background: rgba(0, 255, 102, 0.25); border-radius: 3px;
+}
+.prob-item.selected .prob-bar-fill {
+  background: linear-gradient(90deg, #00ff66, #00f0ff);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+.prob-pct {
+  font-size: 11px; color: #8b949e; width: 38px; flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Q-values list */
+.tick-q-values {
+  margin-top: 8px; display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.02); padding: 6px 12px; border-radius: 6px;
+  flex-wrap: wrap; border: 1px solid rgba(255,255,255,0.03);
+}
+.q-label { font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase; }
+.q-pills { display: flex; gap: 5px; flex-wrap: wrap; }
+.score-pill {
+  font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex; gap: 4px;
+}
+.score-pill.selected {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: rgba(0, 240, 255, 0.3);
+}
+.score-pill.selected .score-act { color: #00f0ff; font-weight: 600; }
+.score-pill.pos .score-val { color: #00ff66; }
+.score-pill.neg .score-val { color: #ff3b30; }
+.score-pill.zero .score-val { color: #8b949e; }
+.score-act { color: #8b949e; }
+
+/* Model output */
+.tick-thought {
+  font-size: 13px; color: #d4a5ff; margin-top: 8px; font-style: italic;
+  background: rgba(212, 165, 255, 0.03); padding: 8px 12px; border-radius: 6px;
+  border-left: 2px solid rgba(212, 165, 255, 0.3);
+}
+.tick-content {
+  font-size: 14px; background: rgba(255, 255, 255, 0.03); padding: 8px 12px;
+  border-radius: 6px; margin-top: 6px; color: #e6edf3;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* -- Schedule ---------------------------------------- */
+.sched-table {
+  border-collapse: collapse; width: 100%;
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.sched-table th, .sched-table td {
+  padding: 10px 16px; text-align: left;
+  border-bottom: 1px solid rgba(240, 246, 252, 0.1); font-size: 14px;
+}
+.sched-table th {
+  background: rgba(48, 54, 61, 0.8);
+  color: #f0f6fc; font-weight: 600; font-size: 13px;
+}
+.sched-table tr.completed td { color: #8b949e; }
+.sched-time { font-weight: 600; color: #00f0ff; font-family: 'JetBrains Mono', monospace; }
+.done-mark { color: #00ff66; font-weight: bold; }
+.sched-sleep-info {
+  display: flex; gap: 16px; font-size: 13px; color: #c9d1d9;
+  background: rgba(255, 255, 255, 0.03); padding: 10px 16px; border-radius: 8px;
+  margin-bottom: 12px; flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sched-note { font-size: 12px; color: #8b949e; margin-top: 8px; }
+
+/* -- LTM --------------------------------------------- */
+.ltm-summary {
+  background: rgba(22, 27, 34, 0.6);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  padding: 12px 16px; border-radius: 8px;
+  margin-bottom: 12px; font-size: 14px; color: #c9d1d9;
+}
+.ltm-count { color: #8b949e; font-size: 12px; margin-left: 6px; }
+.legend { display: flex; gap: 12px; margin-bottom: 16px; font-size: 13px; }
+.lg-node {
+  padding: 3px 12px; border-radius: 12px; font-weight: 600;
+}
+.lg-node.person   { background: rgba(0, 122, 255, 0.2); color: #79c0ff; border: 1px solid rgba(0, 122, 255, 0.4); }
+.lg-node.location { background: rgba(0, 255, 102, 0.15); color: #56d364; border: 1px solid rgba(0, 255, 102, 0.3); }
+.lg-node.concept  { background: rgba(227, 179, 65, 0.15); color: #e3b341; border: 1px solid rgba(227, 179, 65, 0.3); }
+
+/* -- Confusion Chart --------------------------------- */
+.conf-legend {
+  display: flex; gap: 16px; margin-top: 12px; font-size: 12px;
+  flex-wrap: wrap; background: rgba(0,0,0,0.1); padding: 8px 16px; border-radius: 6px;
+}
+.conf-note { font-size: 12px; color: #8b949e; margin-top: 6px; }
+.lg-u { color: #58a6ff; font-weight: 600; }
+.lg-k { color: #ff7b72; font-weight: 600; }
+.lg-s { color: #ffa657; font-weight: 600; }
+.lg-c { color: #56d364; font-weight: 700; }
+.lg-th { color: #8b949e; font-weight: 600; }
+
+/* -- Dialogue ---------------------------------------- */
+.dialogue-list { max-height: 80vh; overflow-y: auto; }
+.dlg-group-header {
+  font-size: 15px; margin: 24px 0 10px; color: #f0f6fc;
+  font-weight: 600;
+}
+.dlg-card {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  padding: 14px 16px; margin-bottom: 10px;
+  border-radius: 10px; border-left: 4px solid #00ff66;
+  transition: all 0.2s;
+}
+.dlg-card:hover { border-color: rgba(240, 246, 252, 0.12); transform: translateX(2px); }
+.dlg-card.rejected { border-left-color: #ff3b30; opacity: 0.6; }
+.dlg-head { font-size: 12px; color: #8b949e; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+.dlg-turn { padding: 4px 0; font-size: 14px; }
+.dlg-turn b { color: #f0f6fc; }
+.dlg-empty { color: #8b949e; font-size: 13px; }
+
+/* -- Sleep ------------------------------------------- */
+.sleep-card {
+  background: rgba(22, 27, 34, 0.5);
+  border: 1px solid rgba(240, 246, 252, 0.05);
+  padding: 16px 20px;
+  margin-bottom: 14px; border-radius: 10px;
+  border-left: 4px solid #5856d6;
+  transition: all 0.2s;
+}
+.sleep-card:hover { border-color: rgba(240, 246, 252, 0.12); transform: translateY(-2px); }
+.sleep-head {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 12px;
+}
+.sleep-who { font-weight: 700; font-size: 18px; color: #f0f6fc; }
+.sleep-day { color: #00f0ff; font-size: 13px; font-weight: 600; }
+.sleep-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.sleep-badge {
+  background: rgba(255, 255, 255, 0.03); padding: 4px 10px;
+  border-radius: 6px; font-size: 12px; color: #c9d1d9;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sleep-row { font-size: 14px; margin-top: 8px; color: #c9d1d9; line-height: 1.6; }
+.sleep-rel { font-size: 14px; margin-top: 8px; color: #d4a5ff; font-weight: 500; }
+.sleep-weights {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.15); padding: 6px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.sleep-weights span { font-weight: 600; color: #f0f6fc; }
+
+/* -- Utilities --------------------------------------- */
+.empty {
+  color: #8b949e; padding: 40px; text-align: center;
+  font-size: 15px; line-height: 2;
+  background: rgba(22, 27, 34, 0.3); border-radius: 12px;
+  border: 1px dashed rgba(240, 246, 252, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>Town AI-Town 模擬報告</h1>
+  <div class="meta">
+    生成時間：2026-05-24 22:25:53 ｜
+    天數：1 ｜
+    Ticks：20 ｜
+    模型呼叫（深思）：73 ｜
+    對話嘗試：0（接受 0）
+  </div>
+</header>
+
+<nav id="main-nav">
+  <button class="tab-btn active" data-tab="overview">Overview 總覽</button>
+  <button class="tab-btn" data-tab="daily-log">Daily Log 每日日誌</button>
+  <button class="tab-btn" data-tab="schedule">Schedule 時間表</button>
+  <button class="tab-btn" data-tab="ltm">LTM LTM 圖譜</button>
+  <button class="tab-btn" data-tab="confusion">Confusion 困惑度曲線</button>
+  <button class="tab-btn" data-tab="dialogue">Content:  對話記錄</button>
+  <button class="tab-btn" data-tab="sleep">Sleep 睡眠濃縮</button>
+</nav>
+
+<main>
+
+<section id="overview" class="tab active">
+  <h2>角色總覽（最終狀態）</h2>
+  <table class="overview-table">
+    <thead><tr>
+      <th>名字</th><th>代號</th><th>日期</th>
+      <th>位置</th><th>行動</th><th>情緒</th>
+      <th>STM</th><th>LTM 命題</th><th>狀態</th>
+    </tr></thead>
+    <tbody><tr>
+          <td><b>Amy</b></td><td>A</td><td>第 137 天</td>
+          <td>A家</td><td>休息</td>
+          <td>平靜</td>
+          <td>6</td><td>22</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Ben</b></td><td>B</td><td>第 137 天</td>
+          <td>B家</td><td>起床</td>
+          <td>平靜</td>
+          <td>6</td><td>23</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Claire</b></td><td>C</td><td>第 137 天</td>
+          <td>C家</td><td>起床</td>
+          <td>平靜</td>
+          <td>6</td><td>23</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>David</b></td><td>D</td><td>第 137 天</td>
+          <td>D家</td><td>起床</td>
+          <td>平靜</td>
+          <td>6</td><td>11</td><td>Intuitive 活動中</td>
+        </tr><tr>
+          <td><b>Emma</b></td><td>E</td><td>第 137 天</td>
+          <td>公寓大廳</td><td>起床</td>
+          <td>平靜</td>
+          <td>6</td><td>21</td><td>Intuitive 活動中</td>
+        </tr></tbody>
+  </table>
+  <div class="stat-row"><div class="stat-card"><div class="stat-num">20</div><div class="stat-label">總 Ticks</div></div><div class="stat-card"><div class="stat-num">73</div><div class="stat-label">深思模式次數</div></div><div class="stat-card"><div class="stat-num">0</div><div class="stat-label">對話嘗試</div></div><div class="stat-card"><div class="stat-num">0</div><div class="stat-label">對話接受</div></div></div>
+</section>
+
+<section id="daily-log" class="tab">
+  <h2>每日決策日誌</h2>
+  <p class="section-desc">
+    Intuitive 直覺模式（Markov / System 1）顯示行動機率分布；
+    Deliberate 深思模式（Model / System 2）顯示模型思考與輸出。
+    [!]  代表重大事件（K≥0.6）。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('log-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('log-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels"><div class="char-panel active" id="log-panel-A"><div class="day-header">第 1 天</div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">06:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.39</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.62 K=0.00">C=0.62</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">07:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.49</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.61 K=0.00">C=0.61</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.2000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">08:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.44</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.63 K=0.00">C=0.63</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.1700</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">09:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.49</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.34</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.3445</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">10:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.44</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.61 K=0.00">C=0.61</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.2928</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">11:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.4489</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">12:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.3816</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">13:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5243</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">14:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4457</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">15:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5788</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">16:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4920</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">17:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6182</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">18:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5255</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">19:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6467</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">20:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5497</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">21:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6672</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">22:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5671</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">23:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6821</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">00:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5797</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div></div><div class="char-panel " id="log-panel-B"><div class="day-header">第 1 天</div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">06:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">吃飯</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.30</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.63 K=0.00">C=0.63</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.3%"></div></div><span class="prob-pct">18%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.2%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">買東西</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.0%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.2%"></div></div><span class="prob-pct">7%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.0%"></div></div><span class="prob-pct">7%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.0%"></div></div><span class="prob-pct">7%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">07:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.29</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.65 K=0.00">C=0.65</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.1%"></div></div><span class="prob-pct">18%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.9%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.7%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">買東西</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.7%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.1%"></div></div><span class="prob-pct">7%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:6.9%"></div></div><span class="prob-pct">7%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.2000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">08:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.34</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.67 K=0.00">C=0.67</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.1700</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">09:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.30</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.67 K=0.00">C=0.67</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.3445</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">10:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.69 K=0.00">C=0.69</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.2928</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">11:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.31</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.67 K=0.00">C=0.67</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.4489</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">12:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.45</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.69 K=0.00">C=0.69</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.3816</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">13:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.50</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.67 K=0.00">C=0.67</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5243</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">14:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.44</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4457</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">15:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5788</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">16:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4920</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">17:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6182</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">18:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5255</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">19:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6467</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">20:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5497</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">21:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6672</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">22:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5671</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">23:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6821</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">00:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.42</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5797</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">01:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.68 K=0.00">C=0.68</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6928</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div></div><div class="char-panel " id="log-panel-C"><div class="day-header">第 1 天</div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">06:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">買東西</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.29</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.47 K=0.00">C=0.47</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.7%"></div></div><span class="prob-pct">20%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.9%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.7%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">07:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.54</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.29</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.48 K=0.00">C=0.48</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.5%"></div></div><span class="prob-pct">20%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.6%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.3%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">買東西</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.3%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.7%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.4%"></div></div><span class="prob-pct">7%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.2000</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">08:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">工作</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.34</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.49 K=0.00">C=0.49</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.3%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.6%"></div></div><span class="prob-pct">11%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.0%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.1700</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">09:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.30</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.50 K=0.00">C=0.50</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.1%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.4%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.2%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.2%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">買東西</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.2%"></div></div><span class="prob-pct">9%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.5%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.3445</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">10:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.50 K=0.00">C=0.50</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.2928</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">11:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.53</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.30</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.4489</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">12:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.3816</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">13:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.31</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5243</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">14:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.45</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.53 K=0.00">C=0.53</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4457</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">15:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.49</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5788</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">16:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.44</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4920</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">17:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6182</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">18:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5255</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">19:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6467</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">20:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5497</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">21:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6672</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">22:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5671</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">23:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6821</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">00:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5797</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">01:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.37</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6928</span></span><span class="score-pill zero"><span class="score-act">買東西</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div></div><div class="char-panel " id="log-panel-D"><div class="day-header">第 1 天</div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">06:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">運動</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:16.4%"></div></div><span class="prob-pct">16%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.0%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.0%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">07:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.31</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.50 K=0.00">C=0.50</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:17.3%"></div></div><span class="prob-pct">17%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.8%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.8%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.8%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.2000</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">08:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">吃飯</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:16.2%"></div></div><span class="prob-pct">16%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.1700</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">09:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:17.1%"></div></div><span class="prob-pct">17%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.3445</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">10:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:16.4%"></div></div><span class="prob-pct">16%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.2928</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">11:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.50 K=0.00">C=0.50</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.2%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.4489</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">12:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">運動</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.9%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item selected"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.3816</span></span><span class="score-pill selected zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">13:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.50 K=0.00">C=0.50</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:17.8%"></div></div><span class="prob-pct">18%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.4%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.4%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5243</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">14:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">散步</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.8%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.5%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4457</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">15:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.2%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5788</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">16:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">運動</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.9%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item selected"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4920</span></span><span class="score-pill selected zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">17:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:17.8%"></div></div><span class="prob-pct">18%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.4%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.4%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:8.2%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6182</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">18:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">吃飯</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.56 K=0.00">C=0.56</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:16.2%"></div></div><span class="prob-pct">16%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:12.7%"></div></div><span class="prob-pct">13%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.5%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5255</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">19:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.54 K=0.00">C=0.54</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:17.0%"></div></div><span class="prob-pct">17%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:11.8%"></div></div><span class="prob-pct">12%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.6%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.6%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6467</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">20:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.54 K=0.00">C=0.54</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:16.2%"></div></div><span class="prob-pct">16%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5497</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">21:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.2%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">散步</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6672</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">22:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">整理家裡</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.9%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item selected"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5671</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">整理家裡</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">23:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.2%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.7%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">運動</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.4%"></div></div><span class="prob-pct">7%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6821</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">整理家裡</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">00:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">工作</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.47</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.52 K=0.00">C=0.52</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:18.9%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.3%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:10.1%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.8%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">回家</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5797</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">整理家裡</span><span class="score-val">0.0000</span></span><span class="score-pill selected zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry intuitive">  <div class="tick-hdr">    <span class="tick-time">01:00</span>    <span class="mode-badge intuitive">直覺</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.51 K=0.00">C=0.51</span>  </div>  <div class="tick-probs"><div class="prob-item"><span class="prob-action">睡覺</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:19.2%"></div></div><span class="prob-pct">19%</span></div><div class="prob-item"><span class="prob-action">整理家裡</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.7%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">吃飯</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">工作</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:9.5%"></div></div><span class="prob-pct">10%</span></div><div class="prob-item"><span class="prob-action">滑手機</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.6%"></div></div><span class="prob-pct">8%</span></div><div class="prob-item"><span class="prob-action">前往</span><div class="prob-bar-wrap"><div class="prob-bar-fill" style="width:7.4%"></div></div><span class="prob-pct">7%</span></div></div>  <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6928</span></span><span class="score-pill zero"><span class="score-act">運動</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">吃飯</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">睡覺</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">散步</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">整理家裡</span><span class="score-val">0.0000</span></span><span class="score-pill zero"><span class="score-act">工作</span><span class="score-val">0.0000</span></span></div></div>    </div></div><div class="char-panel " id="log-panel-E"><div class="day-header">第 1 天</div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">06:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">07:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.52</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.31</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.60 K=0.00">C=0.60</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.2000</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">08:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.46</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.19</span></div>    <span class="tick-cv" title="C=0.60 K=0.00">C=0.60</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.1700</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">09:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.32</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.3445</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">10:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.45</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.60 K=0.00">C=0.60</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.2928</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">11:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.51</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.33</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.4489</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">12:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.44</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.38</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.18</span></div>    <span class="tick-cv" title="C=0.60 K=0.00">C=0.60</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.3816</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">13:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.49</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.35</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5243</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">14:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4457</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">15:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.5788</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">16:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.4920</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">17:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6182</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">18:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5255</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">19:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6467</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">20:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5497</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">21:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6672</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">22:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5671</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">23:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6821</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">00:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge zero">0.0000</span>    <span class="tick-action">休息</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.43</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.40</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.17</span></div>    <span class="tick-cv" title="C=0.59 K=0.00">C=0.59</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill pos"><span class="score-act">起床</span><span class="score-val">0.5797</span></span><span class="score-pill selected zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>  <div class="tick-thought">Thought:  今天有點累，想稍微休息一下。</div>  </div><div class="tick-entry deliberate">  <div class="tick-hdr">    <span class="tick-time">01:00</span>    <span class="mode-badge deliberate">深思</span>        <span class="reward-badge positive">+0.2000</span>    <span class="tick-action">起床</span>    <div class="tick-weights"><span class="w-badge w-alpha" title="時間表權重 (α)">α: 0.48</span><span class="w-badge w-beta" title="慣性權重 (β)">β: 0.36</span><span class="w-badge w-gamma" title="情境權重 (γ)">γ: 0.16</span></div>    <span class="tick-cv" title="C=0.58 K=0.00">C=0.58</span>  </div>    <div class="tick-q-values"><span class="q-label">RL 價值 (Q):</span><div class="q-pills"><span class="score-pill selected pos"><span class="score-act">起床</span><span class="score-val">0.6928</span></span><span class="score-pill zero"><span class="score-act">休息</span><span class="score-val">0.0000</span></span></div></div>    </div></div></div>
+</section>
+
+<section id="schedule" class="tab">
+  <h2>角色時間表</h2>
+  <p class="section-desc">
+    每個角色的作息計畫。由模型在睡眠濃縮時依當天事件重新生成，
+    或使用職業預設模板。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('sched-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('sched-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="sched-panel-A">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>Summary 今天度過了平凡的一天，沒有特別的事件。</span>
+</div>
+  <table class="sched-table">
+    <thead>
+      <tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td>公司附近</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>賣咖啡</td><td>咖啡店</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td>公寓</td><td class="done-mark">.</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 此為睡眠濃縮後生成的計畫（已重置完成狀態）。完整每時決策請查「每日日誌」分頁。</div>
+</div>
+<div class="char-panel " id="sched-panel-B">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>Summary 今天度過了平凡的一天，沒有特別的事件。</span>
+</div>
+  <table class="sched-table">
+    <thead>
+      <tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td>公司附近</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">14:00</td><td>收銀</td><td>超市</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td>公寓</td><td class="done-mark">.</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 此為睡眠濃縮後生成的計畫（已重置完成狀態）。完整每時決策請查「每日日誌」分頁。</div>
+</div>
+<div class="char-panel " id="sched-panel-C">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>Summary 今天度過了平凡的一天，沒有特別的事件。</span>
+</div>
+  <table class="sched-table">
+    <thead>
+      <tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td>公司附近</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td>公寓</td><td class="done-mark">.</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 此為睡眠濃縮後生成的計畫（已重置完成狀態）。完整每時決策請查「每日日誌」分頁。</div>
+</div>
+<div class="char-panel " id="sched-panel-D">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>Summary 今天度過了平凡的一天，沒有特別的事件。</span>
+</div>
+  <table class="sched-table">
+    <thead>
+      <tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td>公司附近</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td>公寓</td><td class="done-mark">.</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 此為睡眠濃縮後生成的計畫（已重置完成狀態）。完整每時決策請查「每日日誌」分頁。</div>
+</div>
+<div class="char-panel " id="sched-panel-E">
+  
+<div class="sched-sleep-info">
+  <span>Emotion 情緒：平靜</span>
+  <span>Summary 今天度過了平凡的一天，沒有特別的事件。</span>
+</div>
+  <table class="sched-table">
+    <thead>
+      <tr><th>時間</th><th>行動</th><th>地點</th><th>完成</th></tr>
+    </thead>
+    <tbody><tr class=""><td class="sched-time">07:00</td><td>起床</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">09:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">12:00</td><td>吃飯</td><td>公司附近</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">13:00</td><td>工作</td><td>辦公室</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">17:30</td><td>服務客人</td><td>餐廳</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">18:00</td><td>回家</td><td>公寓</td><td class="done-mark">.</td></tr><tr class=""><td class="sched-time">23:00</td><td>睡覺</td><td>公寓</td><td class="done-mark">.</td></tr></tbody>
+  </table>
+  <div class="sched-note">※ 此為睡眠濃縮後生成的計畫（已重置完成狀態）。完整每時決策請查「每日日誌」分頁。</div>
+</div></div>
+</section>
+
+<section id="ltm" class="tab">
+  <h2>LTM 記憶圖譜（互動：拖移 / 縮放 / 懸停查看詳情）</h2>
+  <div class="legend">
+    <span class="lg-node person">● 角色</span>
+    <span class="lg-node location">● 地點</span>
+    <span class="lg-node concept">● 概念</span>
+  </div>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('ltm-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('ltm-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="ltm-panel-A">
+  <div class="ltm-summary">Summary 今天度過了平凡的一天，沒有特別的事件。 <span class="ltm-count">(22 條命題)</span></div>
+  <div id="ltm-graph-A" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-B">
+  <div class="ltm-summary">Summary 今天度過了平凡的一天，沒有特別的事件。 <span class="ltm-count">(23 條命題)</span></div>
+  <div id="ltm-graph-B" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-C">
+  <div class="ltm-summary">Summary 今天度過了平凡的一天，沒有特別的事件。 <span class="ltm-count">(23 條命題)</span></div>
+  <div id="ltm-graph-C" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-D">
+  <div class="ltm-summary">Summary 今天度過了平凡的一天，沒有特別的事件。 <span class="ltm-count">(11 條命題)</span></div>
+  <div id="ltm-graph-D" style="height:540px;background:white;border-radius:8px;"></div>
+</div>
+<div class="char-panel " id="ltm-panel-E">
+  <div class="ltm-summary">Summary 今天度過了平凡的一天，沒有特別的事件。 <span class="ltm-count">(21 條命題)</span></div>
+  <div id="ltm-graph-E" style="height:540px;background:white;border-radius:8px;"></div>
+</div></div>
+</section>
+
+<section id="confusion" class="tab">
+  <h2>困惑度曲線（雙歷程理論 Kahneman 2011）</h2>
+  <p class="section-desc">
+    C 值超過閾值 -> 深思（System 2）；以下 -> 直覺（System 1 / Markov）。
+    情緒不好時閾值升高（更傾向直覺）。
+  </p>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('conf-panel-', 'A', this)">Amy</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'B', this)">Ben</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'C', this)">Claire</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'D', this)">David</button><button class="char-tab-btn " onclick="showCharTab('conf-panel-', 'E', this)">Emma</button></div>
+  <div class="char-panels">
+<div class="char-panel active" id="conf-panel-A">
+  <canvas id="conf-chart-A" width="900" height="300"
+          style="max-width:100%;"></canvas>
+  <div class="conf-legend">
+    <span class="lg-u">- U 不確定性</span>
+    <span class="lg-k">- K 困惑度峰值</span>
+    <span class="lg-s">- S 情境複雜度</span>
+    <span class="lg-c">- C 最終值（粗線）</span>
+    <span class="lg-th">-- 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    Deliberate 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-B">
+  <canvas id="conf-chart-B" width="900" height="300"
+          style="max-width:100%;"></canvas>
+  <div class="conf-legend">
+    <span class="lg-u">- U 不確定性</span>
+    <span class="lg-k">- K 困惑度峰值</span>
+    <span class="lg-s">- S 情境複雜度</span>
+    <span class="lg-c">- C 最終值（粗線）</span>
+    <span class="lg-th">-- 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    Deliberate 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-C">
+  <canvas id="conf-chart-C" width="900" height="300"
+          style="max-width:100%;"></canvas>
+  <div class="conf-legend">
+    <span class="lg-u">- U 不確定性</span>
+    <span class="lg-k">- K 困惑度峰值</span>
+    <span class="lg-s">- S 情境複雜度</span>
+    <span class="lg-c">- C 最終值（粗線）</span>
+    <span class="lg-th">-- 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    Deliberate 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-D">
+  <canvas id="conf-chart-D" width="900" height="300"
+          style="max-width:100%;"></canvas>
+  <div class="conf-legend">
+    <span class="lg-u">- U 不確定性</span>
+    <span class="lg-k">- K 困惑度峰值</span>
+    <span class="lg-s">- S 情境複雜度</span>
+    <span class="lg-c">- C 最終值（粗線）</span>
+    <span class="lg-th">-- 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    Deliberate 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div>
+<div class="char-panel " id="conf-panel-E">
+  <canvas id="conf-chart-E" width="900" height="300"
+          style="max-width:100%;"></canvas>
+  <div class="conf-legend">
+    <span class="lg-u">- U 不確定性</span>
+    <span class="lg-k">- K 困惑度峰值</span>
+    <span class="lg-s">- S 情境複雜度</span>
+    <span class="lg-c">- C 最終值（粗線）</span>
+    <span class="lg-th">-- 閾值（虛線）</span>
+  </div>
+  <div class="conf-note">
+    Deliberate 三角形點 = 該時段觸發深思模式（C 超過閾值，呼叫模型）
+  </div>
+</div></div>
+</section>
+
+<section id="dialogue" class="tab">
+  <h2>對話記錄</h2>
+  <div class="dialogue-list"><div class="empty">（無對話記錄）</div></div>
+</section>
+
+<section id="sleep" class="tab">
+  <h2>睡眠濃縮報告</h2>
+  <p class="section-desc">
+    睡眠時進行 STM->LTM 轉移（Diekelmann & Born 2010）。
+    HAM 命題從當天敘述中抽取，重要的存入長期記憶。
+  </p>
+  <div class="sleep-list">
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Amy</span>
+    <span class="sleep-day">第 1 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 22</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  09:00工作  12:00吃飯  13:00工作  13:00賣咖啡  18:00回家  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.43</span><span class="w-badge w-beta">β: 0.33</span><span class="w-badge w-gamma">γ: 0.24</span></div>
+  
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Ben</span>
+    <span class="sleep-day">第 1 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 23</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  09:00工作  12:00吃飯  13:00工作  14:00收銀  18:00回家  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.44</span><span class="w-badge w-beta">β: 0.33</span><span class="w-badge w-gamma">γ: 0.23</span></div>
+  
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Claire</span>
+    <span class="sleep-day">第 1 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 23</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  09:00工作  12:00吃飯  13:00工作  18:00回家  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.44</span><span class="w-badge w-beta">β: 0.33</span><span class="w-badge w-gamma">γ: 0.23</span></div>
+  
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">David</span>
+    <span class="sleep-day">第 1 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 11</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  09:00工作  12:00吃飯  13:00工作  18:00回家  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.45</span><span class="w-badge w-beta">β: 0.33</span><span class="w-badge w-gamma">γ: 0.23</span></div>
+  
+</div>
+<div class="sleep-card">
+  <div class="sleep-head">
+    <span class="sleep-who">Emma</span>
+    <span class="sleep-day">第 1 天 睡眠濃縮</span>
+  </div>
+  <div class="sleep-badges"><span class="sleep-badge">HAM 抽取 1</span> <span class="sleep-badge">HAM 保留 1</span> <span class="sleep-badge">LTM 總量 21</span> <span class="sleep-badge">LTM 修剪 0</span> <span class="sleep-badge">STM 保留 6</span> <span class="sleep-badge">今日峰值 K=0.00</span></div>
+  <div class="sleep-row">Emotion 情緒：平靜 ＝ 平靜</div>
+  <div class="sleep-row">Summary LTM 摘要：今天度過了平凡的一天，沒有特別的事件。</div>
+  <div class="sleep-row">Daily Log 隔天計畫：07:00起床  09:00工作  12:00吃飯  13:00工作  17:30服務客人  18:00回家  23:00睡覺</div>
+  <div class="sleep-row sleep-weights"><span>Weights 鞏固後權重：</span><span class="w-badge w-alpha">α: 0.44</span><span class="w-badge w-beta">β: 0.33</span><span class="w-badge w-gamma">γ: 0.23</span></div>
+  
+</div></div>
+</section>
+</main>
+
+<script>
+const LTM_DATA  = {"A": {"nodes": [{"id": "公寓大廳", "label": "公寓大廳", "group": "location", "value": 0.88, "title": "公寓大廳（location）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.894, "title": "Amy（person）"}, {"id": "B家", "label": "B家", "group": "location", "value": 0.996, "title": "B家（location）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.838, "title": "平凡（concept）"}], "edges": [{"from": "公寓大廳", "to": "公寓大廳", "label": "位置", "value": 4, "title": "位置（強度 0.83）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 5, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 5, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "目前場景", "value": 4, "title": "目前場景（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "公寓大廳", "to": "B家", "label": "位置", "value": 4, "title": "位置（強度 0.97）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 1, "title": "工作（強度 0.30）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.50）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.55）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 3, "title": "工作（強度 0.60）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "B": {"nodes": [{"id": "Amy", "label": "Amy", "group": "person", "value": 0.775, "title": "Amy（person）"}, {"id": "B家", "label": "B家", "group": "location", "value": 0.999, "title": "B家（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.902, "title": "Ben（person）"}, {"id": "公寓大廳", "label": "公寓大廳", "group": "location", "value": 0.985, "title": "公寓大廳（location）"}, {"id": "二樓", "label": "二樓", "group": "concept", "value": 0.971, "title": "二樓（concept）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.999, "title": "Claire（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.819, "title": "平凡（concept）"}], "edges": [{"from": "Amy", "to": "B家", "label": "目前場景", "value": 4, "title": "目前場景（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "B家", "label": "目前場景", "value": 4, "title": "目前場景（強度 1.00）", "arrows": "to"}, {"from": "公寓大廳", "to": "二樓", "label": "location", "value": 4, "title": "location（強度 0.97）", "arrows": "to"}, {"from": "Ben", "to": "B家", "label": "目前場景", "value": 4, "title": "目前場景（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "Claire", "label": "對話", "value": 4, "title": "對話（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "公寓大廳", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 3, "title": "工作（強度 0.72）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.85）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 1, "title": "工作（強度 0.30）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.50）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.55）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 3, "title": "工作（強度 0.60）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "C": {"nodes": [{"id": "公寓大廳", "label": "公寓大廳", "group": "location", "value": 0.999, "title": "公寓大廳（location）"}, {"id": "B家", "label": "B家", "group": "location", "value": 0.999, "title": "B家（location）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.75, "title": "Amy（person）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.999, "title": "Claire（person）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.866, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.838, "title": "平凡（concept）"}], "edges": [{"from": "公寓大廳", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Amy", "to": "B家", "label": "朋友", "value": 4, "title": "朋友（強度 1.00）", "arrows": "to"}, {"from": "Claire", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Claire", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Claire", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Claire", "to": "B家", "label": "location", "value": 4, "title": "location（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.97）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.97）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.96）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.96）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.80）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.80）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 1, "title": "工作（強度 0.30）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.50）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.55）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 3, "title": "工作（強度 0.60）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "D": {"nodes": [{"id": "David", "label": "David", "group": "person", "value": 0.955, "title": "David（person）"}, {"id": "咖啡店", "label": "咖啡店", "group": "location", "value": 0.955, "title": "咖啡店（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.575, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.58, "title": "平凡（concept）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.6, "title": "Amy（person）"}], "edges": [{"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡店", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 1, "title": "工作（強度 0.30）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.50）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.55）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 3, "title": "工作（強度 0.60）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "E": {"nodes": [{"id": "Emma", "label": "Emma", "group": "person", "value": 0.999, "title": "Emma（person）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.998, "title": "Amy（person）"}, {"id": "E家", "label": "E家", "group": "location", "value": 0.999, "title": "E家（location）"}, {"id": "店", "label": "店", "group": "concept", "value": 0.999, "title": "店（concept）"}, {"id": "公寓大廳", "label": "公寓大廳", "group": "location", "value": 0.999, "title": "公寓大廳（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.804, "title": "Ben（person）"}, {"id": "平凡", "label": "平凡", "group": "concept", "value": 0.832, "title": "平凡（concept）"}], "edges": [{"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "E家", "label": "前往", "value": 4, "title": "前往（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "店", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Emma", "to": "公寓大廳", "label": "現在場景", "value": 4, "title": "現在場景（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.97）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.94）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.93）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.93）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.91）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 1.00）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.91）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.91）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.85）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 1, "title": "工作（強度 0.30）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.50）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 2, "title": "工作（強度 0.55）", "arrows": "to"}, {"from": "Amy", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Ben", "to": "平凡", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}};
+const CONF_DATA = {"A": {"labels": ["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00"], "U": [0.962, 0.926, 0.956, 0.843, 0.909, 0.844, 0.861, 0.849, 0.865, 0.849, 0.865, 0.849, 0.865, 0.849, 0.865, 0.849, 0.865, 0.849, 0.865], "K": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "S": [0.77, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81], "C": [0.616, 0.614, 0.625, 0.58, 0.607, 0.581, 0.587, 0.583, 0.589, 0.583, 0.589, 0.583, 0.589, 0.583, 0.589, 0.583, 0.589, 0.583, 0.589], "modes": ["deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate"], "thresholds": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}, "B": {"labels": ["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00"], "U": [0.818, 0.816, 0.887, 0.819, 0.893, 0.823, 0.897, 0.827, 0.849, 0.837, 0.854, 0.837, 0.854, 0.837, 0.854, 0.837, 0.854, 0.837, 0.854, 0.837], "K": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "S": [0.77, 0.81, 0.81, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85], "C": [0.63, 0.65, 0.671, 0.671, 0.693, 0.672, 0.694, 0.673, 0.68, 0.676, 0.681, 0.676, 0.681, 0.676, 0.681, 0.676, 0.681, 0.676, 0.681, 0.676], "modes": ["intuitive", "intuitive", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate"], "thresholds": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}, "C": {"labels": ["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00"], "U": [0.804, 0.802, 0.826, 0.805, 0.829, 0.805, 0.824, 0.809, 0.889, 0.819, 0.837, 0.824, 0.842, 0.824, 0.842, 0.824, 0.842, 0.824, 0.842, 0.824], "K": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "S": [0.77, 0.81, 0.81, 0.85, 0.85, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89, 0.89], "C": [0.472, 0.484, 0.491, 0.497, 0.504, 0.509, 0.514, 0.51, 0.534, 0.513, 0.518, 0.514, 0.52, 0.514, 0.52, 0.514, 0.52, 0.514, 0.52, 0.514], "modes": ["intuitive", "intuitive", "intuitive", "intuitive", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate"], "thresholds": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}, "D": {"labels": ["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00"], "U": [0.882, 0.849, 0.878, 0.847, 0.873, 0.805, 0.823, 0.813, 0.826, 0.805, 0.823, 0.813, 0.93, 0.896, 0.878, 0.805, 0.823, 0.81, 0.828, 0.81], "K": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "S": [0.77, 0.81, 0.81, 0.85, 0.85, 0.89, 0.89, 0.89, 0.89, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93], "C": [0.507, 0.501, 0.513, 0.509, 0.519, 0.5, 0.507, 0.503, 0.509, 0.508, 0.515, 0.511, 0.558, 0.545, 0.537, 0.508, 0.515, 0.51, 0.517, 0.51], "modes": ["intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive", "intuitive"], "thresholds": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}, "E": {"labels": ["06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00"], "U": [0.915, 0.909, 0.898, 0.836, 0.902, 0.837, 0.912, 0.842, 0.862, 0.846, 0.862, 0.846, 0.862, 0.846, 0.862, 0.846, 0.862, 0.846, 0.862, 0.846], "K": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "S": [0.78, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82], "C": [0.587, 0.601, 0.598, 0.579, 0.599, 0.579, 0.602, 0.581, 0.587, 0.582, 0.587, 0.582, 0.587, 0.582, 0.587, 0.582, 0.587, 0.582, 0.587, 0.582], "modes": ["deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate", "deliberate"], "thresholds": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}};
+
+// -- Tab switching ----------------------------------------------
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var name = this.dataset.tab;
+    document.querySelectorAll('.tab').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    document.getElementById(name).classList.add('active');
+    this.classList.add('active');
+
+    // 觸發需要可見容器的元件
+    if (name === 'ltm')      { initActiveLTMGraph(); }
+    if (name === 'confusion') { resizeConfusionCharts(); }
+  });
+});
+
+// -- Character panel switching ----------------------------------
+function showCharTab(panelPrefix, code, btn) {
+  var section = btn.closest('.tab');
+  section.querySelectorAll('.char-panel').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  btn.closest('.char-tabs').querySelectorAll('.char-tab-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  document.getElementById(panelPrefix + code).classList.add('active');
+  btn.classList.add('active');
+
+  // LTM：切換角色時初始化該角色的圖
+  if (panelPrefix === 'ltm-panel-') {
+    initLTMGraph(code);
+  }
+}
+
+// -- LTM vis.js Graphs ------------------------------------------
+var ltmNetworks = {};
+var ltmInitDone = false;
+
+function initActiveLTMGraph() {
+  if (ltmInitDone) return;
+  ltmInitDone = true;
+  // 只初始化當前可見的
+  var active = document.querySelector('#ltm .char-panel.active');
+  if (active) {
+    var code = active.id.replace('ltm-panel-', '');
+    initLTMGraph(code);
+  }
+}
+
+function initLTMGraph(code) {
+  if (ltmNetworks[code]) {
+    ltmNetworks[code].redraw();
+    ltmNetworks[code].fit();
+    return;
+  }
+  var container = document.getElementById('ltm-graph-' + code);
+  if (!container) return;
+
+  var data = LTM_DATA[code];
+  if (!data || !data.nodes || data.nodes.length === 0) {
+    container.innerHTML =
+      '<div style="padding:30px;color:#8b949e;text-align:center">' +
+      '（尚無 LTM 命題）</div>';
+    return;
+  }
+
+  var options = {
+    nodes: {
+      shape: 'dot',
+      scaling: {
+        min: 14, max: 42,
+        label: { enabled: true, min: 12, max: 18 }
+      },
+      font: { size: 14, color: '#e6edf3', face: 'Outfit, Microsoft JhengHei, Arial, sans-serif' },
+      borderWidth: 2,
+    },
+    edges: {
+      font: { size: 11, color: '#8b949e', align: 'middle',
+              face: 'Outfit, Microsoft JhengHei, Arial, sans-serif' },
+      smooth: { type: 'continuous' },
+      arrows: { to: { enabled: true, scaleFactor: 0.65 } },
+      color: { color: '#30363d', highlight: '#00f0ff', opacity: 0.8 },
+    },
+    groups: {
+      person:   { color: { background: 'rgba(0, 122, 255, 0.2)', border: '#58a6ff',
+                            highlight: { background: 'rgba(0, 122, 255, 0.35)', border: '#79c0ff' } } },
+      location: { color: { background: 'rgba(0, 255, 102, 0.15)', border: '#56d364',
+                            highlight: { background: 'rgba(0, 255, 102, 0.3)', border: '#39d353' } } },
+      concept:  { color: { background: 'rgba(227, 179, 65, 0.15)', border: '#e3b341',
+                            highlight: { background: 'rgba(227, 179, 65, 0.3)', border: '#f2cc60' } } },
+    },
+    physics: {
+      enabled: true,
+      barnesHut: {
+        gravitationalConstant: -4000,
+        centralGravity: 0.25,
+        springLength: 200,
+        springConstant: 0.03,
+        damping: 0.12,
+        avoidOverlap: 1.0,
+      },
+      stabilization: {
+        enabled: true,
+        iterations: 400,
+        updateInterval: 25,
+        fit: true,
+      },
+    },
+    layout: {
+      improvedLayout: true,
+      randomSeed: 42,
+    },
+    interaction: {
+      hover: true,
+      tooltipDelay: 150,
+      zoomView: true,
+      dragView: true,
+      navigationButtons: true,
+    },
+  };
+
+  ltmNetworks[code] = new vis.Network(
+    container,
+    { nodes: new vis.DataSet(data.nodes),
+      edges: new vis.DataSet(data.edges) },
+    options
+  );
+}
+
+// -- Confusion Charts (chart.js) --------------------------------
+var confCharts = {};
+
+function initConfusionCharts() {
+  Object.keys(CONF_DATA).forEach(function(code) {
+    if (confCharts[code]) return;
+    var canvas = document.getElementById('conf-chart-' + code);
+    if (!canvas) return;
+
+    var c = CONF_DATA[code];
+    if (!c || !c.labels || c.labels.length === 0) {
+      canvas.insertAdjacentHTML('afterend',
+        '<div style="padding:10px;color:#8b949e">（無困惑度數據）</div>');
+      return;
+    }
+
+    // C 點：深思時用橘色三角形，直覺時用綠色圓點
+    var cPointStyle  = c.modes.map(function(m) {
+      return m === 'deliberate' ? 'triangle' : 'circle';
+    });
+    var cPointColor  = c.modes.map(function(m) {
+      return m === 'deliberate' ? '#ff9500' : '#00ff66';
+    });
+    var cPointRadius = c.modes.map(function(m) {
+      return m === 'deliberate' ? 9 : 4;
+    });
+
+    confCharts[code] = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: c.labels,
+        datasets: [
+          { label: 'U 不確定性', data: c.U,
+            borderColor: '#58a6ff', backgroundColor: 'transparent',
+            pointRadius: 3, tension: 0.3 },
+          { label: 'K 困惑度',   data: c.K,
+            borderColor: '#ff7b72', backgroundColor: 'transparent',
+            pointRadius: 3, tension: 0.3 },
+          { label: 'S 情境複雜', data: c.S,
+            borderColor: '#ffa657', backgroundColor: 'transparent',
+            pointRadius: 3, tension: 0.3 },
+          { label: 'C 最終值',   data: c.C,
+            borderColor: '#56d364', borderWidth: 3,
+            backgroundColor: 'transparent',
+            pointRadius: cPointRadius,
+            pointStyle:  cPointStyle,
+            pointBackgroundColor: cPointColor,
+            tension: 0.3 },
+          { label: '閾值', data: c.thresholds,
+            borderColor: '#8b949e', borderDash: [7, 4],
+            backgroundColor: 'transparent',
+            pointRadius: 0, tension: 0 },
+        ],
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        scales: {
+          y: { min: 0, max: 1.05, grid: { color: 'rgba(240, 246, 252, 0.1)' }, ticks: { color: '#8b949e' } },
+          x: { grid: { display: false },
+               ticks: { color: '#8b949e', maxRotation: 45, font: { size: 11 } } },
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { boxWidth: 12, font: { size: 12 }, color: '#c9d1d9' }
+          },
+          tooltip: { mode: 'index', intersect: false },
+        },
+        animation: { duration: 0 },
+      },
+    });
+  });
+}
+
+function resizeConfusionCharts() {
+  Object.values(confCharts).forEach(function(ch) {
+    if (ch) ch.resize();
+  });
+}
+
+// 頁面載入後立即初始化所有 confusion 圖表
+// （canvas 有明確的 width/height，不依賴容器可見性）
+document.addEventListener('DOMContentLoaded', function() {
+  initConfusionCharts();
+});
+
+</script>
+</body>
+</html>

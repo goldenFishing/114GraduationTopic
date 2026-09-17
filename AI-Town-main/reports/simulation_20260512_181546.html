@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>AI-Town 模擬報告</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+
+body { font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", sans-serif;
+       background: #f5f5f7; color: #1d1d1f; margin: 0; padding: 0; }
+header { background: #1d1d1f; color: white; padding: 20px 30px; }
+header h1 { margin: 0 0 8px 0; font-size: 24px; }
+header .meta { font-size: 13px; color: #a1a1a6; }
+nav { background: white; padding: 10px 30px; border-bottom: 1px solid #d2d2d7;
+      display: flex; gap: 8px; }
+.tab-btn { padding: 8px 16px; border: none; background: #f5f5f7;
+           border-radius: 6px; cursor: pointer; font-size: 14px; }
+.tab-btn.active { background: #007aff; color: white; }
+main { padding: 24px 30px; }
+.tab { display: none; }
+.tab.active { display: block; }
+h2 { font-size: 20px; margin: 0 0 16px 0; }
+table.overview-table { border-collapse: collapse; background: white;
+                        border-radius: 8px; overflow: hidden; width: 100%; }
+.overview-table th, .overview-table td { padding: 10px 14px; text-align: left;
+                                          border-bottom: 1px solid #e5e5ea; }
+.overview-table th { background: #fafafa; font-weight: 600; }
+.char-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.char-tab-btn { padding: 6px 14px; border: 1px solid #d2d2d7;
+                background: white; border-radius: 6px; cursor: pointer; }
+.char-tab-btn.active { background: #007aff; color: white; border-color: #007aff; }
+.char-panel { display: none; }
+.char-panel.active { display: block; }
+.stm-card { background: white; padding: 14px; margin-bottom: 12px;
+            border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.stm-head { display: flex; gap: 14px; font-size: 12px; color: #86868b;
+            margin-bottom: 8px; }
+.stm-time { font-weight: bold; color: #007aff; }
+.stm-body > div { margin: 4px 0; font-size: 14px; }
+.stm-action { color: #1d1d1f; font-weight: 500; }
+.stm-content { background: #f5f5f7; padding: 6px 10px; border-radius: 4px;
+                color: #424245; }
+.stm-thought { color: #6e6e73; font-style: italic; }
+.stm-emo { font-size: 12px; color: #86868b; }
+.ltm-summary { background: white; padding: 12px 16px; border-radius: 8px;
+                margin-bottom: 12px; }
+.ltm-graph { background: white; border-radius: 8px; }
+.legend { display: flex; gap: 16px; margin-bottom: 12px; font-size: 13px; }
+.legend .lg-person { color: #007aff; }
+.legend .lg-location { color: #34c759; }
+.legend .lg-concept { color: #ff9500; }
+.dlg-card { background: white; padding: 14px; margin-bottom: 12px;
+            border-radius: 8px; border-left: 3px solid #34c759; }
+.dlg-card.rejected { border-left-color: #ff3b30; }
+.dlg-head { font-size: 13px; color: #86868b; margin-bottom: 10px; }
+.dlg-turn { padding: 4px 0; font-size: 14px; }
+.empty { color: #86868b; padding: 20px; text-align: center; }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>AI-Town 模擬報告</h1>
+  <div class="meta">
+    生成時間：2026-05-12 18:15:46　|
+    總天數：1　|
+    總 ticks：1　|
+    模型呼叫：0　|
+    對話次數：0
+  </div>
+</header>
+
+<nav>
+  <button class="tab-btn active" onclick="showTab('overview')">總覽</button>
+  <button class="tab-btn" onclick="showTab('stm')">STM 流</button>
+  <button class="tab-btn" onclick="showTab('ltm')">LTM 圖譜</button>
+  <button class="tab-btn" onclick="showTab('confusion')">困惑度曲線</button>
+  <button class="tab-btn" onclick="showTab('dialogue')">對話記錄</button>
+  <button class="tab-btn" onclick="showTab('sleep')">睡眠濃縮</button>
+</nav>
+
+<main>
+
+<section id="overview" class="tab active">
+  <h2>角色總覽（最終狀態）</h2>
+  <table class="overview-table">
+    <thead>
+      <tr>
+        <th>名字</th><th>代號</th><th>第幾天</th>
+        <th>位置</th><th>行動</th><th>情緒</th>
+        <th>STM 筆數</th><th>LTM 命題</th><th>狀態</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Amy</td>
+          <td>A</td>
+          <td>4</td>
+          <td>公寓二樓</td>
+          <td>煮飯</td>
+          <td>不安</td>
+          <td>0</td>
+          <td>9</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Ben</td>
+          <td>B</td>
+          <td>4</td>
+          <td>公寓</td>
+          <td>打烊</td>
+          <td>疲憊</td>
+          <td>0</td>
+          <td>9</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Claire</td>
+          <td>C</td>
+          <td>4</td>
+          <td>公寓二樓</td>
+          <td>對話</td>
+          <td>疲憊</td>
+          <td>0</td>
+          <td>9</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>David</td>
+          <td>D</td>
+          <td>4</td>
+          <td>獨棟房子</td>
+          <td>煮飯</td>
+          <td>疲憊</td>
+          <td>0</td>
+          <td>9</td>
+          <td>活動中</td>
+        </tr>
+        <tr>
+          <td>Emma</td>
+          <td>E</td>
+          <td>4</td>
+          <td>獨棟房子 2</td>
+          <td>休息</td>
+          <td>疲憊</td>
+          <td>0</td>
+          <td>7</td>
+          <td>活動中</td>
+        </tr></tbody>
+  </table>
+</section>
+
+
+<section id="stm" class="tab">
+  <h2>STM 流</h2>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('stm', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('stm', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('stm', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('stm', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('stm', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="stm-panel-A">
+          <div class="empty">（無 STM 紀錄）</div>
+        </div>
+        <div class="char-panel " id="stm-panel-B">
+          <div class="empty">（無 STM 紀錄）</div>
+        </div>
+        <div class="char-panel " id="stm-panel-C">
+          <div class="empty">（無 STM 紀錄）</div>
+        </div>
+        <div class="char-panel " id="stm-panel-D">
+          <div class="empty">（無 STM 紀錄）</div>
+        </div>
+        <div class="char-panel " id="stm-panel-E">
+          <div class="empty">（無 STM 紀錄）</div>
+        </div></div>
+</section>
+
+
+<section id="ltm" class="tab">
+  <h2>LTM 圖譜（可拖移、可點擊節點）</h2>
+  <div class="legend">
+    <span class="lg-person">● 角色</span>
+    <span class="lg-location">● 地點</span>
+    <span class="lg-concept">● 概念</span>
+  </div>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('ltm', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('ltm', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="ltm-panel-A">
+          <div class="ltm-summary">📝 摘要：Amy 在公寓二樓，工作了三天。她在第一天和第三天都在第一天的 09:00 到 19:00 時間段工作。她在</div>
+          <div class="ltm-graph" id="ltm-graph-A" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-B">
+          <div class="ltm-summary">📝 摘要：Ben 在公寓二樓，最近的時間是第二天 09:00。他在第三天 07:00 到第三天 13:00 之間在公寓。他</div>
+          <div class="ltm-graph" id="ltm-graph-B" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-C">
+          <div class="ltm-summary">📝 摘要：Claire 在公寓二樓，工作需要完成。她與 Amy 在咖啡廳聊天，然後聊天了她的朋友。�</div>
+          <div class="ltm-graph" id="ltm-graph-C" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-D">
+          <div class="ltm-summary">📝 摘要：David 在現在的場景是咖啡廳，他正在工作在公寓。他最近的重要事件是第一天的第一天，他在工作中與同事進行了</div>
+          <div class="ltm-graph" id="ltm-graph-D" style="height:500px;"></div>
+        </div>
+        <div class="char-panel " id="ltm-panel-E">
+          <div class="ltm-summary">📝 摘要：Emma 在公寓二樓 19:00 的第二天和第三天都對 Amy 進行了討論，並且在第三天前往了�����</div>
+          <div class="ltm-graph" id="ltm-graph-E" style="height:500px;"></div>
+        </div></div>
+</section>
+
+
+<section id="confusion" class="tab">
+  <h2>困惑度曲線（U/K/S/C）</h2>
+  <div class="char-tabs"><button class="char-tab-btn active" onclick="showCharTab('conf', 'A')">Amy</button><button class="char-tab-btn " onclick="showCharTab('conf', 'B')">Ben</button><button class="char-tab-btn " onclick="showCharTab('conf', 'C')">Claire</button><button class="char-tab-btn " onclick="showCharTab('conf', 'D')">David</button><button class="char-tab-btn " onclick="showCharTab('conf', 'E')">Emma</button></div>
+  <div class="char-panels">
+        <div class="char-panel active" id="conf-panel-A">
+          <canvas id="conf-chart-A" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-B">
+          <canvas id="conf-chart-B" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-C">
+          <canvas id="conf-chart-C" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-D">
+          <canvas id="conf-chart-D" height="200"></canvas>
+        </div>
+        <div class="char-panel " id="conf-panel-E">
+          <canvas id="conf-chart-E" height="200"></canvas>
+        </div></div>
+</section>
+
+
+<section id="dialogue" class="tab">
+  <h2>對話記錄</h2>
+  <div class="dialogue-list"><div class="empty">（沒有對話記錄）</div></div>
+</section>
+
+
+<section id="sleep" class="tab">
+  <h2>睡眠濃縮報告</h2>
+  <div class="empty">（睡眠濃縮詳細資料，需 simulate.py 收集後注入）</div>
+</section>
+
+</main>
+
+<script>
+const CHARS = {"A": {"name": "Amy", "ltm": {"nodes": [{"id": "公寓", "label": "公寓", "group": "location", "value": 0.883, "title": "公寓（location）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.98, "title": "Amy（person）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.976, "title": "公寓二樓（location）"}], "edges": [{"from": "公寓", "to": "公寓", "label": "位置", "value": 4, "title": "位置（強度 0.85）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.994）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.994）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.99）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.99）", "arrows": "to"}, {"from": "公寓", "to": "公寓二樓", "label": "位置", "value": 4, "title": "位置（強度 0.95）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "B": {"name": "Ben", "ltm": {"nodes": [{"id": "Amy", "label": "Amy", "group": "person", "value": 0.85, "title": "Amy（person）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.958, "title": "公寓二樓（location）"}, {"id": "Ben", "label": "Ben", "group": "person", "value": 0.971, "title": "Ben（person）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.9, "title": "公寓（location）"}, {"id": "二樓", "label": "二樓", "group": "concept", "value": 0.85, "title": "二樓（concept）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.95, "title": "Claire（person）"}], "edges": [{"from": "Amy", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.85）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.993）", "arrows": "to"}, {"from": "公寓", "to": "二樓", "label": "location", "value": 4, "title": "location（強度 0.85）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.986）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.986）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.986）", "arrows": "to"}, {"from": "Ben", "to": "Claire", "label": "對話", "value": 4, "title": "對話（強度 0.95）", "arrows": "to"}, {"from": "Ben", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.95）", "arrows": "to"}, {"from": "Ben", "to": "公寓", "label": "location", "value": 4, "title": "location（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "C": {"name": "Claire", "ltm": {"nodes": [{"id": "公寓", "label": "公寓", "group": "location", "value": 0.85, "title": "公寓（location）"}, {"id": "公寓二樓", "label": "公寓二樓", "group": "location", "value": 0.932, "title": "公寓二樓（location）"}, {"id": "工作", "label": "工作", "group": "concept", "value": 0.875, "title": "工作（concept）"}, {"id": "完成", "label": "完成", "group": "concept", "value": 0.85, "title": "完成（concept）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.875, "title": "Amy（person）"}, {"id": "咖啡廳", "label": "咖啡廳", "group": "location", "value": 0.85, "title": "咖啡廳（location）"}, {"id": "Claire", "label": "Claire", "group": "person", "value": 0.96, "title": "Claire（person）"}], "edges": [{"from": "公寓", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.85）", "arrows": "to"}, {"from": "工作", "to": "完成", "label": "需要", "value": 4, "title": "需要（強度 0.85）", "arrows": "to"}, {"from": "Amy", "to": "咖啡廳", "label": "聊天", "value": 4, "title": "聊天（強度 0.85）", "arrows": "to"}, {"from": "Amy", "to": "公寓二樓", "label": "朋友", "value": 4, "title": "朋友（強度 0.9）", "arrows": "to"}, {"from": "工作", "to": "", "label": "目前", "value": 4, "title": "目前（強度 0.9）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.99）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.95）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.95）", "arrows": "to"}, {"from": "Claire", "to": "公寓二樓", "label": "location", "value": 4, "title": "location（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "D": {"name": "David", "ltm": {"nodes": [{"id": "David", "label": "David", "group": "person", "value": 0.917, "title": "David（person）"}, {"id": "咖啡廳", "label": "咖啡廳", "group": "location", "value": 0.917, "title": "咖啡廳（location）"}, {"id": "工作", "label": "工作", "group": "concept", "value": 0.86, "title": "工作（concept）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.9, "title": "公寓（location）"}], "edges": [{"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.85）", "arrows": "to"}, {"from": "工作", "to": "工作", "label": "目前", "value": 4, "title": "目前（強度 0.85）", "arrows": "to"}, {"from": "工作", "to": "工作", "label": "目前", "value": 4, "title": "目前（強度 0.85）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.9）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.9）", "arrows": "to"}, {"from": "工作", "to": "公寓", "label": "目前", "value": 4, "title": "目前（強度 0.9）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}, {"from": "David", "to": "咖啡廳", "label": "目前場景", "value": 4, "title": "目前場景（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}, "E": {"name": "Emma", "ltm": {"nodes": [{"id": "Emma", "label": "Emma", "group": "person", "value": 0.93, "title": "Emma（person）"}, {"id": "Amy", "label": "Amy", "group": "person", "value": 0.927, "title": "Amy（person）"}, {"id": "獨棟房子 2", "label": "獨棟房子 2", "group": "location", "value": 0.9, "title": "獨棟房子 2（location）"}, {"id": "店", "label": "店", "group": "concept", "value": 0.95, "title": "店（concept）"}, {"id": "公寓", "label": "公寓", "group": "location", "value": 0.95, "title": "公寓（location）"}], "edges": [{"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.96）", "arrows": "to"}, {"from": "Emma", "to": "獨棟房子 2", "label": "前往", "value": 4, "title": "前往（強度 0.9）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.9）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.9）", "arrows": "to"}, {"from": "Emma", "to": "Amy", "label": "對話", "value": 4, "title": "對話（強度 0.95）", "arrows": "to"}, {"from": "Emma", "to": "店", "label": "工作", "value": 4, "title": "工作（強度 0.95）", "arrows": "to"}, {"from": "Emma", "to": "公寓", "label": "現在場景", "value": 4, "title": "現在場景（強度 0.95）", "arrows": "to"}]}, "curves": {"labels": [], "U_values": [], "K_values": [], "S_values": [], "C_values": [], "modes": []}}};
+const DAYS = [{"day": 1, "ticks": [{"tick": 1, "time": "06:00", "day": 1, "execute": {}, "decide": {}, "interrupts": {}, "dialogues": [], "sleeping_today": ["D", "B", "E", "C", "A"]}], "sleep_reports": {}}];
+
+
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+  // 觸發 LTM 圖譜/曲線重繪
+  if (name === 'ltm') initLTMGraphs();
+  if (name === 'confusion') initConfusionCharts();
+}
+
+function showCharTab(section, code) {
+  const prefix = section === 'stm' ? 'stm-panel-'
+              : section === 'ltm' ? 'ltm-panel-'
+              : 'conf-panel-';
+  const parent = document.getElementById(section === 'conf' ? 'confusion'
+                                                            : section);
+  parent.querySelectorAll('.char-panel').forEach(p => p.classList.remove('active'));
+  parent.querySelectorAll('.char-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(prefix + code).classList.add('active');
+  event.target.classList.add('active');
+}
+
+let ltmInitDone = false;
+function initLTMGraphs() {
+  if (ltmInitDone) return;
+  ltmInitDone = true;
+  Object.keys(CHARS).forEach(code => {
+    const container = document.getElementById('ltm-graph-' + code);
+    if (!container) return;
+    const data = CHARS[code].ltm;
+    if (!data.nodes.length) {
+      container.innerHTML = '<div style="padding:20px;color:#86868b">（尚無 LTM 命題）</div>';
+      return;
+    }
+    new vis.Network(container, data, {
+      nodes: { shape: 'dot', font: { size: 14 } },
+      edges: { font: { size: 11, align: 'middle' } },
+      groups: {
+        person:   { color: { background: '#007aff', border: '#0056cc' } },
+        location: { color: { background: '#34c759', border: '#248a3d' } },
+        concept:  { color: { background: '#ff9500', border: '#c97a00' } },
+      },
+      physics: { stabilization: true },
+    });
+  });
+}
+
+let confInitDone = false;
+function initConfusionCharts() {
+  if (confInitDone) return;
+  confInitDone = true;
+  Object.keys(CHARS).forEach(code => {
+    const canvas = document.getElementById('conf-chart-' + code);
+    if (!canvas) return;
+    const c = CHARS[code].curves;
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: c.labels,
+        datasets: [
+          { label: 'U', data: c.U_values, borderColor: '#007aff', fill: false },
+          { label: 'K', data: c.K_values, borderColor: '#ff3b30', fill: false },
+          { label: 'S', data: c.S_values, borderColor: '#ff9500', fill: false },
+          { label: 'C', data: c.C_values, borderColor: '#34c759', fill: false,
+            borderWidth: 3 },
+        ]
+      },
+      options: { scales: { y: { min: 0, max: 1 } } }
+    });
+  });
+}
+
+</script>
+</body>
+</html>

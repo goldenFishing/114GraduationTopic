@@ -1,0 +1,247 @@
+[13:12:55] [INFO] [simulate] === AI-Town 離線模擬\u555f動 ===
+[13:12:55] [INFO] [simulate] 參數：days=1, no_model=True
+[13:12:55] [INFO] [simulate] 使用 FakeLoader（無模型模式）
+[13:12:55] [INFO] [manager] 時鐘同\u6b65至第 7 天
+[13:12:55] [INFO] [manager] AgentManager 初始化，角色：['A', 'B', 'C', 'D', 'E']
+[13:12:55] [INFO] [manager] ===== Tick 06:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：起床 A家
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：休息 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T007 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T007 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T007 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T007 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] [E] D007_T007 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 06:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 07:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：休息 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T008 | mode=intuitive | C=0.495 | action=滑手機
+[13:12:55] [INFO] [manager] [B] D007_T008 | mode=deliberate | C=0.631 | action=起床
+[13:12:55] [INFO] [manager] [C] D007_T008 | mode=deliberate | C=0.631 | action=起床
+[13:12:55] [INFO] [manager] [D] D007_T008 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] [E] D007_T008 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 07:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 08:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：滑手機 
+[13:12:55] [INFO] [manager] [B] 執行：起床 
+[13:12:55] [INFO] [manager] [C] 執行：起床 
+[13:12:55] [INFO] [manager] [D] 執行：休息 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T009 | mode=intuitive | C=0.509 | action=前往
+[13:12:55] [INFO] [manager] [B] D007_T009 | mode=intuitive | C=0.486 | action=滑手機
+[13:12:55] [INFO] [manager] [C] D007_T009 | mode=intuitive | C=0.481 | action=回家
+[13:12:55] [INFO] [manager] [D] D007_T009 | mode=deliberate | C=0.631 | action=起床
+[13:12:55] [INFO] [manager] [E] D007_T009 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 08:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 09:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：前往 \u5496\u5561店
+[13:12:55] [INFO] [manager] [B] 執行：滑手機 
+[13:12:55] [INFO] [manager] [C] 執行：回家 
+[13:12:55] [INFO] [manager] [D] 執行：起床 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T010 | mode=deliberate | C=0.578 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T010 | mode=intuitive | C=0.499 | action=前往
+[13:12:55] [INFO] [manager] [C] D007_T010 | mode=intuitive | C=0.514 | action=整理家裡
+[13:12:55] [INFO] [manager] [D] D007_T010 | mode=intuitive | C=0.482 | action=滑手機
+[13:12:55] [INFO] [manager] [E] D007_T010 | mode=deliberate | C=0.631 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 09:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 10:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：前往 超市
+[13:12:55] [INFO] [manager] [C] 執行：整理家裡 
+[13:12:55] [INFO] [manager] [D] 執行：滑手機 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T011 | mode=deliberate | C=0.572 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T011 | mode=deliberate | C=0.562 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T011 | mode=intuitive | C=0.524 | action=整理家裡
+[13:12:55] [INFO] [manager] [D] D007_T011 | mode=intuitive | C=0.494 | action=滑手機
+[13:12:55] [INFO] [manager] [E] D007_T011 | mode=deliberate | C=0.631 | action=起床
+[13:12:55] [INFO] [manager] ===== Tick 10:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 11:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：整理家裡 
+[13:12:55] [INFO] [manager] [D] 執行：滑手機 
+[13:12:55] [INFO] [manager] [E] 執行：起床 
+[13:12:55] [INFO] [manager] [A] D007_T012 | mode=deliberate | C=0.553 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T012 | mode=intuitive | C=0.540 | action=滑手機
+[13:12:55] [INFO] [manager] [C] D007_T012 | mode=intuitive | C=0.510 | action=前往
+[13:12:55] [INFO] [manager] [D] D007_T012 | mode=intuitive | C=0.499 | action=吃飯
+[13:12:55] [INFO] [manager] [E] D007_T012 | mode=intuitive | C=0.506 | action=前往
+[13:12:55] [INFO] [manager] ===== Tick 11:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 12:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：滑手機 
+[13:12:55] [INFO] [manager] [C] 執行：前往 \u8fa6公室
+[13:12:55] [INFO] [manager] [D] 執行：吃飯 
+[13:12:55] [INFO] [manager] [E] 執行：前往 餐廳
+[13:12:55] [INFO] [manager] [A] D007_T013 | mode=deliberate | C=0.553 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T013 | mode=intuitive | C=0.521 | action=前往
+[13:12:55] [INFO] [manager] [C] D007_T013 | mode=deliberate | C=0.557 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T013 | mode=intuitive | C=0.506 | action=吃飯
+[13:12:55] [INFO] [manager] [E] D007_T013 | mode=deliberate | C=0.574 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 12:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 13:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：前往 超市
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：吃飯 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T014 | mode=deliberate | C=0.556 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T014 | mode=intuitive | C=0.521 | action=買東西
+[13:12:55] [INFO] [manager] [C] D007_T014 | mode=intuitive | C=0.479 | action=買東西
+[13:12:55] [INFO] [manager] [D] D007_T014 | mode=intuitive | C=0.509 | action=前往
+[13:12:55] [INFO] [manager] [E] D007_T014 | mode=deliberate | C=0.553 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 13:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 14:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：買東西 
+[13:12:55] [INFO] [manager] [C] 執行：買東西 
+[13:12:55] [INFO] [manager] [D] 執行：前往 \u5496\u5561店
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T015 | mode=deliberate | C=0.558 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T015 | mode=intuitive | C=0.534 | action=滑手機
+[13:12:55] [INFO] [manager] [C] D007_T015 | mode=intuitive | C=0.479 | action=工作
+[13:12:55] [INFO] [manager] [D] D007_T015 | mode=intuitive | C=0.521 | action=吃飯
+[13:12:55] [INFO] [manager] [E] D007_T015 | mode=intuitive | C=0.536 | action=整理家裡
+[13:12:55] [INFO] [manager] ===== Tick 14:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 15:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：滑手機 
+[13:12:55] [INFO] [manager] [C] 執行：工作 
+[13:12:55] [INFO] [manager] [D] 執行：吃飯 
+[13:12:55] [INFO] [manager] [E] 執行：整理家裡 
+[13:12:55] [INFO] [manager] [A] D007_T016 | mode=deliberate | C=0.560 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T016 | mode=intuitive | C=0.535 | action=收銀
+[13:12:55] [INFO] [manager] [C] D007_T016 | mode=deliberate | C=0.583 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T016 | mode=intuitive | C=0.537 | action=回家
+[13:12:55] [INFO] [manager] [E] D007_T016 | mode=intuitive | C=0.549 | action=運動
+[13:12:55] [INFO] [manager] ===== Tick 15:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 16:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：收銀 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：回家 
+[13:12:55] [INFO] [manager] [E] 執行：運動 
+[13:12:55] [INFO] [manager] [A] D007_T017 | mode=deliberate | C=0.565 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T017 | mode=intuitive | C=0.549 | action=收銀
+[13:12:55] [INFO] [manager] [C] D007_T017 | mode=deliberate | C=0.575 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T017 | mode=intuitive | C=0.531 | action=對話
+[13:12:55] [INFO] [manager] [E] D007_T017 | mode=deliberate | C=0.562 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 16:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 17:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：收銀 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：對話 Amy
+[13:12:55] [INFO] [manager] [D \u2194 A] 對話開始
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T019 | mode=deliberate | C=0.582 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T018 | mode=deliberate | C=0.555 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T018 | mode=deliberate | C=0.578 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T019 | mode=intuitive | C=0.533 | action=散\u6b65
+[13:12:55] [INFO] [manager] [E] D007_T018 | mode=deliberate | C=0.563 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 17:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 18:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：散\u6b65 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T020 | mode=deliberate | C=0.582 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T019 | mode=intuitive | C=0.537 | action=補貨
+[13:12:55] [INFO] [manager] [C] D007_T019 | mode=deliberate | C=0.581 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T020 | mode=intuitive | C=0.534 | action=滑手機
+[13:12:55] [INFO] [manager] [E] D007_T019 | mode=deliberate | C=0.564 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 18:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 19:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：補貨 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：滑手機 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T021 | mode=deliberate | C=0.588 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T020 | mode=intuitive | C=0.532 | action=收銀
+[13:12:55] [INFO] [manager] [C] D007_T020 | mode=deliberate | C=0.593 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T021 | mode=intuitive | C=0.541 | action=前往
+[13:12:55] [INFO] [manager] [E] D007_T020 | mode=deliberate | C=0.575 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 19:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 20:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：收銀 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：前往 \u8fa6公室
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T022 | mode=deliberate | C=0.589 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T021 | mode=deliberate | C=0.586 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T021 | mode=deliberate | C=0.600 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T022 | mode=deliberate | C=0.565 | action=休息
+[13:12:55] [INFO] [manager] [E] D007_T021 | mode=deliberate | C=0.580 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 20:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 21:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：休息 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T023 | mode=deliberate | C=0.590 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T022 | mode=deliberate | C=0.589 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T022 | mode=deliberate | C=0.592 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T023 | mode=intuitive | C=0.511 | action=對話
+[13:12:55] [INFO] [manager] [E] D007_T022 | mode=deliberate | C=0.583 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 21:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 22:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：對話 Claire
+[13:12:55] [INFO] [manager] [D \u2194 C] 對話開始
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] D007_T024 | mode=deliberate | C=0.591 | action=休息
+[13:12:55] [INFO] [manager] [B] D007_T023 | mode=deliberate | C=0.592 | action=休息
+[13:12:55] [INFO] [manager] [C] D007_T024 | mode=deliberate | C=0.596 | action=休息
+[13:12:55] [INFO] [manager] [D] D007_T025 | mode=intuitive | C=0.493 | action=吃飯
+[13:12:55] [INFO] [manager] [E] D007_T023 | mode=deliberate | C=0.584 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 22:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 23:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [A] 執行：休息 
+[13:12:55] [INFO] [manager] [B] 執行：休息 
+[13:12:55] [INFO] [manager] [C] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 執行：吃飯 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [A] 到達 default_sleep_time，安排入睡
+[13:12:55] [INFO] [manager] [A] Day 7 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 11 筆
+[13:12:55] [INFO] [manager] [A] 存\u6a94完成，進入第 8 天
+[13:12:55] [INFO] [manager] [B] 到達 default_sleep_time，安排入睡
+[13:12:55] [INFO] [manager] [B] Day 7 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 10 筆
+[13:12:55] [INFO] [manager] [B] 存\u6a94完成，進入第 8 天
+[13:12:55] [INFO] [manager] [C] 到達 default_sleep_time，安排入睡
+[13:12:55] [INFO] [manager] [C] Day 7 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 10 筆
+[13:12:55] [INFO] [manager] [C] 存\u6a94完成，進入第 8 天
+[13:12:55] [INFO] [manager] [D] D007_T026 | mode=intuitive | C=0.500 | action=工作
+[13:12:55] [INFO] [manager] [E] D007_T024 | mode=deliberate | C=0.589 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 23:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 00:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [D] 執行：工作 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [D] D007_T027 | mode=deliberate | C=0.578 | action=休息
+[13:12:55] [INFO] [manager] [E] D007_T025 | mode=deliberate | C=0.592 | action=休息
+[13:12:55] [INFO] [manager] ===== Tick 00:00 結束 =====
+[13:12:55] [INFO] [manager] ===== Tick 01:00 第 7 天 開始 =====
+[13:12:55] [INFO] [manager] [D] 執行：休息 
+[13:12:55] [INFO] [manager] [E] 執行：休息 
+[13:12:55] [INFO] [manager] [D] 到達 default_sleep_time，安排入睡
+[13:12:55] [INFO] [manager] [D] Day 7 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 10 筆
+[13:12:55] [INFO] [manager] [D] 存\u6a94完成，進入第 8 天
+[13:12:55] [INFO] [manager] [E] 到達 default_sleep_time，安排入睡
+[13:12:55] [INFO] [manager] [E] Day 7 睡眠濃縮完成 | 抽 HAM 1 筆 → LTM 共 10 筆
+[13:12:55] [INFO] [manager] [E] 存\u6a94完成，進入第 8 天
+[13:12:55] [INFO] [manager] ===== Tick 01:00 結束 =====
+[13:12:55] [INFO] [manager] 推進至第 8 天
+[13:12:55] [INFO] [simulate] 模擬完成，耗時 0.0 秒

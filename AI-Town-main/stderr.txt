@@ -1,0 +1,8 @@
+[14:19:47] [INFO] [simulate] === AI-Town 離線模擬\u555f動 ===
+[14:19:47] [INFO] [simulate] === 重置所有角色資料 ===
+[14:19:47] [INFO] [simulate]   [A] Amy 重置完成（角色：\u5496\u5561師）
+[14:19:47] [INFO] [simulate]   [B] Ben 重置完成（角色：超市員工）
+[14:19:47] [INFO] [simulate]   [C] Claire 重置完成（角色：\u8fa6公室員工）
+[14:19:47] [INFO] [simulate]   [D] David 重置完成（角色：公司老\u95c6）
+[14:19:47] [INFO] [simulate]   [E] Emma 重置完成（角色：餐廳員工）
+[14:19:47] [INFO] [simulate] 重置完成。

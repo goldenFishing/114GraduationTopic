@@ -1,0 +1,330 @@
+============================================================
+AI-TOWN 3-DAY SIMULATION LOGICAL ANOMALY REPORT
+============================================================
+
+### CHARACTER TIMELINES ###
+
+Character: Amy (A)
+--------------------------------------------------------------------------------
+  Day 1 06:00 | Action: 起床         | Target: A家         | Location:            | Mode: deliberate | C: 0.572
+  Day 1 07:00 | Action: 起床         | Target: A家         | Location:            | Mode: intuitive  | C: 0.516
+  Day 1 08:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.518
+  Day 1 09:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.516
+  Day 1 10:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.536
+  Day 1 11:00 | Action: 整理店面       | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.568
+  Day 1 12:00 | Action: 賣咖啡        | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.582
+  Day 1 13:00 | Action: 吃飯         | Target: 咖啡店後場      | Location:            | Mode: deliberate | C: 0.583
+  Day 1 14:00 | Action: 賣咖啡        | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.541
+  Day 1 15:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.581
+  Day 1 16:00 | Action: 賣咖啡        | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.585
+  Day 1 17:00 | Action: 賣咖啡        | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.583
+  Day 1 18:00 | Action: 賣咖啡        | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.600
+  Day 1 19:00 | Action: 打烊         | Target: 咖啡店        | Location:            | Mode: deliberate | C: 0.637
+  Day 1 20:00 | Action: 回家         | Target: A家         | Location:            | Mode: deliberate | C: 0.625
+  Day 1 21:00 | Action: 回家         | Target: A家         | Location:            | Mode: deliberate | C: 0.599
+  Day 1 22:00 | Action: 回家         | Target: A家         | Location:            | Mode: deliberate | C: 0.587
+  Day 1 23:00 | Action: 回家         | Target: A家         | Location:            | Mode: schedule   | C: 0.000
+  Day 1 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 1 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 06:00 | Action: 回家         | Target: A家         | Location:            | Mode: intuitive  | C: 0.364
+  Day 2 07:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.375
+  Day 2 08:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.381
+  Day 2 09:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.325
+  Day 2 10:00 | Action: 回家         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.360
+  Day 2 11:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.386
+  Day 2 12:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.375
+  Day 2 13:00 | Action: 對話         | Target: David      | Location:            | Mode: intuitive  | C: 0.370
+  Day 2 14:00 | Action: 整理店面       | Target:            | Location:            | Mode: intuitive  | C: 0.378
+  Day 2 15:00 | Action: 賣咖啡        | Target:            | Location:            | Mode: intuitive  | C: 0.419
+  Day 2 16:00 | Action: 整理家裡       | Target: David      | Location:            | Mode: intuitive  | C: 0.419
+  Day 2 17:00 | Action: 對話         | Target: David      | Location:            | Mode: intuitive  | C: 0.397
+  Day 2 18:00 | Action: 打烊         | Target:            | Location:            | Mode: intuitive  | C: 0.399
+  Day 2 19:00 | Action: 賣咖啡        | Target:            | Location:            | Mode: intuitive  | C: 0.408
+  Day 2 20:00 | Action: 整理家裡       | Target: 咖啡店後場      | Location:            | Mode: intuitive  | C: 0.405
+  Day 2 21:00 | Action: 前往         | Target: 咖啡店後場      | Location:            | Mode: intuitive  | C: 0.417
+  Day 2 22:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.491
+  Day 2 23:00 | Action: 散步         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 2 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 06:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.426
+  Day 3 07:00 | Action: 起床         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.282
+  Day 3 08:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.349
+  Day 3 09:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.369
+  Day 3 10:00 | Action: 賣咖啡        | Target:            | Location:            | Mode: intuitive  | C: 0.374
+  Day 3 11:00 | Action: 整理店面       | Target:            | Location:            | Mode: intuitive  | C: 0.356
+  Day 3 12:00 | Action: 整理店面       | Target: David      | Location:            | Mode: intuitive  | C: 0.374
+  Day 3 13:00 | Action: 對話         | Target: David      | Location:            | Mode: intuitive  | C: 0.360
+  Day 3 14:00 | Action: 打烊         | Target:            | Location:            | Mode: intuitive  | C: 0.373
+  Day 3 15:00 | Action: 賣咖啡        | Target:            | Location:            | Mode: intuitive  | C: 0.392
+  Day 3 16:00 | Action: 整理店面       | Target:            | Location:            | Mode: intuitive  | C: 0.395
+  Day 3 17:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.391
+  Day 3 18:00 | Action: 整理店面       | Target:            | Location:            | Mode: intuitive  | C: 0.365
+  Day 3 19:00 | Action: 賣咖啡        | Target:            | Location:            | Mode: intuitive  | C: 0.391
+  Day 3 20:00 | Action: 打烊         | Target:            | Location:            | Mode: intuitive  | C: 0.381
+  Day 3 21:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.488
+  Day 3 22:00 | Action: 休息         | Target:            | Location:            | Mode: intuitive  | C: 0.488
+  Day 3 23:00 | Action: 吃飯         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 3 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+
+Character: Ben (B)
+--------------------------------------------------------------------------------
+  Day 1 06:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.615
+  Day 1 07:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.615
+  Day 1 08:00 | Action: 起床         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.512
+  Day 1 09:00 | Action: 前往         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.541
+  Day 1 10:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.548
+  Day 1 11:00 | Action: 滑手機        | Target: 超市         | Location:            | Mode: deliberate | C: 0.554
+  Day 1 12:00 | Action: 收銀         | Target: 超市         | Location:            | Mode: deliberate | C: 0.554
+  Day 1 13:00 | Action: 收銀         | Target: 超市         | Location:            | Mode: deliberate | C: 0.559
+  Day 1 14:00 | Action: 吃飯         | Target: 超市附近       | Location:            | Mode: deliberate | C: 0.569
+  Day 1 15:00 | Action: 收銀         | Target: 超市         | Location:            | Mode: deliberate | C: 0.562
+  Day 1 16:00 | Action: 收銀         | Target: 超市         | Location:            | Mode: deliberate | C: 0.584
+  Day 1 17:00 | Action: 收銀         | Target: 超市         | Location:            | Mode: deliberate | C: 0.608
+  Day 1 18:00 | Action: 補貨         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.496
+  Day 1 19:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.542
+  Day 1 20:00 | Action: 收銀         | Target: B家         | Location:            | Mode: deliberate | C: 0.582
+  Day 1 21:00 | Action: 回家         | Target: B家         | Location:            | Mode: deliberate | C: 0.586
+  Day 1 22:00 | Action: 回家         | Target: B家         | Location:            | Mode: deliberate | C: 0.594
+  Day 1 23:00 | Action: 回家         | Target: B家         | Location:            | Mode: schedule   | C: 0.000
+  Day 1 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 1 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 06:00 | Action: 回家         | Target: B家         | Location:            | Mode: intuitive  | C: 0.403
+  Day 2 07:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.403
+  Day 2 08:00 | Action: 起床         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.370
+  Day 2 09:00 | Action: 前往         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.367
+  Day 2 10:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.438
+  Day 2 11:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.325
+  Day 2 12:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.457
+  Day 2 13:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.392
+  Day 2 14:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.339
+  Day 2 15:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.320
+  Day 2 16:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.465
+  Day 2 17:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.356
+  Day 2 18:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.484
+  Day 2 19:00 | Action: 買東西        | Target: B家         | Location:            | Mode: intuitive  | C: 0.371
+  Day 2 20:00 | Action: 前往         | Target: B家         | Location:            | Mode: intuitive  | C: 0.473
+  Day 2 21:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.480
+  Day 2 22:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.476
+  Day 2 23:00 | Action: 補貨         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 2 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 06:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.413
+  Day 3 07:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.432
+  Day 3 08:00 | Action: 起床         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.280
+  Day 3 09:00 | Action: 前往         | Target: 超市         | Location:            | Mode: intuitive  | C: 0.347
+  Day 3 10:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.339
+  Day 3 11:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.318
+  Day 3 12:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.306
+  Day 3 13:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.332
+  Day 3 14:00 | Action: 補貨         | Target:            | Location:            | Mode: intuitive  | C: 0.353
+  Day 3 15:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.389
+  Day 3 16:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.377
+  Day 3 17:00 | Action: 收銀         | Target: 超市附近       | Location:            | Mode: intuitive  | C: 0.388
+  Day 3 18:00 | Action: 前往         | Target: 超市附近       | Location:            | Mode: intuitive  | C: 0.392
+  Day 3 19:00 | Action: 收銀         | Target:            | Location:            | Mode: intuitive  | C: 0.483
+  Day 3 20:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.463
+  Day 3 21:00 | Action: 休息         | Target:            | Location:            | Mode: intuitive  | C: 0.465
+  Day 3 22:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.457
+  Day 3 23:00 | Action: 滑手機        | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 3 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+
+Character: Claire (C)
+--------------------------------------------------------------------------------
+  Day 1 06:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.578
+  Day 1 07:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.586
+  Day 1 08:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.507
+  Day 1 09:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.516
+  Day 1 10:00 | Action: 散步         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.513
+  Day 1 11:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.564
+  Day 1 12:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.602
+  Day 1 13:00 | Action: 吃飯         | Target: 公司附近       | Location:            | Mode: intuitive  | C: 0.476
+  Day 1 14:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.662
+  Day 1 15:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.682
+  Day 1 16:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.658
+  Day 1 17:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.635
+  Day 1 18:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.591
+  Day 1 19:00 | Action: 回家         | Target: C家         | Location:            | Mode: deliberate | C: 0.646
+  Day 1 20:00 | Action: 整理家裡       | Target: C家         | Location:            | Mode: deliberate | C: 0.637
+  Day 1 21:00 | Action: 整理家裡       | Target: C家         | Location:            | Mode: deliberate | C: 0.678
+  Day 1 22:00 | Action: 整理家裡       | Target: C家         | Location:            | Mode: deliberate | C: 0.668
+  Day 1 23:00 | Action: 整理家裡       | Target: C家         | Location:            | Mode: schedule   | C: 0.000
+  Day 1 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 1 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 06:00 | Action: 整理家裡       | Target: C家         | Location:            | Mode: intuitive  | C: 0.339
+  Day 2 07:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.387
+  Day 2 08:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.337
+  Day 2 09:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.342
+  Day 2 10:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.321
+  Day 2 11:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.321
+  Day 2 12:00 | Action: 整理家裡       | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.321
+  Day 2 13:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.353
+  Day 2 14:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.302
+  Day 2 15:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.299
+  Day 2 16:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.300
+  Day 2 17:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.400
+  Day 2 18:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.376
+  Day 2 19:00 | Action: 工作         | Target: David      | Location:            | Mode: intuitive  | C: 0.383
+  Day 2 20:00 | Action: 對話         | Target: David      | Location:            | Mode: intuitive  | C: 0.386
+  Day 2 21:00 | Action: 對話         | Target: David      | Location:            | Mode: intuitive  | C: 0.398
+  Day 2 22:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.391
+  Day 2 23:00 | Action: 回家         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 2 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 2 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 06:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.413
+  Day 3 07:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.425
+  Day 3 08:00 | Action: 起床         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.320
+  Day 3 09:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.329
+  Day 3 10:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.465
+  Day 3 11:00 | Action: 回家         | Target: 公司附近       | Location:            | Mode: intuitive  | C: 0.448
+  Day 3 12:00 | Action: 前往         | Target: 公司附近       | Location:            | Mode: intuitive  | C: 0.359
+  Day 3 13:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.442
+  Day 3 14:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.424
+  Day 3 15:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.451
+  Day 3 16:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.460
+  Day 3 17:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.461
+  Day 3 18:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.463
+  Day 3 19:00 | Action: 休息         | Target:            | Location:            | Mode: intuitive  | C: 0.491
+  Day 3 20:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.446
+  Day 3 21:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.462
+  Day 3 22:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.463
+  Day 3 23:00 | Action: 工作         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 3 00:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+  Day 3 01:00 | Action:            | Target:            | Location:            | Mode: intuitive  | C: 0.000
+
+Character: David (D)
+--------------------------------------------------------------------------------
+  Day 1 06:00 | Action: 休息         | Target:            | Location:            | Mode: intuitive  | C: 0.545
+  Day 1 07:00 | Action: 回家         | Target:            | Location:            | Mode: deliberate | C: 0.618
+  Day 1 08:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.610
+  Day 1 09:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.537
+  Day 1 10:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.506
+  Day 1 11:00 | Action: 吃飯         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.564
+  Day 1 12:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.578
+  Day 1 13:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.529
+  Day 1 14:00 | Action: 運動         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.561
+  Day 1 15:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.530
+  Day 1 16:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.533
+  Day 1 17:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.559
+  Day 1 18:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.560
+  Day 1 19:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.573
+  Day 1 20:00 | Action: 工作         | Target: 辦公室        | Location:            | Mode: deliberate | C: 0.574
+  Day 1 21:00 | Action: 回家         | Target: D家         | Location:            | Mode: deliberate | C: 0.553
+  Day 1 22:00 | Action: 回家         | Target: D家         | Location:            | Mode: deliberate | C: 0.580
+  Day 1 23:00 | Action: 回家         | Target: D家         | Location:            | Mode: deliberate | C: 0.599
+  Day 1 00:00 | Action: 回家         | Target: D家         | Location:            | Mode: deliberate | C: 0.620
+  Day 1 01:00 | Action: 回家         | Target: D家         | Location:            | Mode: schedule   | C: 0.000
+  Day 2 06:00 | Action: 回家         | Target: D家         | Location:            | Mode: intuitive  | C: 0.329
+  Day 2 07:00 | Action: 前往         | Target: D家         | Location:            | Mode: intuitive  | C: 0.373
+  Day 2 08:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.401
+  Day 2 09:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.368
+  Day 2 10:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.360
+  Day 2 11:00 | Action: 買東西        | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.357
+  Day 2 12:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.343
+  Day 2 13:00 | Action: 對話         | Target: Amy        | Location:            | Mode: intuitive  | C: 0.409
+  Day 2 14:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.435
+  Day 2 15:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.437
+  Day 2 16:00 | Action: 回家         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.439
+  Day 2 17:00 | Action: 對話         | Target: Amy        | Location:            | Mode: intuitive  | C: 0.466
+  Day 2 18:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.466
+  Day 2 19:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.335
+  Day 2 20:00 | Action: 對話         | Target: Claire     | Location:            | Mode: intuitive  | C: 0.309
+  Day 2 21:00 | Action: 對話         | Target: Claire     | Location:            | Mode: intuitive  | C: 0.341
+  Day 2 22:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.345
+  Day 2 23:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.335
+  Day 2 00:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.403
+  Day 2 01:00 | Action: 工作         | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 3 06:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.427
+  Day 3 07:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.439
+  Day 3 08:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.451
+  Day 3 09:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.304
+  Day 3 10:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.303
+  Day 3 11:00 | Action: 整理家裡       | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.318
+  Day 3 12:00 | Action: 前往         | Target: 咖啡店        | Location:            | Mode: intuitive  | C: 0.317
+  Day 3 13:00 | Action: 對話         | Target: Amy        | Location:            | Mode: intuitive  | C: 0.335
+  Day 3 14:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.351
+  Day 3 15:00 | Action: 運動         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.286
+  Day 3 16:00 | Action: 前往         | Target: 辦公室        | Location:            | Mode: intuitive  | C: 0.258
+  Day 3 17:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.279
+  Day 3 18:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.281
+  Day 3 19:00 | Action: 工作         | Target:            | Location:            | Mode: intuitive  | C: 0.383
+  Day 3 20:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.407
+  Day 3 21:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.291
+  Day 3 22:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.290
+  Day 3 23:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.314
+  Day 3 00:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.297
+  Day 3 01:00 | Action: 工作         | Target:            | Location:            | Mode: schedule   | C: 0.000
+
+Character: Emma (E)
+--------------------------------------------------------------------------------
+  Day 1 06:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.556
+  Day 1 07:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.568
+  Day 1 08:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.631
+  Day 1 09:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.631
+  Day 1 10:00 | Action: 休息         | Target:            | Location:            | Mode: deliberate | C: 0.631
+  Day 1 11:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.527
+  Day 1 12:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.525
+  Day 1 13:00 | Action: 買東西        | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.552
+  Day 1 14:00 | Action: 服務客人       | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.564
+  Day 1 15:00 | Action: 吃飯         | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.558
+  Day 1 16:00 | Action: 休息         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.542
+  Day 1 17:00 | Action: 運動         | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.553
+  Day 1 18:00 | Action: 休息         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.539
+  Day 1 19:00 | Action: 散步         | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.559
+  Day 1 20:00 | Action: 服務客人       | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.550
+  Day 1 21:00 | Action: 服務客人       | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.554
+  Day 1 22:00 | Action: 服務客人       | Target: 餐廳         | Location:            | Mode: deliberate | C: 0.555
+  Day 1 23:00 | Action: 回家         | Target: E家         | Location:            | Mode: deliberate | C: 0.569
+  Day 1 00:00 | Action: 回家         | Target: E家         | Location:            | Mode: deliberate | C: 0.575
+  Day 1 01:00 | Action: 回家         | Target: E家         | Location:            | Mode: schedule   | C: 0.000
+  Day 2 06:00 | Action: 回家         | Target: E家         | Location:            | Mode: intuitive  | C: 0.389
+  Day 2 07:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.407
+  Day 2 08:00 | Action: 煮飯         | Target:            | Location:            | Mode: intuitive  | C: 0.422
+  Day 2 09:00 | Action: 煮飯         | Target:            | Location:            | Mode: intuitive  | C: 0.431
+  Day 2 10:00 | Action: 煮飯         | Target:            | Location:            | Mode: intuitive  | C: 0.413
+  Day 2 11:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.358
+  Day 2 12:00 | Action: 休息         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.354
+  Day 2 13:00 | Action: 前往         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.407
+  Day 2 14:00 | Action: 服務客人       | Target:            | Location:            | Mode: intuitive  | C: 0.391
+  Day 2 15:00 | Action: 運動         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.374
+  Day 2 16:00 | Action: 前往         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.371
+  Day 2 17:00 | Action: 吃飯         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.487
+  Day 2 18:00 | Action: 前往         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 19:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 20:00 | Action: 備料         | Target:            | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 21:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 22:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 23:00 | Action: 備料         | Target:            | Location:            | Mode: intuitive  | C: 0.482
+  Day 2 00:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.500
+  Day 2 01:00 | Action: 服務客人       | Target:            | Location:            | Mode: schedule   | C: 0.000
+  Day 3 06:00 | Action: 服務客人       | Target:            | Location:            | Mode: intuitive  | C: 0.413
+  Day 3 07:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.423
+  Day 3 08:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.451
+  Day 3 09:00 | Action: 整理家裡       | Target:            | Location:            | Mode: intuitive  | C: 0.435
+  Day 3 10:00 | Action: 回家         | Target:            | Location:            | Mode: intuitive  | C: 0.445
+  Day 3 11:00 | Action: 起床         | Target:            | Location:            | Mode: intuitive  | C: 0.358
+  Day 3 12:00 | Action: 散步         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.335
+  Day 3 13:00 | Action: 前往         | Target: 餐廳         | Location:            | Mode: intuitive  | C: 0.386
+  Day 3 14:00 | Action: 備料         | Target:            | Location:            | Mode: intuitive  | C: 0.387
+  Day 3 15:00 | Action: 服務客人       | Target:            | Location:            | Mode: intuitive  | C: 0.371
+  Day 3 16:00 | Action: 買東西        | Target:            | Location:            | Mode: intuitive  | C: 0.371
+  Day 3 17:00 | Action: 煮飯         | Target:            | Location:            | Mode: intuitive  | C: 0.371
+  Day 3 18:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.478
+  Day 3 19:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.490
+  Day 3 20:00 | Action: 散步         | Target:            | Location:            | Mode: intuitive  | C: 0.479
+  Day 3 21:00 | Action: 備料         | Target:            | Location:            | Mode: intuitive  | C: 0.490
+  Day 3 22:00 | Action: 吃飯         | Target:            | Location:            | Mode: intuitive  | C: 0.474
+  Day 3 23:00 | Action: 滑手機        | Target:            | Location:            | Mode: intuitive  | C: 0.490
+  Day 3 00:00 | Action: 運動         | Target:            | Location:            | Mode: intuitive  | C: 0.490
+  Day 3 01:00 | Action: 買東西        | Target:            | Location:            | Mode: schedule   | C: 0.000
+
+
+================================================================================
+### LOGICAL ANOMALY DETECTION ###
+================================================================================
+
+Detected 3 anomalies/warnings:
+  1. [REPETITION WARNING] Day 1 01:00 | David has been doing '回家' consecutively for 5 ticks.
+  2. [REPETITION WARNING] Day 2 06:00 | David has been doing '回家' consecutively for 6 ticks.
+  3. [REPETITION WARNING] Day 1 10:00 | Emma has been doing '休息' consecutively for 5 ticks.
